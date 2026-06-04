@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/*
+ * Stage 0 — minimal base only.
+ * The real HMI design system (colour tokens, the two-typeface system,
+ * spacing scale, radii, components) is implemented in Stage 1 (FEAT-21),
+ * extracted from `Help Me Invest Website v3/styles.css`.
+ */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
