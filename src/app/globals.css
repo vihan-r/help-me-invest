@@ -211,8 +211,10 @@
     white-space: nowrap;
     cursor: pointer;
     transition:
-      background-color 120ms ease,
-      color 120ms ease;
+      background-color 160ms ease,
+      color 160ms ease,
+      transform 220ms var(--ease-out-quart),
+      box-shadow 220ms var(--ease-out-quart);
   }
   .btn-sm {
     padding: 10px 16px;
@@ -224,6 +226,7 @@
   }
   .btn-primary:hover {
     background: #073923; /* implementation tune within tolerance */
+    box-shadow: 0 10px 24px -10px rgba(10, 75, 52, 0.5);
   }
   .btn-secondary {
     background: var(--color-lighter-mint);
@@ -231,6 +234,13 @@
   }
   .btn-secondary:hover {
     background: var(--color-mint);
+    box-shadow: 0 10px 24px -14px rgba(10, 75, 52, 0.35);
+  }
+  /* Lift is motion — gated by reduced-motion below. */
+  @media (prefers-reduced-motion: no-preference) {
+    .btn:hover {
+      transform: translateY(-2px);
+    }
   }
 
   /* —— Links —— */
@@ -271,6 +281,10 @@
     text-decoration: none;
     white-space: nowrap;
     line-height: 1;
+    transition: opacity 160ms var(--ease-out-quart);
+  }
+  .brand-lockup:hover {
+    opacity: 0.78;
   }
   .brand-mark {
     display: inline-block;
@@ -855,6 +869,42 @@
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+  }
+
+  /* —— Card hover lift (per brand motion spec) ——————————————————————————
+     Interactive anchor cards — investor profiles, partner cards, pillars, and
+     education thumbnails — lift on hover: scale 1.02 + 6px rise, over ~1.2s
+     easeOutQuart (no bounce). Filled cards also gain a soft elevation shadow.
+     The lift uses the individual `scale` / `translate` properties so it
+     composes with the reveal `transform` without clobbering the entrance
+     transition. Honours reduced-motion. */
+  a.investor-profile,
+  a.partner-card,
+  a.whatwedo-card--filled,
+  a.topic-thumb,
+  a.video-module--link {
+    transition:
+      opacity 1400ms var(--ease-out-quart),
+      transform 1400ms var(--ease-out-quart),
+      scale 1200ms var(--ease-out-quart),
+      translate 1200ms var(--ease-out-quart),
+      box-shadow 1200ms var(--ease-out-quart);
+    will-change: transform, scale, translate;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    a.investor-profile:hover,
+    a.partner-card:hover,
+    a.whatwedo-card--filled:hover,
+    a.topic-thumb:hover,
+    a.video-module--link:hover {
+      scale: 1.02;
+      translate: 0 -6px;
+    }
+    /* Soft elevation shadow only on cards that have a fill behind them. */
+    a.investor-profile:hover,
+    a.whatwedo-card--filled:hover {
+      box-shadow: 0 18px 44px -24px rgba(10, 75, 52, 0.35);
+    }
   }
 
   /* —— Pillars (the "what we do" cards) —— */
