@@ -4,3 +4,7 @@ export { Button, TertiaryLink } from "./Button";
 export type { ButtonProps, TertiaryLinkProps } from "./Button";
 export { Container } from "./Container";
 export type { ContainerProps } from "./Container";
+export { SiteHeader } from "./SiteHeader";
+export { SiteFooter } from "./SiteFooter";
+export { PagePlaceholder } from "./PagePlaceholder";
+export type { PagePlaceholderProps } from "./PagePlaceholder";
