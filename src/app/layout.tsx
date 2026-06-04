@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
+import { SiteFooter, SiteHeader } from "@/components";
+import { SITE } from "@/config/site";
 import "./globals.css";
 
 // Body typeface — variable weight axis (400/500/600/700 used across the system).
@@ -20,9 +22,20 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Help Me Invest",
-  description:
-    "Help Me Invest helps everyday Australians invest in property on their own terms — learn how property investing works, then choose how you want help.",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: SITE.name,
+    template: `%s · ${SITE.name}`,
+  },
+  description: SITE.description,
+  applicationName: SITE.name,
+  openGraph: {
+    type: "website",
+    siteName: SITE.name,
+    title: SITE.name,
+    description: SITE.description,
+    locale: "en_AU",
+  },
 };
 
 export default function RootLayout({
@@ -32,7 +45,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-AU" className={`${jakarta.variable} ${newsreader.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <SiteHeader />
+        {children}
+        <SiteFooter />
+      </body>
     </html>
   );
 }
