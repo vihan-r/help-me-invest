@@ -307,10 +307,11 @@ export default function StyleguidePage() {
             <Wordmark colour="paper" size={24} href="#" />
           </div>
           <p className="body-small mt-md text-grey">
-            &ldquo;help me&rdquo; Bold 700 + &ldquo;invest&rdquo; Medium 500, lowercase. The
-            colourway reverses correctly with no box on any ground. The &ldquo;h&rdquo; mark is a{" "}
-            <strong>placeholder</strong> (dashed square) pending the final transparent SVG; it will
-            recolour via <code>currentColor</code> when dropped in.
+            &ldquo;help me&rdquo; Bold 700 + &ldquo;invest&rdquo; Medium 500, lowercase. Interim:
+            the &ldquo;h&rdquo; mark is swapped by ground using PNGs — the green-on-paper mark on
+            light grounds (above); the Emerald panel below shows the <strong>placeholder</strong>{" "}
+            until the white-on-green PNG is supplied. The transparent <code>currentColor</code> SVG
+            remains the eventual fix.
           </p>
         </Section>
       </Container>
