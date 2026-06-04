@@ -1,0 +1,12 @@
+# Build output & deps
+.next/
+out/
+build/
+node_modules/
+next-env.d.ts
+package-lock.json
+
+# Design reference — source of truth for layout/styling, not formatted by us
+Help Me Invest Website v3/
+HMI_Brand_Guidelines.md
+Website Development Brief — Help Me Invest.md
