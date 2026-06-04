@@ -1,21 +1,289 @@
 @import "tailwindcss";
 
-/*
- * Stage 0 — minimal base only.
- * The real HMI design system (colour tokens, the two-typeface system,
- * spacing scale, radii, components) is implemented in Stage 1 (FEAT-21),
- * extracted from `Help Me Invest Website v3/styles.css`.
- */
+/* =============================================================================
+ * Help Me Invest — design system (FEAT-21)
+ *
+ * Token values are pulled verbatim from the design source of truth:
+ *   `Help Me Invest Website v3/styles.css`
+ * The brand guidelines govern intent; where they differ from the HTML, the
+ * HTML wins (per project direction). Notable source-of-truth facts encoded here:
+ *   - Two-typeface system: Newsreader (serif) for D1–H4, Plus Jakarta Sans body.
+ *   - Buttons are 10px rounded rectangles (--radius-md), NOT pills.
+ *   - Headline <em> emphasis is rolled back: renders plain (normal, inherit).
+ * ========================================================================== */
 
-html {
-  -webkit-text-size-adjust: 100%;
+@theme {
+  /* —— Colour roles (six colours, one job each) —— */
+  --color-paper: #f6f7f4; /* ground */
+  --color-lighter-mint: #d4e8b5; /* gentle tonal surface, secondary buttons */
+  --color-mint: #a8d5b4; /* full soft sections, soft surfaces */
+  --color-emerald: #0a4b34; /* wordmark, headlines, primary UI */
+  --color-charcoal: #1a2b22; /* body ink */
+  --color-grey: #8b8881; /* structural neutral */
+
+  /* —— Typeface system (wired to next/font CSS variables) —— */
+  --font-sans:
+    var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+
+  /* —— Spacing scale (multiples of 8px) —— */
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 40px;
+  --spacing-xl: 64px;
+  --spacing-2xl: 96px;
+
+  /* —— Corner radii —— */
+  --radius-sm: 6px; /* small UI: tags, badges */
+  --radius-md: 10px; /* buttons, inputs */
+  --radius-lg: 14px; /* cards */
+  --radius-xl: 20px; /* large containers, photography */
+
+  /* —— Column widths —— */
+  --container-reading: 680px; /* long-form essays */
+  --container-body: 720px; /* general body column */
+  --container-display: 1000px; /* display headlines */
+  --container-shell: 1200px; /* outer page shell */
 }
 
-body {
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+/* —— Base ————————————————————————————————————————————————————————————— */
+@layer base {
+  body {
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* —— Design-system components ————————————————————————————————————————————
+   Semantic classes mirrored from the source styles.css so production markup
+   uses named tokens, never raw values. */
+@layer components {
+  /* —— Type scale (all headlines Newsreader 400, Emerald) —— */
+  .d1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 72;
+    font-size: clamp(56px, 7.5vw, 104px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--color-emerald);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .h1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 72;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    color: var(--color-emerald);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 72;
+    font-size: clamp(34px, 3.6vw, 50px);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    color: var(--color-emerald);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-emerald);
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-emerald);
+    margin: 0;
+  }
+
+  /* Headline <em> emphasis rolled back site-wide — renders plain.
+     Markup keeps <em> so the italic accent can be re-enabled later. */
+  .d1 em,
+  .h1 em,
+  .h2 em,
+  .h3 em,
+  .h4 em {
+    font-style: normal;
+    font-weight: inherit;
+  }
+
+  /* —— Body copy (Plus Jakarta Sans, Warm Charcoal) —— */
+  .body-large {
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .body {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+
+  .body-small {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+
+  .fine-print {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+
+  /* Eyebrow (small structural metadata) */
+  .eyebrow {
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--color-grey);
+    margin: 0;
+  }
+
+  /* Reverse-out: body + headlines on Emerald grounds become Soft Paper */
+  .on-emerald,
+  .on-emerald .body,
+  .on-emerald .body-large,
+  .on-emerald .body-small {
+    color: var(--color-paper);
+  }
+  .on-emerald .d1,
+  .on-emerald .h1,
+  .on-emerald .h2,
+  .on-emerald .h3,
+  .on-emerald .h4 {
+    color: var(--color-paper);
+  }
+
+  /* —— Buttons (primary Emerald, secondary Lighter Mint) —— */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1;
+    padding: 14px 26px;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease;
+  }
+  .btn-sm {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  .btn-primary {
+    background: var(--color-emerald);
+    color: var(--color-paper);
+  }
+  .btn-primary:hover {
+    background: #073923; /* implementation tune within tolerance */
+  }
+  .btn-secondary {
+    background: var(--color-lighter-mint);
+    color: var(--color-emerald);
+  }
+  .btn-secondary:hover {
+    background: var(--color-mint);
+  }
+
+  /* —— Links —— */
+  .inline-link {
+    color: var(--color-charcoal);
+    text-decoration: underline;
+    text-decoration-color: var(--color-charcoal);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition:
+      color 120ms ease,
+      text-decoration-color 120ms ease,
+      text-decoration-thickness 120ms ease;
+  }
+  .inline-link:hover {
+    color: var(--color-emerald);
+    text-decoration-color: var(--color-emerald);
+    text-decoration-thickness: 2px;
+  }
+
+  .tertiary-link {
+    color: var(--color-charcoal);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    font-weight: 500;
+    transition: color 120ms ease;
+  }
+  .tertiary-link:hover {
+    color: var(--color-emerald);
+  }
+
+  /* —— Brand lockup (the 'h' mark that pairs with the wordmark) —— */
+  .brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .brand-mark {
+    display: inline-block;
+    height: 1.5em;
+    width: 1.5em;
+    flex-shrink: 0;
+  }
+
+  /* —— Horizontal rule —— */
+  hr.rule {
+    border: 0;
+    border-top: 1px solid var(--color-grey);
+    opacity: 0.45;
+    margin: 0;
+  }
 }
