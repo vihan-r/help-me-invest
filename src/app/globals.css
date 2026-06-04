@@ -276,9 +276,6 @@
     display: inline-block;
     height: 1.5em;
     width: 1.5em;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
     flex-shrink: 0;
   }
 

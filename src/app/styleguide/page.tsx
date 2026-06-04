@@ -307,8 +307,10 @@ export default function StyleguidePage() {
             <Wordmark colour="paper" size={24} href="#" />
           </div>
           <p className="body-small mt-md text-grey">
-            &ldquo;help me&rdquo; Bold 700 + &ldquo;invest&rdquo; Medium 500, lowercase, paired with
-            the supplied &ldquo;h&rdquo; mark.
+            &ldquo;help me&rdquo; Bold 700 + &ldquo;invest&rdquo; Medium 500, lowercase. The
+            colourway reverses correctly with no box on any ground. The &ldquo;h&rdquo; mark is a{" "}
+            <strong>placeholder</strong> (dashed square) pending the final transparent SVG; it will
+            recolour via <code>currentColor</code> when dropped in.
           </p>
         </Section>
       </Container>
