@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="../logos/hmi-mark.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '../';</script>
+  <script type="text/babel" src="../js/components.jsx"></script>
+
+  <script type="text/babel">
+    function SignIn() {
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const email = (document.getElementById('email').value || '').trim();
+        const existing = window.HMIAuth.get() || {};
+        window.HMIAuth.set(Object.assign({}, existing, { email: email || existing.email || '' }));
+        window.location.href = withBase('index.html');
+      };
+      const continueGoogle = (e) => {
+        e.preventDefault();
+        window.HMIAuth.set(Object.assign({}, window.HMIAuth.get() || {}, { email: '' }));
+        window.location.href = withBase('index.html');
+      };
+
+      return (
+        <React.Fragment>
+          <Header active="signin" />
+
+          <main>
+            <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
+              <div className="account-grid" style={{ gridTemplateColumns: '1fr' }}>
+
+                {/* The form (full width, no right-column context on sign-in) */}
+                <div className="account-form">
+                  <Eyebrow>Welcome back</Eyebrow>
+                  <h1 className="d1" style={{ marginTop: 14 }}>Sign in to your <em>account.</em></h1>
+                  <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
+                    Pick up where you left off in the library. Your saved progress and notes are
+                    here waiting.
+                  </p>
+
+                  <form className="stack-md" style={{ marginTop: 40 }} onSubmit={handleSubmit} noValidate>
+                    <div className="field">
+                      <label htmlFor="email">What email do you use?</label>
+                      <input id="email" name="email" type="email" autoComplete="email" />
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="password">Your password</label>
+                      <input id="password" name="password" type="password" autoComplete="current-password" />
+                      <p className="field-help">
+                        <a className="inline-link" href="#">Forgot your password?</a>
+                      </p>
+                    </div>
+
+                    <div style={{ marginTop: 16 }}>
+                      <button type="submit" className="btn btn-primary">Sign in <Arrow /></button>
+                    </div>
+                  </form>
+
+                  <div className="divider-or"><span>or</span></div>
+
+                  <a className="btn btn-secondary" href="#" onClick={continueGoogle} style={{ width: '100%', justifyContent: 'center' }}>
+                    Continue with Google
+                  </a>
+
+                  <p style={{ marginTop: 28, textAlign: 'center' }}>
+                    <a className="tertiary-link" href={withBase('account/create.html')}>
+                      Don&rsquo;t have an account yet? Create one <Arrow />
+                    </a>
+                  </p>
+                </div>
+
+                {/* Right: context panel removed */}
+
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<SignIn />);
+  </script>
+</body>
+</html>

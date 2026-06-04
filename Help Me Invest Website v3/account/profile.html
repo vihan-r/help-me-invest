@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your profile, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="../logos/hmi-mark.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '../';</script>
+  <script type="text/babel" src="../js/components.jsx"></script>
+
+  <script type="text/babel">
+    function Profile() {
+      const initial = (window.HMIAuth && window.HMIAuth.get()) || null;
+
+      // Not signed in — send them to sign-in.
+      React.useEffect(function () {
+        if (!initial) window.location.href = withBase('account/sign-in.html');
+      }, []);
+      if (!initial) return null;
+
+      const [form, setForm] = React.useState({
+        firstName: initial.firstName || '',
+        lastName: initial.lastName || '',
+        email: initial.email || '',
+        phone: initial.phone || ''
+      });
+      const [saved, setSaved] = React.useState(false);
+
+      const set = function (k) {
+        return function (e) {
+          const v = e.target.value;
+          setForm(function (f) { return Object.assign({}, f, { [k]: v }); });
+          setSaved(false);
+        };
+      };
+
+      const handleSubmit = function (e) {
+        e.preventDefault();
+        window.HMIAuth.set(form);
+        setSaved(true);
+      };
+
+      const logout = function () {
+        window.HMIAuth.clear();
+        window.location.href = withBase('index.html');
+      };
+
+      const initialLetter = (form.firstName || form.email || '?').trim().charAt(0).toUpperCase();
+
+      return (
+        <React.Fragment>
+          <Header active="" />
+
+          <main>
+            <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
+              <div className="profile-layout">
+
+                <div className="account-form" style={{ maxWidth: 560 }}>
+                  <Eyebrow>Your account</Eyebrow>
+                  <h1 className="d1" style={{ marginTop: 14 }}>Your <em>profile.</em></h1>
+                  <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
+                    Keep your details up to date. This is what we use when a partner
+                    you&rsquo;ve asked for gets in touch.
+                  </p>
+
+                  <form className="stack-md" style={{ marginTop: 40 }} onSubmit={handleSubmit} noValidate>
+                    <div className="field-row">
+                      <div className="field">
+                        <label htmlFor="firstName">First name</label>
+                        <input id="firstName" type="text" autoComplete="given-name" value={form.firstName} onChange={set('firstName')} />
+                      </div>
+                      <div className="field">
+                        <label htmlFor="lastName">Last name</label>
+                        <input id="lastName" type="text" autoComplete="family-name" value={form.lastName} onChange={set('lastName')} />
+                      </div>
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="email">Email</label>
+                      <input id="email" type="email" autoComplete="email" value={form.email} onChange={set('email')} />
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="phone">Mobile</label>
+                      <input id="phone" type="tel" autoComplete="tel" placeholder="04xx xxx xxx" value={form.phone} onChange={set('phone')} />
+                    </div>
+
+                    <div style={{ marginTop: 16, display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+                      <button type="submit" className="btn btn-primary">Save changes <Arrow /></button>
+                      {saved && <span className="profile-saved" role="status">Saved.</span>}
+                    </div>
+                  </form>
+
+                  <hr className="profile-rule" />
+
+                  <div className="profile-signout-row">
+                    <div>
+                      <p className="profile-signout-label">Signed in as</p>
+                      <p className="profile-signout-email">{form.email || form.firstName || 'Your account'}</p>
+                    </div>
+                    <button type="button" className="btn btn-secondary btn-sm" onClick={logout}>Log out <Arrow /></button>
+                  </div>
+                </div>
+
+                <aside className="account-context profile-aside">
+                  <div className="profile-avatar" aria-hidden="true">{initialLetter}</div>
+                  <Eyebrow>Your library</Eyebrow>
+                  <ul className="context-list">
+                    <li>The full education library is open to you while you&rsquo;re signed in.</li>
+                    <li>Pick up any topic, in any order, whenever you want it.</li>
+                  </ul>
+                  <p style={{ marginTop: 24 }}>
+                    <TertiaryLink to="education.html">Go to modules <Arrow /></TertiaryLink>
+                  </p>
+                </aside>
+
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Profile />);
+  </script>
+</body>
+</html>

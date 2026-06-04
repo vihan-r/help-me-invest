@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Talk to an expert, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="logos/hmi-mark.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '';</script>
+  <script type="text/babel" src="js/components.jsx"></script>
+
+  <script type="text/babel">
+    function FindAnExpert() {
+      const [submitted, setSubmitted] = React.useState(false);
+      const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true); };
+
+      return (
+        <React.Fragment>
+          <Header active="expert" />
+
+          <main>
+            {/* Header */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 56 }}>
+              <Eyebrow>Talk to an expert</Eyebrow>
+              <h1 className="d1 col-display" style={{ marginTop: 16 }}>
+                Get matched with the <em>right expert.</em>
+              </h1>
+              <p className="body-large col-body" style={{ marginTop: 32 }}>
+                Tell us, in a few short answers, what you&rsquo;re trying to do and when. One of our
+                team will read it, then call you back within 24 hours to introduce you to a partner
+                we vouch for, chosen on merit, paid transparently, held to the outcome.
+              </p>
+            </section>
+
+            {/* Video */}
+            <section className="shell" style={{ paddingTop: 0, paddingBottom: 56 }}>
+              <div className="col-body">
+                <div className="video-placeholder" role="button" tabIndex="0" aria-label="Play video">
+                  <div className="video-play" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l10-5.5z"></path></svg>
+                  </div>
+                  <span className="video-duration">02:00</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Form */}
+            <section className="shell" style={{ paddingBottom: 64 }}>
+              <div className="col-body">
+                {submitted ? (
+                  <div className="stack-md" style={{ padding: '32px 0' }}>
+                    <h2 className="h3">Thanks. We&rsquo;ll be in touch <em>within a day.</em></h2>
+                    <p className="body">
+                      One of our team will read what you&rsquo;ve written and call you back within 24
+                      hours. If something changes before then, send a second message, we&rsquo;ll
+                      read both.
+                    </p>
+                  </div>
+                ) : (
+                  <form className="stack-lg" onSubmit={handleSubmit} noValidate>
+                    <div className="field">
+                      <label htmlFor="first-name">What&rsquo;s your first name?</label>
+                      <input id="first-name" name="first-name" type="text" autoComplete="given-name" />
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="phone">What&rsquo;s the best number to reach you on?</label>
+                      <input id="phone" name="phone" type="tel" autoComplete="tel" />
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="email">And an email, in case we can&rsquo;t reach you by phone.</label>
+                      <input id="email" name="email" type="email" autoComplete="email" />
+                    </div>
+
+                    <div className="field">
+                      <label>What are you trying to do?</label>
+                      <div className="field-radio-group">
+                        <label className="field-radio">
+                          <input type="radio" name="intent" defaultChecked />
+                          <span>I&rsquo;m buying my first investment property.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="intent" />
+                          <span>I&rsquo;m buying my next investment property.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="intent" />
+                          <span>I&rsquo;m refinancing an existing loan.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="intent" />
+                          <span>I&rsquo;m reviewing my current portfolio.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="intent" />
+                          <span>Something else, I&rsquo;ll explain below.</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="field">
+                      <label>How soon do you need help?</label>
+                      <div className="field-radio-group">
+                        <label className="field-radio">
+                          <input type="radio" name="urgency" defaultChecked />
+                          <span>This week.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="urgency" />
+                          <span>This month.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="urgency" />
+                          <span>Sometime in the next quarter.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="urgency" />
+                          <span>I&rsquo;m just exploring, no rush.</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div>
+                      <button type="submit" className="btn btn-primary">Send my details <Arrow /></button>
+                      <p className="body-small text-grey" style={{ marginTop: 14 }}>
+                        We&rsquo;ll call you back within 24 hours. If you&rsquo;d rather email,{' '}
+                        <a className="inline-link" href="mailto:hello@helpmeinvest.com.au">hello@helpmeinvest.com.au</a>{' '}
+                        reaches the same person.
+                      </p>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </section>
+
+            {/* What happens next */}
+            <section className="bg-mint" style={{ padding: '80px 0' }}>
+              <div className="shell">
+                <h2 className="h2 col-display">What happens <em>after you send this.</em></h2>
+                <div className="grid-3" style={{ marginTop: 48 }}>
+                  <div>
+                    <h4 className="h4">1 &middot; We read it.</h4>
+                    <p className="body" style={{ marginTop: 12 }}>
+                      One of our team, not a script, not a triage bot, reads what
+                      you&rsquo;ve written and works out who&rsquo;s the right partner for it.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="h4">2 &middot; We call you back.</h4>
+                    <p className="body" style={{ marginTop: 12 }}>
+                      Within 24 hours. To confirm what you&rsquo;re after, suggest the partner we
+                      think fits, and check that you&rsquo;re comfortable proceeding.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="h4">3 &middot; You decide.</h4>
+                    <p className="body" style={{ marginTop: 12 }}>
+                      The introduction only happens if you want it. You see the partner&rsquo;s
+                      payment arrangement before you commit. Help is offered, never imposed.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Closing */}
+            <section className="shell" style={{ paddingTop: 32, paddingBottom: 160 }}></section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<FindAnExpert />);
+  </script>
+</body>
+</html>

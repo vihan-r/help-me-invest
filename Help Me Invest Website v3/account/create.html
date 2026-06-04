@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create your account, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="../logos/hmi-mark.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '../';</script>
+  <script type="text/babel" src="../js/components.jsx"></script>
+
+  <script type="text/babel">
+    function AccountCreate() {
+      // Prototype: capture name + email into the local session, then return
+      // to the site signed in.
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const firstName = (document.getElementById('first-name').value || '').trim();
+        const email = (document.getElementById('email').value || '').trim();
+        window.HMIAuth.set({ firstName: firstName, email: email });
+        window.location.href = withBase('index.html');
+      };
+      const continueGoogle = (e) => {
+        e.preventDefault();
+        window.HMIAuth.set({ firstName: '', email: '' });
+        window.location.href = withBase('index.html');
+      };
+
+      return (
+        <React.Fragment>
+          {/* Minimal top chrome, just the wordmark, no full site nav. */}
+          <header className="site-header">
+            <div className="account-shell" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <Wordmark size={20} />
+            </div>
+          </header>
+
+          <main>
+            <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
+              <div className="account-grid">
+
+                {/* Left: the form */}
+                <div className="account-form">
+                  <Eyebrow>Free account &middot; 30 seconds</Eyebrow>
+                  <h1 className="d1" style={{ marginTop: 14 }}>Create your <em>account.</em></h1>
+                  <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
+                    A free account so you can keep going through the library and, when you&rsquo;re
+                    ready, talk to the partners we vouch for. We&rsquo;ll never share your details.
+                    You can delete the account any time.
+                  </p>
+
+                  <form className="stack-md" style={{ marginTop: 40 }} onSubmit={handleSubmit} noValidate>
+                    <div className="field">
+                      <label htmlFor="first-name">What&rsquo;s your first name?</label>
+                      <input id="first-name" name="first-name" type="text" autoComplete="given-name" />
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="email">What email should we use?</label>
+                      <input id="email" name="email" type="email" autoComplete="email" />
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="password">Choose a password</label>
+                      <input id="password" name="password" type="password" autoComplete="new-password" />
+                      <p className="field-help">At least 8 characters. We&rsquo;ll never email it to you.</p>
+                    </div>
+
+                    <div className="field">
+                      <label>Where are you in your investing journey?</label>
+                      <div className="field-radio-group">
+                        <label className="field-radio">
+                          <input type="radio" name="stage" defaultChecked />
+                          <span>Just exploring, I want to understand how property investing works.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="stage" />
+                          <span>Saving for my first investment property.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="stage" />
+                          <span>Ready to buy my first investment property.</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="stage" />
+                          <span>I already own one or more investment properties.</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div style={{ marginTop: 32 }}>
+                      <button type="submit" className="btn btn-primary">Create my account <Arrow /></button>
+                      <p className="terms-line">
+                        By creating an account, you agree to our <a href="#">terms</a> and <a href="#">privacy notice</a>.
+                      </p>
+                    </div>
+                  </form>
+
+                  <div className="divider-or"><span>or</span></div>
+
+                  <a className="btn btn-secondary" href="#" onClick={continueGoogle} style={{ width: '100%', justifyContent: 'center' }}>
+                    Continue with Google
+                  </a>
+
+                  <p style={{ marginTop: 28, textAlign: 'center' }}>
+                    <a className="tertiary-link" href={withBase('account/sign-in.html')}>Already have an account? Sign in <Arrow /></a>
+                  </p>
+                </div>
+
+                {/* Right: context panel */}
+                <aside className="account-context">
+                  <Eyebrow>What the account does</Eyebrow>
+                  <ul className="context-list">
+                    <li>A place to keep what you&rsquo;re learning as the library grows.</li>
+                    <li>Connects you to partners when you&rsquo;re ready, never before.</li>
+                  </ul>
+                  <hr />
+                  <p className="context-foot">
+                    The account is free. It always will be. We make money when you choose to work
+                    with a partner, and we show you exactly how much, before you decide.
+                  </p>
+                </aside>
+
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<AccountCreate />);
+  </script>
+</body>
+</html>

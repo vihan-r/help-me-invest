@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Get in touch, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="logos/hmi-mark.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '';</script>
+  <script type="text/babel" src="js/components.jsx"></script>
+
+  <script type="text/babel">
+    function Contact() {
+      // Form is non-functional for MVP. Prevents submission so the
+      // user lands on a working confirmation acknowledging that.
+      const [submitted, setSubmitted] = React.useState(false);
+      const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true); };
+
+      return (
+        <React.Fragment>
+          <Header active="contact" />
+
+          <main>
+            {/* Header */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 64 }}>
+              <h1 className="d1 col-display">Get <em>in touch.</em></h1>
+              <p className="body-large col-body" style={{ marginTop: 32 }}>
+                One of us will read your message and reply within a day. If your question is urgent or
+                specific to a property decision you&rsquo;re making this week, say so, we&rsquo;ll
+                route it to the right partner.
+              </p>
+            </section>
+
+            {/* The form */}
+            <section className="shell" style={{ paddingBottom: 96 }}>
+              <div className="col-body">
+                {submitted ? (
+                  <div className="stack-md" style={{ padding: '32px 0' }}>
+                    <h2 className="h3">Your message is <em>on its way.</em></h2>
+                    <p className="body">
+                      One of us will read it and reply within a day. If you&rsquo;d like to add anything
+                      else, send a second message, we&rsquo;ll read both.
+                    </p>
+                  </div>
+                ) : (
+                  <form className="stack-lg" onSubmit={handleSubmit} noValidate>
+                    <div className="field">
+                      <label htmlFor="first-name">What&rsquo;s your first name?</label>
+                      <input id="first-name" name="first-name" type="text" autoComplete="given-name" />
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="email">What email should we use?</label>
+                      <input id="email" name="email" type="email" autoComplete="email" />
+                    </div>
+
+                    <div className="field">
+                      <label>What&rsquo;s this about?</label>
+                      <div className="field-radio-group">
+                        <label className="field-radio">
+                          <input type="radio" name="topic" defaultChecked />
+                          <span>I&rsquo;m new, where do I start?</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="topic" />
+                          <span>A question about a specific property or decision</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="topic" />
+                          <span>Partner enquiry</span>
+                        </label>
+                        <label className="field-radio">
+                          <input type="radio" name="topic" />
+                          <span>Press / other</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="field">
+                      <label htmlFor="message">What&rsquo;s on your mind?</label>
+                      <textarea id="message" name="message" rows="6"></textarea>
+                    </div>
+
+                    <div>
+                      <button type="submit" className="btn btn-primary">Send <Arrow /></button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </section>
+
+            {/* Alternative routes */}
+            <section className="shell section-md">
+              <div className="col-body stack-md">
+                <div>
+                  <h3 className="h4">By email</h3>
+                  <p className="body" style={{ marginTop: 8 }}>
+                    <a className="inline-link" href="mailto:hello@helpmeinvest.com.au">hello@helpmeinvest.com.au</a>.
+                    Same person on the other end. Same reply time.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="h4">By post</h3>
+                  <p className="body" style={{ marginTop: 8 }}>
+                    Help Me Invest, Level 4, 100 Collins Street, Melbourne VIC 3000.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Closing line */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 160 }}>
+              <p>
+                <TertiaryLink to="find-an-expert.html">Talk to an expert <Arrow /></TertiaryLink>
+              </p>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Contact />);
+  </script>
+</body>
+</html>

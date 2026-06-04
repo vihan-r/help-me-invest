@@ -1,0 +1,2368 @@
+/* =========================================================
+   Help Me Invest — global brand styles
+   The five-colour palette, type scale, spacing, and radii.
+   Tokens are the design system; never inline hex values.
+   ========================================================= */
+
+/* —— Talk-to-an-expert CTA panel (education + future surfaces) —— */
+.expert-cta {
+  display: block;
+  padding: 24px 0 0;
+}
+.expert-cta .section-eyebrow { margin-bottom: 20px; }
+.expert-cta-action { margin-top: 32px; }
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&display=swap');
+
+:root {
+  /* —— Colour roles (six colours, one job each) —— */
+  --paper:        #F6F7F4;  /* ground */
+  --lighter-mint: #D4E8B5;  /* gentle tonal surface, secondary buttons */
+  --mint:         #A8D5B4;  /* soft sections, phrase highlight */
+  --emerald:      #0A4B34;  /* wordmark, headlines, primary UI */
+  --charcoal:     #1A2B22;  /* body ink */
+  --grey:         #8B8881;  /* structural neutral */
+
+  /* —— Spacing scale (multiples of 8px) —— */
+  --space-2xs: 4px;
+  --space-xs:  8px;
+  --space-sm:  16px;
+  --space-md:  24px;
+  --space-lg:  40px;
+  --space-xl:  64px;
+  --space-2xl: 96px;
+
+  /* —— Corner radii —— */
+  --radius-sm:  6px;   /* small UI: tags, badges, phrase highlight */
+  --radius-md:  10px;  /* buttons, inputs */
+  --radius-lg:  14px;  /* cards */
+  --radius-xl:  20px;  /* large containers, photography */
+
+  /* —— Column widths —— */
+  --col-body:     720px;
+  --col-reading:  680px;
+  --col-display: 1000px;
+  --col-shell:   1200px;
+}
+
+/* —— Motion: subtle reveal-on-scroll + hover lifts ——————————————————
+   Sections fade in and rise 14px when they enter the viewport. Buttons
+   and interactive cards lift 1px on hover. Honours reduced-motion. */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Button + arrow hover lift — kept. Non-button hover animations
+   (cards, thumbnails, chain blocks, radios, link arrows) have been
+   removed below so the only hover signal across the site is a
+   subtle button lift. */
+.btn {
+  transition: background-color 160ms ease,
+              color 160ms ease,
+              transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 20px -10px rgba(10, 75, 52, 0.5);
+}
+
+/* The arrow glyph nudges right on hover ONLY when inside a button. */
+.btn .anim-arrow {
+  display: inline-block;
+  transform: translateY(-1px);
+  transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn:hover .anim-arrow {
+  transform: translate(3px, -1px);
+}
+/* All other arrows render statically — no nudge. */
+.tertiary-link .anim-arrow,
+.inline-link .anim-arrow,
+.article-nav a .anim-arrow,
+.resource .anim-arrow {
+  display: inline-block;
+  transform: translateY(-1px);
+  transition: none;
+}
+
+/* Override prior hover rules — non-button hover effects removed. */
+.chain-node:not(.is-terminal) .chain-node-box:hover { background: var(--mint); }
+.video-placeholder:hover { background: var(--mint); }
+.video-placeholder:hover .video-play { transform: none; }
+.hero-video:hover { background: var(--lighter-mint); }
+.hero-video:hover .video-play { transform: none; }
+.investor-profile:hover { background: transparent; }
+.investor-profile:hover .editorial-portrait { background: var(--lighter-mint); }
+.investor-profile:hover .investor-cta { color: var(--charcoal); }
+.field-radio:hover { background: transparent; border-color: rgba(139, 136, 129, 0.4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .btn,
+  .anim-arrow,
+  .video-placeholder .video-play {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+button { font: inherit; cursor: pointer; }
+
+/* Investor stories — editorial lede block. A Lighter Mint panel sits
+   behind only the heading + paragraph (occupying the left two-thirds
+   of the section), with a giant italic Newsreader em-dash ornament
+   bleeding off the right edge. Triptych flows beneath on Soft Paper. */
+.investor-stories-lede {
+  position: relative;
+  background: var(--lighter-mint);
+  border-radius: 24px;
+  padding: 56px 64px 64px;
+  max-width: 880px;
+  overflow: hidden;
+}
+@media (max-width: 880px) {
+  .investor-stories-lede { padding: 48px 32px 56px; }
+}
+.investor-stories-ornament {
+  position: absolute;
+  right: -32px;
+  bottom: -72px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 280px;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--emerald);
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 880px) {
+  .investor-stories-ornament { font-size: 200px; right: -16px; bottom: -56px; }
+}
+
+/* —— Motion system —————————————————————————————————————————————
+   Quiet, considered, editorial. easeOutQuart on every transition.
+   Honours prefers-reduced-motion. Transforms + opacity only. */
+
+html { scroll-behavior: smooth; }
+
+:root {
+  --ease-out-quart: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Default reveal state — opacity + 16px translateY. Sections, eyebrows,
+   headlines, paragraphs, cards, diagram layers all share this. */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 1400ms var(--ease-out-quart),
+    transform 1400ms var(--ease-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Section-level reveal — fades the entire section block up at once.
+   Used by the existing main > section scanner; kept for legacy. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 1400ms var(--ease-out-quart),
+    transform 1400ms var(--ease-out-quart);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero load — hero card fades up on initial paint, then the
+   internal text block staggers in. */
+@keyframes hero-card-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hero-text-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-card {
+  animation: none;
+}
+.hero-card-img {
+  opacity: 0;
+  animation: hero-img-in 1000ms var(--ease-out-quart) 350ms both;
+}
+@keyframes hero-img-in {
+  from { opacity: 0; transform: scale(1.03); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-card-content > * {
+  opacity: 0;
+  animation: hero-text-in 600ms var(--ease-out-quart) both;
+  animation-delay: calc(120ms + var(--stagger, 0) * 70ms);
+}
+.hero-card-content > *:nth-child(1) { --stagger: 0; }
+.hero-card-content > *:nth-child(2) { --stagger: 1; }
+.hero-card-content > *:nth-child(3) { --stagger: 2; }
+.hero-card-content > *:nth-child(4) { --stagger: 3; }
+.hero-card-content > *:nth-child(5) { --stagger: 4; }
+
+/* Chain diagram reveal — layers stagger in slower than default for
+   structural emphasis. nth-child sets the per-layer delay. */
+[data-reveal-chain] {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition:
+    opacity 1100ms var(--ease-out-quart),
+    transform 1100ms var(--ease-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal-chain].is-in {
+  opacity: 1;
+  transform: none;
+}
+.chain-v2-stack > [data-reveal-chain]:nth-child(1)  { --reveal-delay: 0ms; }
+.chain-v2-stack > [data-reveal-chain]:nth-child(3)  { --reveal-delay: 100ms; }
+.chain-v2-stack > [data-reveal-chain]:nth-child(5)  { --reveal-delay: 200ms; }
+.chain-v2-stack > [data-reveal-chain]:nth-child(7)  { --reveal-delay: 300ms; }
+.chain-v2-stack > [data-reveal-chain]:nth-child(9)  { --reveal-delay: 400ms; }
+.chain-v2-stack > [data-reveal-chain]:nth-child(11) { --reveal-delay: 500ms; }
+.chain-v2-stack > [data-reveal-chain]:nth-child(13) { --reveal-delay: 600ms; }
+
+/* The chain diagram is left; the platform diagram is right. The
+   platform terminal nodes get a base delay so the whole left-side
+   chain reveals before the right-side platform starts. */
+.grid-2 > .chain-v2:last-child .chain-v2-stack > [data-reveal-chain]:nth-child(1)  { --reveal-delay: 400ms; }
+.grid-2 > .chain-v2:last-child .chain-v2-stack > [data-reveal-chain]:nth-child(3)  { --reveal-delay: 500ms; }
+.grid-2 > .chain-v2:last-child .platform-connector {
+  opacity: 0;
+  animation: platform-line-in 400ms var(--ease-out-quart) 450ms forwards;
+}
+@keyframes platform-line-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grid-2 > .chain-v2:last-child .platform-connector {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Both diagrams reveal as ONE unit, not piece by piece — each figure
+   fades up as a whole via [data-reveal] on the <figure>, while its inner
+   nodes and connectors stay static and ride the figure's own animation.
+   The platform (right) figure trails the chain (left) slightly to keep
+   the left→right reading order. */
+.grid-2 > .chain-v2 .chain-v2-stack > [data-reveal-chain] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  --reveal-delay: 0ms;
+}
+.grid-2 > .chain-v2:last-child {
+  --reveal-delay: 220ms;
+}
+.grid-2 > .chain-v2:last-child .platform-connector {
+  animation: none;
+  opacity: 1;
+}
+
+/* Image hover scale — removed. Containers still clip overflow so any
+   future hover treatment can be added without layout shift. */
+.investor-profile .editorial-portrait,
+.partner-card .placeholder,
+.topic-thumb {
+  overflow: hidden;
+}
+
+/* Site header scrolled state — Soft Paper fill at 92% opacity once
+   the user has scrolled past 100px. */
+.site-header {
+  transition: background-color 300ms var(--ease-out-quart),
+              border-color 300ms var(--ease-out-quart),
+              box-shadow 300ms var(--ease-out-quart);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-scrolled {
+  background: rgba(246, 247, 244, 0.92);
+  border-bottom-color: rgba(139, 136, 129, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Card stagger — children of `.whatwedo-grid` and the investor
+   triptych fade up with a per-card delay set by nth-child. */
+/* Card stagger — children of grid containers across the site fade up
+   with a per-card delay set by nth-child. Applies to home page
+   whatwedo + investor triptych, partners + education grids, the
+   how-it-works phase + comparison + fee callouts, payment flow
+   steps, and video module rows. */
+.whatwedo-grid > .whatwedo-card,
+.investor-triptych > .investor-profile,
+.grid-2 > *,
+.grid-3 > *,
+.payment-flow > .payment-step,
+.compare-grid > .compare-col,
+.locked-modules > .video-module,
+.topic,
+.phase {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 1400ms var(--ease-out-quart),
+    transform 1400ms var(--ease-out-quart);
+  transition-delay: var(--card-delay, 0ms);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+/* Per-child stagger delays (nth-child cascades on every grid). */
+.whatwedo-grid > .whatwedo-card:nth-child(1),
+.investor-triptych > .investor-profile:nth-child(1),
+.grid-2 > *:nth-child(1),
+.grid-3 > *:nth-child(1),
+.payment-flow > *:nth-child(1),
+.compare-grid > *:nth-child(1),
+.locked-modules > *:nth-child(1) { --card-delay: 0ms; }
+.whatwedo-grid > .whatwedo-card:nth-child(2),
+.investor-triptych > .investor-profile:nth-child(2),
+.grid-2 > *:nth-child(2),
+.grid-3 > *:nth-child(2),
+.payment-flow > *:nth-child(2),
+.compare-grid > *:nth-child(2),
+.locked-modules > *:nth-child(2) { --card-delay: 150ms; }
+.whatwedo-grid > .whatwedo-card:nth-child(3),
+.investor-triptych > .investor-profile:nth-child(3),
+.grid-2 > *:nth-child(3),
+.grid-3 > *:nth-child(3),
+.payment-flow > *:nth-child(3),
+.compare-grid > *:nth-child(3),
+.locked-modules > *:nth-child(3) { --card-delay: 300ms; }
+.whatwedo-grid > .whatwedo-card:nth-child(4),
+.grid-2 > *:nth-child(4),
+.grid-3 > *:nth-child(4),
+.locked-modules > *:nth-child(4) { --card-delay: 450ms; }
+.locked-modules > *:nth-child(5) { --card-delay: 600ms; }
+.locked-modules > *:nth-child(6) { --card-delay: 750ms; }
+
+/* When the parent section reveals, the cards inside reveal too. */
+.reveal.is-visible .whatwedo-grid > .whatwedo-card,
+.reveal.is-visible .investor-triptych > .investor-profile,
+.reveal.is-visible .grid-2 > *,
+.reveal.is-visible .grid-3 > *,
+.reveal.is-visible .payment-flow > *,
+.reveal.is-visible .compare-grid > *,
+.reveal.is-visible .locked-modules > *,
+.reveal.is-visible .topic,
+.reveal.is-visible .phase {
+  opacity: 1;
+  transform: none;
+}
+
+/* Linked-card hover — slight scale on cards that are themselves
+   anchors (investor profile, partner card, topic thumbnail). Uses
+   the same easeOutQuart curve as the reveal motion so it feels of
+   a piece with the rest of the system. Pairs with the entrance
+   animation by composing transforms via a CSS variable. */
+a.investor-profile,
+.investor-triptych > a.investor-profile,
+a.partner-card,
+a.topic-thumb,
+.whatwedo-grid > a.whatwedo-card--filled,
+.whatwedo-grid > .whatwedo-card--filled {
+  transition:
+    opacity 1400ms var(--ease-out-quart),
+    transform 120ms cubic-bezier(0.2, 0, 0.2, 1),
+    background-color 120ms cubic-bezier(0.2, 0, 0.2, 1),
+    box-shadow 120ms cubic-bezier(0.2, 0, 0.2, 1);
+  transition-delay: 0ms, 0ms, 0ms, 0ms;
+}
+.whatwedo-grid > a.whatwedo-card--filled {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+.whatwedo-grid > a.whatwedo-card--filled .whatwedo-card-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a.investor-profile:hover,
+.investor-triptych > a.investor-profile:hover,
+.reveal.is-visible .investor-triptych > a.investor-profile:hover,
+a.topic-thumb:hover,
+.whatwedo-grid > a.whatwedo-card--filled:hover,
+.reveal.is-visible .whatwedo-grid > a.whatwedo-card--filled:hover {
+  transform: translate3d(0, -4px, 0) scale(1.035);
+  box-shadow: 0 16px 40px -20px rgba(10, 75, 52, 0.35);
+}
+
+/* Partner card hover — image-only zoom, no card lift. The card itself
+   is still a link; the hover effect is scoped to the placeholder. */
+a.partner-card .placeholder {
+  transition: transform 350ms cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
+}
+a.partner-card .placeholder:hover {
+  transform: scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal],
+  [data-reveal-chain],
+  .reveal,
+  .hero-card,
+  .hero-card-content > *,
+  .whatwedo-grid > .whatwedo-card,
+  .investor-triptych > .investor-profile {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* —— Motion system END ——————————————————————————————————————— */
+
+/* Partner card (Who we vouch for) — clickable, link to the partner bio. */
+.partner-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--charcoal);
+}
+.partner-card .partner-card-cta {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--charcoal);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Paper-grain texture overlay — felt, not seen. Applied to every
+   page via the body pseudo-element. Subtle enough that it reads as
+   material weight rather than visible noise. */
+body::before {
+  content: none;
+}
+
+/* —— Home page: contained photographic hero card ————————————————
+   The header sits above this section on the page background. The
+   hero is a rounded card filling roughly 96% of the viewport width,
+   80vh tall on desktop. Text sits directly on the image — colours
+   flip to Soft Paper to read against the photo. */
+.hero-card-wrap {
+  padding: 32px 24px 0;
+}
+@media (max-width: 880px) { .hero-card-wrap { padding: 16px 16px 0; } }
+
+.hero-card {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  min-height: 560px;
+  border-radius: 20px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--emerald);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 880px) {
+  .hero-card {
+    height: auto;
+    min-height: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 60vh;
+  }
+}
+
+.hero-card-img {
+  grid-column: 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  display: block;
+  inset: auto;
+}
+@media (max-width: 880px) {
+  .hero-card-img { grid-column: 1; grid-row: 2; }
+}
+
+/* Gradient was applied via ::before across the whole card.
+   Removed — the dark-green column now provides the text contrast. */
+.hero-card::before { display: none; }
+
+.hero-card-content {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 56px;
+  max-width: none;
+  background: var(--emerald);
+}
+@media (max-width: 880px) {
+  .hero-card-content { padding: 48px 32px; }
+}
+
+.hero-card-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--paper);
+  letter-spacing: 0.02em;
+  margin: 0 0 32px;
+}
+.hero-card-eyebrow .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.hero-card-headline {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(64px, 8vw, 112px);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--paper);
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* Phrase highlight variant: Mint background, Emerald text — sits
+   on top of the image inside the hero card. */
+.hero-card-headline .phrase-highlight--mint {
+  background: var(--mint);
+  color: var(--emerald);
+  border-radius: 6px;
+  padding: 0.04em 0.32em 0.16em;
+  -webkit-box-decoration-break: clone;
+          box-decoration-break: clone;
+}
+
+.hero-card-lede {
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(246, 247, 244, 0.9);
+  margin: 32px 0 0;
+  max-width: 560px;
+}
+
+.hero-card-ctas {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.hero-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 160ms ease, color 160ms ease, transform 200ms cubic-bezier(0.2,0.7,0.2,1);
+}
+.hero-card-cta--primary {
+  background: var(--paper);
+  color: var(--emerald);
+}
+.hero-card-cta--primary:hover {
+  background: var(--lighter-mint);
+  transform: translateY(-1px);
+}
+.hero-card-cta--ghost {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(246, 247, 244, 0.5);
+}
+.hero-card-cta--ghost:hover {
+  border-color: var(--paper);
+  background: rgba(246, 247, 244, 0.08);
+  transform: translateY(-1px);
+}
+.hero-card-cta .anim-arrow {
+  display: inline-block;
+  transform: translateY(-1px);
+  transition: transform 200ms cubic-bezier(0.2,0.7,0.2,1);
+}
+.hero-card-cta:hover .anim-arrow { transform: translate(3px, -1px); }
+
+/* Legacy full-bleed banner block (kept defensive). */
+.hero-banner {
+  display: block;
+  margin: 24px 0 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+.hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Section eyebrow with leading rule — used at the top of every major
+   section (except the hero). Sans, uppercase, Warm Mid-Grey. */
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 40px;
+}
+.section-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--grey);
+}
+
+/* "The problem" stat blocks */
+.stat-block {
+  border-left: 1px solid var(--grey);
+  padding-left: 32px;
+}
+.stat-block + .stat-block { margin-top: 48px; }
+.stat-number {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(48px, 5vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--emerald);
+  margin: 0;
+}
+.stat-label {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--charcoal);
+  margin: 16px 0 0;
+  max-width: 320px;
+}
+.stat-source {
+  font-style: italic;
+  font-size: 11px;
+  color: var(--grey);
+  margin: 12px 0 0;
+}
+
+/* "The problem" 2-column layout */
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+@media (max-width: 880px) {
+  .problem-grid { grid-template-columns: 1fr; gap: 56px; }
+}
+
+/* "What we do" Lighter Mint container, inset from the page edges. */
+.whatwedo-container {
+  background: var(--lighter-mint);
+  border-radius: 24px;
+  padding: 96px 64px;
+}
+@media (max-width: 880px) {
+  .whatwedo-container { padding: 64px 28px; }
+}
+.whatwedo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 56px;
+  margin-top: 80px;
+}
+@media (max-width: 880px) {
+  .whatwedo-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* Carded variant — each card gets a Lighter Mint fill; no shared
+   container background behind them. Used on the home page. */
+.whatwedo-grid--carded { gap: 24px; }
+@media (max-width: 880px) { .whatwedo-grid--carded { gap: 20px; } }
+
+.whatwedo-card.whatwedo-card--filled {
+  background: var(--lighter-mint);
+  border-radius: 24px;
+  padding: 36px 32px;
+  border-top: none;
+}
+.whatwedo-card.whatwedo-card--filled .whatwedo-card-number { display: none; }
+.whatwedo-card {
+  position: relative;
+  padding-top: 32px;
+  border-top: 1px solid rgba(10, 75, 52, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+.whatwedo-card-number {
+  position: absolute;
+  top: 32px;
+  right: 0;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--grey);
+}
+.whatwedo-card-headline {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 36;
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--emerald);
+  margin: 0;
+  text-wrap: balance;
+  max-width: 90%;
+}
+/* Card-level subheadings (whatwedo-style) intentionally do NOT use the
+   italic accent — kept plain to read as straightforward statements. */
+.whatwedo-card-headline em {
+  font-style: normal;
+  font-weight: 400;
+}
+.whatwedo-card-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--charcoal);
+  margin: 20px 0 0;
+}
+.whatwedo-card-link {
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+/* —— Type scale (sentence case, left-aligned by default, hierarchy through size) —— */
+.d1 {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(56px, 7.5vw, 104px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--emerald);
+  margin: 0;
+  text-wrap: balance;
+}
+.d1.has-highlight { line-height: 0.98; }
+
+.h1 {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--emerald);
+  margin: 0;
+  text-wrap: balance;
+}
+.h1.has-highlight { line-height: 1.08; }
+
+.h2 {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(34px, 3.6vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  color: var(--emerald);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.h3 {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 36;
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--emerald);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.h4 {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 36;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--emerald);
+  margin: 0;
+}
+
+/* Italics inside headlines previously carried strategic emphasis
+   (italic + weight 300). Rolled back site-wide — emphasis now renders
+   plain via the same heading style. <em> tags remain in the markup so
+   the accent can be re-enabled later by restoring this rule. */
+.d1 em, .h1 em, .h2 em, .h3 em, .h4 em, .pullquote em,
+.investor-decision em, .display-h2 em, .editor-title em {
+  font-style: normal;
+  font-weight: inherit;
+}
+
+.body-large {
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 1.5;
+  color: var(--charcoal);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.body {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--charcoal);
+  margin: 0;
+}
+
+.body-small {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--charcoal);
+  margin: 0;
+}
+
+.fine-print {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--charcoal);
+  margin: 0;
+}
+
+/* Reverse-out: body on Emerald grounds is Soft Paper */
+.on-emerald, .on-emerald .body, .on-emerald .body-large, .on-emerald .body-small {
+  color: var(--paper);
+}
+.on-emerald .h1, .on-emerald .h2, .on-emerald .h3, .on-emerald .h4, .on-emerald .d1 {
+  color: var(--paper);
+}
+
+/* —— Colour utilities (named, never raw hex in markup) —— */
+.text-emerald  { color: var(--emerald); }
+.text-charcoal { color: var(--charcoal); }
+.text-grey     { color: var(--grey); }
+.text-paper    { color: var(--paper); }
+.bg-paper        { background: var(--paper); }
+/* Section background utility. Uses lighter-mint for all full-bleed
+   coloured sections — the deeper mint (--mint) is reserved for component
+   fills inside the chain/platform diagrams and the payment-flow blocks. */
+.bg-mint         { background: var(--lighter-mint); }
+.bg-lighter-mint { background: var(--lighter-mint); }
+.bg-emerald      { background: var(--emerald); }
+
+/* —— Layout —— */
+.shell {
+  max-width: var(--col-shell);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+@media (max-width: 640px) {
+  .shell { padding: 0 20px; }
+}
+
+.col-body    { max-width: var(--col-body); }
+.col-reading { max-width: var(--col-reading); }
+.col-display { max-width: var(--col-display); }
+
+.stack-xs  > * + * { margin-top: var(--space-xs); }
+.stack-sm  > * + * { margin-top: var(--space-sm); }
+.stack-md  > * + * { margin-top: var(--space-md); }
+.stack-lg  > * + * { margin-top: var(--space-lg); }
+.stack-xl  > * + * { margin-top: var(--space-xl); }
+.stack-2xl > * + * { margin-top: var(--space-2xl); }
+
+/* Vertical section spacing (padding-block only, so it never overrides the
+   horizontal gutter that .shell provides when the two classes are combined) */
+.section { padding-block: var(--space-2xl); }
+.section-md { padding-block: var(--space-xl); }
+.section-tight { padding-block: var(--space-lg); }
+
+/* —— Brand mark (the ‘h’ lockup that pairs with the wordmark) —— */
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand-mark {
+  display: inline-block;
+  height: 1.5em;
+  width: 1.5em;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+/* —— Phrase highlight (Lighter Mint background, Emerald text). Padding is
+   tuned to clear descenders/ascenders without ballooning the box. Pair with
+   .has-highlight on the parent headline to bump line-height clear of the
+   line above. —— */
+.phrase-highlight {
+  background: var(--lighter-mint);
+  color: var(--emerald);
+  border-radius: var(--radius-sm);
+  padding: 0.04em 0.32em 0.16em 0.32em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  margin: 0 -0.02em;
+}
+
+/* —— Buttons (primary Emerald, secondary Lighter Mint, tertiary text link) —— */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  padding: 14px 26px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.btn-sm {
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: var(--emerald);
+  color: var(--paper);
+}
+.btn-primary:hover {
+  background: #073923; /* implementation tune within tolerance */
+}
+.btn-secondary {
+  background: var(--lighter-mint);
+  color: var(--emerald);
+}
+.btn-secondary:hover {
+  background: var(--mint);
+}
+
+/* Three-pillar layout — keeps the link at the bottom of each column even
+   when the body copy lengths differ. */
+.pillars .pillar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.pillars .pillar-cta {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* —— Inline link inside body copy: Warm Charcoal with 1px underline at 3px offset —— */
+.inline-link {
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-color: var(--charcoal);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 120ms ease, text-decoration-color 120ms ease, text-decoration-thickness 120ms ease;
+}
+.inline-link:hover {
+  color: var(--emerald);
+  text-decoration-color: var(--emerald);
+  text-decoration-thickness: 2px;
+}
+
+/* Tertiary link used as CTA inline (with arrow) */
+.tertiary-link {
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color 120ms ease;
+}
+.tertiary-link:hover { color: var(--emerald); }
+
+/* Eyebrow (small structural metadata) */
+.eyebrow {
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--grey);
+  margin: 0;
+}
+
+/* —— Horizontal rule —— */
+hr.rule {
+  border: 0;
+  border-top: 1px solid var(--grey);
+  opacity: 0.45;
+  margin: 0;
+}
+
+/* —— Header —— */
+.site-header {
+  padding: 32px 0 24px;
+}
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.site-header-right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.site-nav a {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--charcoal);
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+}
+.site-nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.site-nav a.active {
+  color: var(--emerald);
+}
+
+@media (max-width: 1024px) {
+  .site-header-right { gap: 16px; }
+  .site-nav { gap: 22px; }
+}
+@media (max-width: 880px) {
+  .site-header-right { gap: 14px; }
+  .site-nav { gap: 18px; }
+}
+@media (max-width: 720px) {
+  .site-nav { display: none; }
+}
+
+/* —— Footer —— */
+.site-footer {
+  margin-top: var(--space-2xl);
+  padding: 56px 0 40px;
+}
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 56px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(139, 136, 129, 0.45);
+}
+.site-footer-col h5 {
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin: 0 0 16px;
+}
+.site-footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-footer-col li + li { margin-top: 10px; }
+.site-footer-col a {
+  font-size: 15px;
+  color: var(--charcoal);
+  text-decoration: none;
+}
+.site-footer-col a:hover { color: var(--emerald); text-decoration: underline; text-underline-offset: 3px; }
+.site-footer-meta {
+  margin-top: 48px;
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.6;
+}
+@media (max-width: 720px) {
+  .site-footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* —— Placeholder image block (for editorial portraits we do not invent) —— */
+.placeholder {
+  position: relative;
+  border-radius: var(--radius-xl);
+  background: var(--mint);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 18px;
+  overflow: hidden;
+}
+.placeholder.emerald { background: var(--emerald); }
+.placeholder-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey);
+  background: rgba(246, 247, 244, 0.85);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.01em;
+}
+.placeholder.emerald .placeholder-label { background: rgba(246, 247, 244, 0.92); }
+.placeholder.ratio-1x1  { aspect-ratio: 1 / 1; }
+.placeholder.ratio-4x5  { aspect-ratio: 4 / 5; }
+.placeholder.ratio-5x6  {
+  aspect-ratio: 5 / 6;
+  overflow: hidden;
+  transition: transform 350ms cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
+  cursor: pointer;
+}
+.placeholder.ratio-5x6:hover {
+  transform: scale(1.04);
+}
+.placeholder.ratio-16x9 { aspect-ratio: 16 / 9; }
+.placeholder.ratio-3x2  { aspect-ratio: 3 / 2; }
+
+/* —— Form controls —— */
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--charcoal);
+}
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field input[type="number"],
+.field input[type="password"],
+.field select,
+.field textarea {
+  font: inherit;
+  font-size: 16px;
+  color: var(--charcoal);
+  background: var(--paper);
+  border: 1px solid rgba(139, 136, 129, 0.55);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  width: 100%;
+  transition: border-color 120ms ease;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--emerald);
+}
+.field textarea { resize: vertical; min-height: 140px; line-height: 1.5; }
+.field-radio-group { display: flex; flex-direction: column; gap: 12px; }
+.field-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(139, 136, 129, 0.4);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.field-radio:hover { background: var(--lighter-mint); border-color: var(--lighter-mint); }
+.field-radio input { margin-top: 4px; accent-color: var(--emerald); }
+.field-radio span { font-size: 16px; color: var(--charcoal); }
+
+/* —— Two-up grid for partner standards (2x2 on desktop, 1-col mobile) —— */
+.standards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px 72px;
+  max-width: 980px;
+}
+.standards-grid h3 { margin: 0; }
+@media (max-width: 720px) {
+  .standards-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* —— Payment flow diagram —————————————————————————————————————
+   Three editorial cards in a horizontal flow, with chevron-style
+   arrows between them. Stacks vertically on mobile. */
+.payment-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  max-width: 1080px;
+}
+@media (max-width: 880px) {
+  .payment-flow {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.payment-step {
+  background: var(--lighter-mint);
+  border-radius: 24px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.payment-step-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(10, 75, 52, 0.2);
+}
+.payment-step-numeral {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: 56px;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  color: var(--emerald);
+  margin: 0;
+}
+.payment-step-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--emerald);
+  font-weight: 500;
+  margin: 0;
+  text-align: right;
+}
+.payment-step-figure {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--emerald);
+  margin: 24px 0 0;
+}
+.payment-step-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 36;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--emerald);
+  margin: 16px 0 0;
+}
+.payment-step-detail {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--charcoal);
+  margin: 16px 0 0;
+}
+
+/* Chevron arrow between cards. Horizontal on desktop; vertical on mobile. */
+.payment-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  color: var(--emerald);
+  position: relative;
+}
+.payment-arrow::before {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: var(--emerald);
+}
+.payment-arrow::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--emerald);
+}
+@media (max-width: 880px) {
+  .payment-arrow {
+    padding: 16px 0;
+    justify-content: center;
+  }
+  .payment-arrow::before {
+    width: 1px;
+    height: 24px;
+  }
+  .payment-arrow::after {
+    right: auto;
+    top: auto;
+    bottom: 14px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid var(--emerald);
+    border-bottom: 0;
+  }
+}
+
+/* —— Tables (transparency) —— */
+.fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.fee-table th, .fee-table td {
+  padding: 16px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(139, 136, 129, 0.4);
+}
+.fee-table th {
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--grey);
+  border-bottom: 1px solid var(--grey);
+}
+.fee-table td.num,
+.fee-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.fee-table tr:last-child td { border-bottom: none; }
+.fee-table .source-row td {
+  padding-top: 16px;
+  border-bottom: none;
+  font-size: 13px;
+  color: var(--grey);
+}
+
+/* —— Cards —— */
+.card {
+  background: var(--lighter-mint);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+.card-paper {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(139, 136, 129, 0.35);
+  padding: 28px;
+}
+
+/* —— Pull quote —— */
+.pullquote {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 72;
+  font-size: clamp(28px, 2.8vw, 42px);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--emerald);
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* —— Chain diagram (visual / static — no dropdowns) ——————————————————
+   Vertical stack of Mint blocks connected by thin Warm Mid-Grey lines.
+   Clip markers branch off to the right of layers that take a clip.
+   The Platform alternative is the parallel form: 2 boxes, 1 direct line. */
+.chain-v2 {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.chain-v2 .chain-title {
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--grey);
+  margin: 0 0 18px;
+}
+.chain-v2-stack {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.chain-node {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+.chain-node-box {
+  flex: 1;
+  background: var(--lighter-mint);
+  color: var(--emerald);
+  border-radius: var(--radius-md);
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 60px;
+  transition: background-color 180ms ease;
+}
+.chain-node:not(.is-terminal) .chain-node-box:hover {
+  background: var(--lighter-mint);
+}
+.chain-node-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.chain-node-toggle {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(10, 75, 52, 0.08);
+  color: var(--emerald);
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+.chain-node-toggle:hover { background: rgba(10, 75, 52, 0.16); }
+.chain-node-toggle:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 2px;
+}
+.chain-node-more {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--charcoal);
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(10, 75, 52, 0.18);
+}
+.chain-node.is-terminal .chain-node-box {
+  padding: 20px 22px;
+  min-height: 68px;
+}
+/* Terminal nodes in both diagrams ("The property" / endpoints) — emerald
+   fill with paper text to read as the resolved start/end points. */
+.chain-node.is-terminal .chain-node-box {
+  background: var(--emerald);
+}
+.chain-node.is-terminal .chain-node-label,
+.chain-node.is-terminal .chain-node-desc {
+  color: var(--paper);
+}
+.chain-node-label {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+.chain-node-desc {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--charcoal);
+  margin: 6px 0 0;
+}
+
+/* Clip marker branches off to the right */
+.chain-node-clip {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 8px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.chain-clip-line {
+  width: 24px;
+  height: 1px;
+  background: var(--grey);
+}
+.chain-clip-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--emerald);
+}
+.chain-clip-label {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: var(--grey);
+  text-transform: uppercase;
+  margin-left: 6px;
+}
+
+/* Vertical connector between chain layers (thin line + small arrow) */
+.chain-connector {
+  position: relative;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+}
+.chain-connector-line {
+  width: 1px;
+  height: 100%;
+  background: var(--grey);
+}
+.chain-connector-arrow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--grey);
+}
+
+/* Platform alternative connector: long direct line with a centred label */
+.platform-connector {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+.platform-connector-line {
+  width: 1px;
+  height: 100%;
+  background: var(--grey);
+}
+.platform-connector-label {
+  position: absolute;
+  background: var(--paper);
+  padding: 6px 12px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  color: var(--grey);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.platform-connector-arrow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid var(--grey);
+}
+
+@media (max-width: 720px) {
+  .chain-node-clip { gap: 2px; padding-left: 4px; }
+  .chain-clip-line { width: 12px; }
+  .chain-clip-label { display: none; }
+}
+
+/* —— Chain diagram (visual / static — no dropdowns) ENDS ———————————— */
+
+/* —— Chain diagram (legacy — kept for compatibility) ———————————————— */
+.chain {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.chain-title {
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--grey);
+  margin: 0 0 16px;
+  letter-spacing: 0.02em;
+}
+.chain-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+.chain-layer-wrap {
+  position: relative;
+  background: var(--mint);
+  border-radius: var(--radius-md);
+}
+.chain-layer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 22px;
+  background: transparent;
+  border: none;
+  color: var(--emerald);
+  font: inherit;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  min-height: 60px;
+}
+.chain-layer:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 2px;
+}
+.chain-layer-label .layer-sub {
+  display: block;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(10, 75, 52, 0.7);
+  margin-top: 2px;
+}
+.chain-layer-toggle {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--emerald);
+}
+.chain-layer-body {
+  padding: 0 22px 18px;
+  margin: -4px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--charcoal);
+}
+.chain-clip {
+  position: absolute;
+  right: -24px;
+  top: 24px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--emerald);
+}
+.chain-caption {
+  font-size: 13px;
+  color: var(--grey);
+  line-height: 1.5;
+  margin: 16px 0 0;
+  max-width: 320px;
+}
+
+/* Platform alternative diagram: top box, line, bottom box — also Mint. */
+.platform-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.platform-box {
+  background: var(--lighter-mint);
+  color: var(--emerald);
+  font-weight: 500;
+  font-size: 15px;
+  padding: 18px 22px;
+  border-radius: var(--radius-md);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+.platform-line {
+  width: 1px;
+  height: 240px;
+  background: var(--grey);
+  align-self: center;
+}
+@media (max-width: 720px) {
+  .platform-line { height: 120px; }
+}
+
+/* —— Education topic card —— */
+.topic {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px 64px;
+  align-items: start;
+  padding: 48px 0;
+  border-bottom: 1px solid rgba(139, 136, 129, 0.4);
+}
+.topic:last-child { border-bottom: none; }
+.topic-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  width: 320px;
+}
+.topic-thumb {
+  width: 100%;
+  text-decoration: none;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+}
+.topic-thumb .video-play { width: 52px; height: 52px; }
+.topic-thumb .video-play svg { width: 18px; height: 18px; }
+.topic-thumb .hero-video-badge { font-size: 12px; padding: 4px 10px; }
+@media (max-width: 720px) {
+  .topic-right { width: 100%; align-items: stretch; }
+}
+.topic-meta {
+  font-size: 13px;
+  color: var(--grey);
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .topic { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+}
+
+/* —— Story / partner grid —— */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px 56px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 900px) {
+  .grid-2 { grid-template-columns: 1fr; gap: 56px; }
+  .grid-3 { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* —— Video modules (education pages) —————————————————————————— */
+.video-module {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 32px 48px;
+  align-items: start;
+  padding: 48px 0;
+  border-bottom: 1px solid rgba(139, 136, 129, 0.4);
+}
+.video-module:first-of-type { padding-top: 0; }
+.video-module:last-of-type { border-bottom: none; }
+
+.video-placeholder {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--mint);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+.video-placeholder:hover { background: #9bcaa7; }
+.video-play {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
+}
+.video-play svg { width: 22px; height: 22px; }
+.video-duration {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  background: rgba(246, 247, 244, 0.94);
+  color: var(--charcoal);
+  font-weight: 500;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-variant-numeric: tabular-nums;
+}
+.video-module-meta {
+  padding-top: 4px;
+}
+.video-module-eyebrow {
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--grey);
+  margin: 0;
+}
+.video-module-title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--emerald);
+  margin: 10px 0 0;
+  text-wrap: balance;
+}
+.video-module-blurb {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--charcoal);
+  margin: 14px 0 0;
+}
+.video-module-actions {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+}
+.video-module-actions .resource {
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+.video-module-actions .resource:hover { color: var(--emerald); }
+
+@media (max-width: 820px) {
+  .video-module { grid-template-columns: 1fr; gap: 20px; padding: 32px 0; }
+}
+
+/* —— Investor triptych (home page) ——————————————————————————————
+   Three profiles of equal editorial weight. Whole card is a click
+   target that routes to the investor's full story. Default state on
+   Soft Paper; hover lifts to Lighter Mint and shifts the per-card link
+   from Warm Charcoal to Emerald. No shadows, no scale. */
+.investor-triptych {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 56px;
+  align-items: stretch;
+}
+.investor-profile {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  background: var(--lighter-mint);
+  color: var(--charcoal);
+  text-decoration: none;
+  transition: background-color 200ms ease;
+}
+.investor-profile:hover {
+  background: var(--lighter-mint);
+}
+.editorial-portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--lighter-mint);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: flex-end;
+  padding: 18px;
+}
+.investor-profile:hover .editorial-portrait {
+  background: var(--lighter-mint);
+}
+.editorial-portrait.has-image {
+  padding: 0;
+  overflow: hidden;
+}
+.editorial-portrait.has-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.25);
+  transform-origin: center center;
+}
+.editorial-portrait-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--grey);
+}
+.investor-meta {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--charcoal);
+  margin: 22px 0 0;
+}
+.investor-decision {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 36;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--emerald);
+  margin: 12px 0 0;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.investor-cta {
+  margin: 24px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 200ms ease;
+}
+.investor-profile:hover .investor-cta {
+  color: var(--charcoal);
+}
+
+@media (max-width: 980px) {
+  .investor-triptych { grid-template-columns: 1fr; gap: 40px; }
+}
+/* —— Wholesale education page (Module 01 + locked modules) ———————— */
+
+/* Hero video player — wider than the body column, sits centred above
+   the page's intro/Reading-notes/Watch-next row. */
+.hero-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--lighter-mint);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 200ms ease;
+  overflow: hidden;
+}
+.hero-video:hover { background: #c4dfa1; }
+.hero-video .video-play {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4px;
+  transition: transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.hero-video:hover .video-play { transform: scale(1.06); }
+.hero-video .video-play svg { width: 28px; height: 28px; }
+.hero-video-badge {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  background: rgba(246, 247, 244, 0.94);
+  color: var(--charcoal);
+  font-weight: 500;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+.hero-video-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 20px;
+}
+.hero-video-row .reading-notes {
+  color: var(--emerald);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.hero-video-row .reading-notes:hover { text-decoration-thickness: 2px; }
+@media (max-width: 640px) {
+  .hero-video-row { flex-direction: column; align-items: flex-start; }
+}
+
+/* Locked module zone: subtle Lighter Mint wash, the blurred modules
+   sit inside, the CTA panel overlays ~1/3 from the top. */
+.locked-zone {
+  position: relative;
+  background: rgba(212, 232, 181, 0.18);
+  border-radius: var(--radius-xl);
+  padding: 56px 40px 80px;
+  margin-top: 24px;
+}
+@media (max-width: 640px) {
+  .locked-zone { padding: 40px 20px 64px; }
+}
+
+.locked-modules { pointer-events: none; }
+.locked-modules .video-module { padding: 36px 0; }
+.locked-modules .video-placeholder {
+  filter: blur(6px) saturate(0.85);
+  pointer-events: none;
+}
+.locked-modules .video-module-meta {
+  opacity: 0.55;
+  filter: blur(1.5px);
+}
+
+/* Sticky CTA panel — Soft Paper card, sits absolutely over the
+   first 1-2 blurred cards. */
+.locked-cta {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(440px, calc(100% - 56px));
+  background: var(--paper);
+  border-radius: var(--radius-xl);
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 8px 28px -16px rgba(26, 43, 34, 0.25);
+}
+.locked-cta .eyebrow { margin-bottom: 12px; }
+.locked-cta h3 { margin: 0; }
+.locked-cta .locked-cta-body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--charcoal);
+  margin: 14px 0 24px;
+}
+.locked-cta .btn { width: 100%; justify-content: center; }
+.locked-cta .locked-cta-signin {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.locked-cta .locked-cta-signin:hover { color: var(--emerald); }
+
+/* —— Account create page ———————————————————————————————————— */
+
+.account-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.account-grid {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 880px) {
+  .account-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+.account-form { max-width: 520px; }
+.account-form .field-help {
+  font-size: 13px;
+  color: var(--grey);
+  margin: 0;
+}
+.account-form .btn { width: 100%; justify-content: center; }
+.account-form .terms-line {
+  text-align: center;
+  font-size: 13px;
+  color: var(--charcoal);
+  margin: 14px 0 0;
+}
+.account-form .terms-line a {
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.account-form .terms-line a:hover { color: var(--emerald); }
+
+/* Divider with "or" centred on it */
+.divider-or {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1px;
+  background: rgba(139, 136, 129, 0.45);
+  margin: 32px 0;
+}
+.divider-or span {
+  background: var(--paper);
+  padding: 0 14px;
+  font-size: 13px;
+  color: var(--grey);
+  position: relative;
+  top: 0;
+}
+
+.account-context {
+  background: var(--lighter-mint);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+}
+.account-context .context-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.account-context .context-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--charcoal);
+}
+.account-context .context-list li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--emerald);
+  margin-top: 9px;
+}
+.account-context hr {
+  border: none;
+  border-top: 1px solid rgba(10, 75, 52, 0.18);
+  margin: 28px 0 20px;
+}
+.account-context .context-foot {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--charcoal);
+  margin: 0;
+}
+.account-context .eyebrow { color: rgba(10, 75, 52, 0.7); }
+
+/* —— Wholesale + Account pages END ——————————————————————————— */
+/* —— Long-form article body —— */
+.longform p { font-size: 17px; line-height: 1.65; margin: 0 0 20px; color: var(--charcoal); }
+.longform p:last-child { margin-bottom: 0; }
+.longform h2 { margin: 56px 0 20px; }
+.longform h2:first-child { margin-top: 0; }
+.longform h3 { margin: 32px 0 12px; }
+
+/* —— Page footer nav (within an article) —— */
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(139, 136, 129, 0.45);
+  font-size: 15px;
+}
+.article-nav a { color: var(--charcoal); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+.article-nav a:hover { color: var(--emerald); }
+@media (max-width: 600px) {
+  .article-nav { flex-direction: column; }
+}
+
+/* —— Header account control (signed-in profile chip + dropdown) ———————— */
+.account-menu { position: relative; display: inline-flex; }
+.account-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--lighter-mint);
+  color: var(--emerald);
+  border: 1px solid var(--lighter-mint);
+  border-radius: 999px;
+  padding: 6px 14px 6px 6px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 200ms var(--ease-out-quart), border-color 200ms var(--ease-out-quart);
+}
+.account-chip:hover { background: var(--mint); border-color: var(--mint); }
+.account-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--paper);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.account-chip-name { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-chip-caret { display: inline-flex; color: var(--emerald); transition: transform 200ms var(--ease-out-quart); }
+.account-menu.is-open .account-chip-caret { transform: rotate(180deg); }
+
+.account-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 232px;
+  background: var(--paper);
+  border: 1px solid rgba(139, 136, 129, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px -20px rgba(26, 43, 34, 0.4);
+  padding: 8px;
+  z-index: 60;
+}
+.account-dropdown-head { padding: 12px 12px 14px; border-bottom: 1px solid rgba(139, 136, 129, 0.25); margin-bottom: 8px; }
+.account-dropdown-name { margin: 0; font-weight: 600; font-size: 15px; color: var(--charcoal); }
+.account-dropdown-email { margin: 4px 0 0; font-size: 13px; color: var(--grey); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--charcoal);
+  padding: 11px 12px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 160ms var(--ease-out-quart), color 160ms var(--ease-out-quart);
+}
+.account-dropdown-item:hover { background: var(--lighter-mint); color: var(--emerald); }
+.account-dropdown-signout { color: var(--grey); }
+.account-dropdown-signout:hover { background: rgba(163, 58, 43, 0.08); color: #A33A2B; }
+
+/* —— Profile page ———————————————————————————————————————————————— */
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 72px;
+  align-items: start;
+}
+@media (max-width: 880px) {
+  .profile-layout { grid-template-columns: 1fr; gap: 48px; }
+}
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+.profile-saved { font-size: 15px; font-weight: 600; color: var(--emerald); }
+.profile-rule { border: none; border-top: 1px solid rgba(139, 136, 129, 0.3); margin: 40px 0 28px; }
+.profile-signout-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.profile-signout-label { margin: 0; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--grey); }
+.profile-signout-email { margin: 4px 0 0; font-weight: 500; color: var(--charcoal); }
+.profile-aside { position: relative; }
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+/* —— Signed-in: the education library is unlocked ————————————————————— */
+.is-authed .locked-zone { background: transparent; padding-top: 8px; }
+.is-authed .locked-cta { display: none; }
+.is-authed .locked-modules { pointer-events: auto; }
+.is-authed .locked-modules .video-placeholder { filter: none; }
+.is-authed .locked-modules .video-module-meta { opacity: 1; filter: none; }
+
+/* Module cards become links to the module page once unlocked. */
+.video-module--link { text-decoration: none; color: inherit; cursor: pointer; display: grid; }
+.video-module--link .video-placeholder { transition: filter 200ms var(--ease-out-quart), transform 200ms var(--ease-out-quart); }
+.video-module--link:hover .video-module-title { color: var(--emerald); text-decoration: underline; text-underline-offset: 3px; }
+.video-module--link:hover .video-play { transform: scale(1.06); }

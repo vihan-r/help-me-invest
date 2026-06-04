@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Success Stories, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="logos/hmi-mark.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '';</script>
+  <script type="text/babel" src="js/components.jsx"></script>
+
+  <script type="text/babel">
+    function StoryCard({ name, structural, summary, href = 'stories/investor-story.html' }) {
+      return (
+        <article className="stack-md">
+          <Placeholder ratio="5x6" label="[ Editorial portrait, customer ]" />
+          <div className="stack-sm">
+            <h4 className="h4">{name}</h4>
+            <p className="body-small text-grey">{structural}</p>
+            <p className="body" style={{ marginTop: 8 }}>{summary}</p>
+            <p style={{ marginTop: 12 }}>
+              <TertiaryLink to={href}>Read {name.split(',')[0]}&rsquo;s story <Arrow /></TertiaryLink>
+            </p>
+          </div>
+        </article>
+      );
+    }
+
+    function Vignette({ name, body }) {
+      return (
+        <div>
+          <h4 className="h4">{name}</h4>
+          <p className="body" style={{ marginTop: 12 }}>{body}</p>
+        </div>
+      );
+    }
+
+    function SuccessStories() {
+      return (
+        <React.Fragment>
+          <Header active="stories" />
+
+          <main>
+            {/* Header */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
+              <h1 className="d1 col-display">Australians investing on <em>their own terms.</em></h1>
+              <p className="body-large col-body" style={{ marginTop: 32 }}>
+                The customers we&rsquo;re built for are defined by posture, not by stage. They read
+                before they buy, they ask how the fee is calculated, and they treat the property as a
+                decision rather than a dream. A small set of their stories follows.
+              </p>
+            </section>
+
+            {/* Stories grid */}
+            <section className="shell section">
+              <div className="grid-2">
+                <StoryCard
+                  name="Sarah, 31, Newcastle."
+                  structural="First investment property &middot; 2025."
+                  summary="Sarah spent six months reading the fundamentals on the platform before she bought. She made the call on the suburb herself, then used the platform to introduce her to a partner for the property selection and the legal review."
+                />
+                <StoryCard
+                  name="Marcus, 38, Western Sydney."
+                  structural="Second investment &middot; 2024."
+                  summary="Marcus had bought one property the conventional way and had felt for years that he had no idea what had actually happened. The second time he used the platform to walk through the financing structure first, line by line, before he looked at properties."
+                />
+                <StoryCard
+                  name="Aisha, 26, Outer Melbourne."
+                  structural="First investment property &middot; 2026."
+                  summary="Aisha came to the platform with a clear plan and very little appetite for being sold to. She used the education library to test her thinking, then took the platform&rsquo;s wholesale access for the property itself."
+                />
+                <StoryCard
+                  name="Peter, 47, Regional Queensland."
+                  structural="Third property &middot; 2025."
+                  summary="Peter knew the market he wanted to buy in better than any partner could. He used the platform for the parts he didn&rsquo;t want to do himself, the negotiation and the conveyancing, and kept the rest of the decision in his own hands."
+                />
+                <StoryCard
+                  name="Linh, 34, Inner Brisbane."
+                  structural="Refinance &middot; 2026."
+                  summary="Linh used the platform to walk through what her existing broker arrangement was actually costing her, in plain numbers. She ended up moving the loan, with the trail commission disclosed on the same page she chose the new product."
+                />
+                <StoryCard
+                  name="Chris, 51, Perth."
+                  structural="Fourth property &middot; 2024."
+                  summary="Chris came in already experienced. He used the platform mainly as a stress-test, running his plan past one of the partners we vouch for, before he committed. The plan held up. The exercise was worth it anyway."
+                />
+              </div>
+            </section>
+
+            {/* Closing */}
+            <section className="shell" style={{ paddingTop: 120, paddingBottom: 160 }}>
+              <h2 className="d1 col-display">
+                This is what property investing looks like when it&rsquo;s <em>back in the hands of everyday Australians.</em>
+              </h2>
+              <div style={{ marginTop: 48 }}>
+                <PrimaryButton to="find-an-expert.html">Talk to an expert <Arrow /></PrimaryButton>
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<SuccessStories />);
+  </script>
+</body>
+</html>

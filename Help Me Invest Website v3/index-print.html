@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Help Me Invest, Property investing on your own terms.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ===== Print-ready overrides ===== */
+    @page {
+      size: A4 portrait;
+      margin: 18mm 16mm;
+    }
+
+    @media print {
+      /* Force the brand's coloured surfaces to print */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      html, body {
+        background: var(--paper) !important;
+        font-size: 12pt;
+      }
+
+      /* Drop nav from print, wordmark stays */
+      .site-nav { display: none !important; }
+      .site-header { padding: 0 0 18pt !important; }
+
+      /* Tighten the giant vertical rhythm, print pages do their own pacing */
+      .section { padding: 28pt 0 !important; }
+      .shell { padding: 0 !important; max-width: none !important; }
+
+      /* Pull hero/CTA padding back to printable scale */
+      main > section[style] {
+        padding-top: 20pt !important;
+        padding-bottom: 28pt !important;
+      }
+
+      /* Type, tame the screen clamps so headlines fit A4 */
+      .d1 { font-size: 36pt !important; line-height: 1.1 !important; }
+      .d1.has-highlight { line-height: 1.25 !important; }
+      .h1 { font-size: 26pt !important; line-height: 1.15 !important; }
+      .h1.has-highlight { line-height: 1.25 !important; }
+      .h2 { font-size: 20pt !important; line-height: 1.2 !important; }
+      .h3 { font-size: 15pt !important; }
+      .h4 { font-size: 13pt !important; }
+      .body-large { font-size: 13pt !important; line-height: 1.5 !important; }
+      .body, p { font-size: 11pt !important; line-height: 1.55 !important; }
+      .body-small { font-size: 9.5pt !important; }
+
+      /* Page break discipline */
+      h1, h2, h3, h4, .d1, .h1, .h2, .h3, .h4 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+      .chain, .platform-diagram, .chain-stack, .placeholder, .card, .card-paper {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      section { break-inside: avoid-page; }
+
+      /* Force a new page before each major homepage section so the
+         signature pieces (thesis + diagrams, Mint section, transparency,
+         closing CTA) each land cleanly. */
+      main > section + section { break-before: page; page-break-before: always; }
+
+      /* Strip CTAs from print, there's nothing to click */
+      .btn { display: none !important; }
+      .tertiary-link { color: var(--charcoal) !important; text-decoration: underline; }
+
+      /* Mint full-bleed section, keep the colour but tighten padding */
+      .bg-mint[style] { padding: 32pt 0 !important; }
+      .bg-mint .shell { padding: 0 24pt !important; }
+
+      /* Footer, keep but compress */
+      .site-footer { margin-top: 24pt !important; padding: 24pt 0 12pt !important; break-before: page; page-break-before: always; }
+      .site-footer-grid { gap: 24pt !important; padding-top: 18pt !important; }
+
+      /* Diagrams, keep clip dots inside the printable area */
+      .chain-clip { right: -16px !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '';</script>
+  <script type="text/babel" src="js/components.jsx"></script>
+
+  <script type="text/babel">
+    function Home() {
+      // Chain layers, labels are structural, never name a profession.
+      const chainLayers = [
+        { label: 'Wholesale access',     clip: true  },
+        { label: 'Deal sourcing',        clip: false },
+        { label: 'Information & advice', clip: true  },
+        { label: 'Negotiation',          clip: true  },
+        { label: 'Transaction handling', clip: false },
+      ];
+
+      return (
+        <React.Fragment>
+          <Header active="home" />
+
+          {/* Hero */}
+          <main>
+            <section className="shell" style={{ paddingTop: 80, paddingBottom: 96 }}>
+              <h1 className="d1 has-highlight col-display">
+                Property investing <PhraseHighlight>on your own terms</PhraseHighlight>.
+              </h1>
+              <p className="body-large col-body" style={{ marginTop: 40 }}>
+                Help Me Invest is a platform for the new generation of Australian investors. Learn how
+                property investing actually works, see exactly how the experts get paid, and decide
+                for yourself, with everything you need to decide well.
+              </p>
+              <div style={{ marginTop: 40 }}>
+                <PrimaryButton to="education.html">Start here <Arrow /></PrimaryButton>
+              </div>
+            </section>
+
+            {/* The thesis: the chain isn't the only way */}
+            <section className="shell section">
+              <h2 className="h1 col-display">
+                The chain isn&rsquo;t the only way. It was just the only way you could see.
+              </h2>
+              <div className="col-body stack-md" style={{ marginTop: 32 }}>
+                <p className="body-large">
+                  Between an everyday investor and the knowledge they need to invest well, a chain of
+                  intermediaries has grown up over decades. Each layer takes a clip. Each layer also
+                  controls a piece of what the investor is allowed to see.
+                </p>
+                <p className="body">
+                  The chain isn&rsquo;t a villain story about the people working inside it. It&rsquo;s a
+                  structural pattern, one that made sense when information was scarce, and that has
+                  outlived the conditions it was built for. The pattern is what we&rsquo;re here to change.
+                </p>
+              </div>
+
+              {/* Side-by-side: chain vs platform */}
+              <div className="grid-2" style={{ marginTop: 72, alignItems: 'start' }}>
+                <ChainDiagram
+                  title="The chain you can&rsquo;t see."
+                  layers={chainLayers}
+                  caption="A structural sketch. Each circle marks a layer where a clip is taken."
+                />
+                <PlatformDiagram
+                  title="The way Help Me Invest works."
+                  caption="Knowledge moves directly. The customer leads the decision."
+                />
+              </div>
+            </section>
+
+            {/* Three pillars */}
+            <section className="shell section">
+              <h2 className="h2 col-display">
+                Three things the industry has historically kept apart.
+              </h2>
+              <div className="grid-3" style={{ marginTop: 56 }}>
+                <div>
+                  <h3 className="h4">Knowledge</h3>
+                  <p className="body" style={{ marginTop: 12 }}>
+                    Every part of the property investing journey, taught openly. No paywall on the
+                    fundamentals. You read what you need, when you need it, in plain English, with
+                    the sources cited.
+                  </p>
+                  <p style={{ marginTop: 16 }}>
+                    <TertiaryLink to="education.html">Read how it works <Arrow /></TertiaryLink>
+                  </p>
+                </div>
+                <div>
+                  <h3 className="h4">Access</h3>
+                  <p className="body" style={{ marginTop: 12 }}>
+                    The category of property that has historically flowed only through closed channels
+                   , opened directly to you. The platform is the channel. You don&rsquo;t need to be
+                    inside the chain to be inside the deal.
+                  </p>
+                  <p style={{ marginTop: 16 }}>
+                    <TertiaryLink to="education/wholesale.html">Read how it works <Arrow /></TertiaryLink>
+                  </p>
+                </div>
+                <div>
+                  <h3 className="h4">Trusted experts</h3>
+                  <p className="body" style={{ marginTop: 12 }}>
+                    When you want help with a specific decision, the platform introduces you to a
+                    partner we vouch for. Vetted on merit. Paid transparently. Held to the outcome.
+                  </p>
+                  <p style={{ marginTop: 16 }}>
+                    <TertiaryLink to="partners.html">Read how it works <Arrow /></TertiaryLink>
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Full-bleed Mint section: for the new generation */}
+            <section className="bg-mint" style={{ padding: '120px 0' }}>
+              <div className="shell">
+                <h2 className="h1 col-body">
+                  Built for the new generation of Australian investors.
+                </h2>
+                <div className="col-body stack-md" style={{ marginTop: 32 }}>
+                  <p className="body-large">
+                    The customer we&rsquo;re built for is defined by posture, not by stage. Reads the
+                    research before the brochure. Asks how the fee is calculated, not whether there is
+                    one. Treats the property as a decision, not as a dream.
+                  </p>
+                  <p className="body">
+                    They can be twenty-six and on their first investment, or fifty-one and on their
+                    fourth. What unites them is how they engage, with their own judgement intact,
+                    and with the right help around them when they ask for it.
+                  </p>
+                </div>
+                <p style={{ marginTop: 32 }}>
+                  <TertiaryLink to="success-stories.html">Read the success stories <Arrow /></TertiaryLink>
+                </p>
+              </div>
+            </section>
+
+            {/* Transparency commitment */}
+            <section className="shell section">
+              <h2 className="h1 col-display">
+                Every fee. Every source. Every decision. Visible.
+              </h2>
+              <div className="col-body stack-md" style={{ marginTop: 32 }}>
+                <p className="body-large">
+                  Our partners&rsquo; fees, the platform&rsquo;s clip, and the criteria we use to vouch for
+                  each partner are documented openly, not in legal disclosures, on the page where
+                  the decision gets made.
+                </p>
+                <p className="body">
+                  The chain hides what value moves where. We don&rsquo;t. If you ever can&rsquo;t see
+                  where a number came from, that&rsquo;s a defect, not a feature.
+                </p>
+              </div>
+              <p style={{ marginTop: 32 }}>
+                <TertiaryLink to="partners.html">See how our partners get paid <Arrow /></TertiaryLink>
+              </p>
+            </section>
+
+            {/* Closing CTA */}
+            <section className="shell" style={{ paddingTop: 120, paddingBottom: 160 }}>
+              <h2 className="d1 col-display">
+                Help Me Invest is what property investing should have looked like all along.
+              </h2>
+              <div style={{ marginTop: 48 }}>
+                <PrimaryButton to="education.html">Start here <Arrow /></PrimaryButton>
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Home />);
+
+    // Auto-print: wait for fonts + React render + a small settle buffer.
+    (async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+      } catch (e) { /* fonts API missing, fall through */ }
+      // Let React commit and the layout settle before triggering the dialog.
+      await new Promise(r => setTimeout(r, 600));
+      window.print();
+    })();
+  </script>
+</body>
+</html>

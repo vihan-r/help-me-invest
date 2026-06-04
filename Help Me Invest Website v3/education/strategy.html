@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Property strategy, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="../logos/hmi-mark.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '../';</script>
+  <script type="text/babel" src="../js/components.jsx"></script>
+
+  <script type="text/babel">
+    function Strategy() {
+      // Locked modules, generic placeholders. Specifics don't matter because
+      // the cards are blurred and non-interactive until the user has an account.
+      const lockedModules = [
+        { duration: '11:50', title: 'Picking the right market.', desc: 'How to read a city\u2019s growth drivers before you look at a single listing.' },
+        { duration: '14:18', title: 'Land versus building value.', desc: 'Why the split between land and building decides your long-term growth.' },
+        { duration: '09:32', title: 'Houses, units, and townhouses.', desc: 'What each property type does for cash flow and growth, and who it suits.' },
+        { duration: '12:05', title: 'Yield versus growth.', desc: 'The trade-off every purchase makes, and how to weight it for your goals.' },
+        { duration: '08:48', title: 'Reading suburb data.', desc: 'The few metrics that actually predict performance, and the ones that mislead.' },
+        { duration: '13:42', title: 'New build versus established.', desc: 'Depreciation, maintenance, and price, the real differences in your return.' },
+        { duration: '10:18', title: 'Where the cycle sits.', desc: 'How the market cycle works, and why it matters less than most people think.' },
+        { duration: '11:25', title: 'Building a portfolio.', desc: 'How each property sets up the next, and the order that keeps you borrowing.' },
+        { duration: '15:08', title: 'Risk and diversification.', desc: 'Spreading exposure across markets and types without over-complicating it.' },
+        { duration: '09:50', title: 'When to hold, when to sell.', desc: 'The signals a property has done its job, and what to do next.' },
+        { duration: '12:35', title: 'Putting it together.', desc: 'Turning the framework into a written plan you can act on.' },
+      ];
+
+      const authed = !!(window.HMIAuth && window.HMIAuth.isLoggedIn());
+
+      return (
+        <React.Fragment>
+          <Header active="education" />
+
+          <main>
+            {/* Header */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 32 }}>
+              <Eyebrow>Education &middot; Property strategy</Eyebrow>
+              <h1 className="d1 col-display" style={{ marginTop: 16 }}>
+                What to buy, where to buy <em>and when to buy.</em>
+              </h1>
+              <p className="body-large col-body" style={{ marginTop: 32 }}>
+                Start here. One short module that lays out the framework the platform uses to think
+                about property selection, from first principles, in the order the decisions
+                actually need to be made. The rest of the series builds on this one.
+              </p>
+            </section>
+
+            {/* Module 01 hero video */}
+            <section className="shell" style={{ paddingTop: 32, paddingBottom: 32 }}>
+              <div style={{ maxWidth: 900 }}>
+                <div className="hero-video" role="button" tabIndex="0" aria-label="Play Module 01, What to buy, where, why, and when">
+                  <div className="video-play" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l10-5.5z" /></svg>
+                  </div>
+                  <span className="hero-video-badge">Module 01 &middot; 10:24</span>
+                </div>
+                <div className="hero-video-row">
+                  <SecondaryButton to="account/create.html">Watch next module <Arrow /></SecondaryButton>
+                </div>
+              </div>
+            </section>
+
+            {/* Divider */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 64 }}>
+              <hr className="rule" style={{ maxWidth: 900 }} />
+            </section>
+
+            {/* The rest of the series */}
+            <section className="shell" style={{ paddingBottom: 96 }}>
+              <Eyebrow>The rest of the series</Eyebrow>
+              <h2 className="h2 col-display" style={{ marginTop: 12 }}>
+                {authed ? <>The full series, <em>yours to watch.</em></> : <>Free to watch. <em>Create an account to continue.</em></>}
+              </h2>
+              <p className="body col-body" style={{ marginTop: 20 }}>
+                {authed
+                  ? <>You&rsquo;re signed in, so the whole library is open to you. Watch in any order, whenever you want it.</>
+                  : <>The account is free and exists to serve you, a place to keep what you&rsquo;re learning, and to introduce you to the partners you can call on when you&rsquo;re ready. The teaching itself was never the thing we were going to charge for.</>}
+              </p>
+
+              <div className="locked-zone" style={{ marginTop: 40 }}>
+                <div className="locked-modules" aria-hidden="true">
+                  {lockedModules.map((m, i) => (
+                    <VideoModule
+                      key={i}
+                      index={i + 2}
+                      title="Module title placeholder."
+                      duration={m.duration}
+                      blurb="A short description of the module goes here."
+                      href={withBase('education/module.html') + '?topic=' + encodeURIComponent('Property strategy') + '&from=strategy.html&n=' + (i + 2) + '&d=' + encodeURIComponent(m.duration)}
+                    />
+                  ))}
+                </div>
+
+                <div className="locked-cta">
+                  <p className="eyebrow">Free account &middot; 30 seconds</p>
+                  <h3 className="h3">Create your account <em>to keep going.</em></h3>
+                  <p className="locked-cta-body">
+                    We&rsquo;ll save where you are. You can stop any time.
+                  </p>
+                  <a className="btn btn-primary" href={withBase('account/create.html')}>
+                    Create my account <Arrow />
+                  </a>
+                  <a className="locked-cta-signin" href={withBase('account/sign-in.html')}>
+                    Already have an account? Sign in <Arrow />
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            {/* Article footer nav */}
+            <section className="shell" style={{ paddingTop: 40, paddingBottom: 120 }}>
+              <div style={{ maxWidth: 900 }}>
+                <div className="article-nav">
+                  <a href={withBase('education/finance.html')}>&larr; Previous: Finance</a>
+                  <a href={withBase('education.html')}>Back to Education</a>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Strategy />);
+  </script>
+</body>
+</html>

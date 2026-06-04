@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Investor story, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="../logos/hmi-mark.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '../';</script>
+  <script type="text/babel" src="../js/components.jsx"></script>
+
+  <script type="text/babel">
+    function InvestorStory() {
+      return (
+        <React.Fragment>
+          <Header active="stories" />
+
+          <main>
+            {/* Header */}
+            <section className="shell" style={{ paddingTop: 56, paddingBottom: 48 }}>
+              <div className="col-reading">
+                <Eyebrow>Investor stories</Eyebrow>
+                <p className="body-small" style={{ marginTop: 12 }}>
+                  <a className="inline-link" href={withBase('success-stories.html')}>&larr; Back to all stories</a>
+                </p>
+                <h1 className="d1" style={{ marginTop: 24 }}>
+                  Sarah&rsquo;s <em>investor story.</em>
+                </h1>
+                <p className="body-small text-grey" style={{ marginTop: 16 }}>
+                  Newcastle &middot; First investment property &middot; 2025
+                </p>
+              </div>
+            </section>
+
+            {/* Editorial portrait */}
+            <section className="shell" style={{ paddingBottom: 48 }}>
+              <div className="col-display">
+                <Placeholder ratio="16x9" label="[ Editorial portrait, customer ]" />
+              </div>
+            </section>
+
+            {/* Long-form body */}
+            <section className="shell" style={{ paddingBottom: 96 }}>
+              <div className="longform col-reading">
+                <p className="body-large" style={{ marginBottom: 32 }}>
+                  Placeholder lede paragraph. One or two sentences that set up who this investor is,
+                  what they were trying to do, and what posture they brought to it. Replace once the
+                  real story is captured.
+                </p>
+
+                <h2 className="h2">Where they <em>started.</em></h2>
+                <p>
+                  Placeholder copy. Replace with a short paragraph about the investor&rsquo;s
+                  starting point, what they knew, what they didn&rsquo;t, and what they were
+                  trying to figure out.
+                </p>
+                <p>
+                  Another placeholder paragraph to give the section enough weight. Two or three
+                  sentences in the same plain-English register as the rest of the site.
+                </p>
+
+                <h2 className="h2">How they <em>used the platform.</em></h2>
+                <p>
+                  Placeholder copy. Replace with a description of which parts of the platform the
+                  investor leaned on, the education library, a specific partner introduction,
+                  the wholesale access, and which parts they handled themselves.
+                </p>
+
+                <div style={{ margin: '40px 0', padding: '32px 0', borderTop: '1px solid rgba(139,136,129,0.45)', borderBottom: '1px solid rgba(139,136,129,0.45)' }}>
+                  <p className="pullquote">
+                    &ldquo;Pull-quote placeholder. Replace with a direct line from the investor that
+                    captures the posture they brought to the work.&rdquo;
+                  </p>
+                </div>
+
+                <h2 className="h2">What they <em>decided.</em></h2>
+                <p>
+                  Placeholder copy. Replace with a paragraph about the actual decision the investor
+                  made, the property, the financing structure, the holding plan, and
+                  why they made it.
+                </p>
+                <p>
+                  A second placeholder paragraph for depth. Keep the focus on the reasoning, not the
+                  outcome. The story is the thinking, not the brag.
+                </p>
+
+                <h2 className="h2">Where they are <em>now.</em></h2>
+                <p>
+                  Placeholder closing paragraph. What the investor is working on next, and how the
+                  platform fits into it, if it does.
+                </p>
+              </div>
+            </section>
+
+            {/* Article footer nav */}
+            <section className="shell" style={{ paddingTop: 40, paddingBottom: 80 }}>
+              <div className="col-reading">
+                <div className="article-nav">
+                  <a href={withBase('success-stories.html')}>&larr; All investor stories</a>
+                  <a href={withBase('find-an-expert.html')}>Talk to an expert &rarr;</a>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<InvestorStory />);
+  </script>
+</body>
+</html>

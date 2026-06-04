@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Education, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="logos/hmi-mark.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '';</script>
+  <script type="text/babel" src="js/components.jsx"></script>
+
+  <script type="text/babel">
+
+function Topic({ title, blurb, href, meta, thumbDuration }) {
+  return (
+    <article className="topic">
+      <div>
+        <h2 className="h2">{title}</h2>
+        <p className="body-large" style={{ marginTop: 20, maxWidth: 720 }}>{blurb}</p>
+        <p style={{ marginTop: 24 }}>
+          <TertiaryLink to={href}>Start with this <Arrow /></TertiaryLink>
+        </p>
+      </div>
+      <div className="topic-right">
+        <a className="hero-video topic-thumb" href={withBase(href)}
+           aria-label={`Watch Module 01 of ${title}`}>
+          <div className="video-play" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l10-5.5z" /></svg>
+          </div>
+          <span className="hero-video-badge">Module 01 &middot; {thumbDuration}</span>
+        </a>
+        <div className="topic-meta">{meta}</div>
+      </div>
+    </article>);
+
+}
+
+function HowItWorks({ headline, body }) {
+  return (
+    <div>
+          <h3 className="h4">{headline}</h3>
+          <p className="body" style={{ marginTop: 10 }}>{body}</p>
+        </div>);
+
+}
+
+function Education() {
+  return (
+    <React.Fragment>
+          <Header active="education" />
+
+          <main>
+            {/* Header */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
+              <h1 className="d1 col-display">Everything you need to invest in <em>property yourself.</em></h1>
+              <p className="body-large col-body" style={{ marginTop: 32 }}>
+                Taught openly. No paywall on the knowledge itself. You decide what you need, when you
+                need it.
+              </p>
+            </section>
+
+            {/* Three topics */}
+            <section className="shell" style={{ paddingBottom: 96 }}>
+              <Topic
+            title="Understanding wholesale property."
+            blurb="The category of property that has historically flowed only through closed channels, and how the platform opens those channels directly to you."
+            href="education/wholesale.html"
+            meta="8 modules &middot; ~90 minutes of video."
+            thumbDuration="08:24" />
+          
+              <Topic
+            title="Finance."
+            blurb="How property is actually financed in Australia. The decisions that compound. What your broker is, and isn&rsquo;t, paid to tell you."
+            href="education/finance.html"
+            meta="10 modules &middot; ~110 minutes of video."
+            thumbDuration="09:10" />
+          
+              <Topic
+            title="Property strategy."
+            blurb="What to buy, where, why, and when. The frameworks the platform uses, taught from first principles."
+            href="education/strategy.html"
+            meta="12 modules &middot; ~140 minutes of video."
+            thumbDuration="10:24" />
+          
+            </section>
+
+            {/* How the education works (carded, no shared bg) */}
+            <section className="shell section">
+              <p className="section-eyebrow">How it works</p>
+              <h2 className="h1 col-display">
+                How the education <em>works.</em>
+              </h2>
+              <p className="body-large col-body" style={{ marginTop: 32 }}>
+                The library isn&rsquo;t a course. There&rsquo;s no required sequence and no
+                progress bar. You decide what you need, when you need it.
+              </p>
+
+              <div className="whatwedo-grid whatwedo-grid--carded">
+                <div className="whatwedo-card whatwedo-card--filled">
+                  <h3 className="whatwedo-card-headline">Watch in <em>any order.</em></h3>
+                  <p className="whatwedo-card-body">
+                    No required sequence. No progress bar. You start where your question is, and
+                    you stop when the question&rsquo;s answered.
+                  </p>
+                </div>
+                <div className="whatwedo-card whatwedo-card--filled">
+                  <h3 className="whatwedo-card-headline">No paywall on the <em>fundamentals.</em></h3>
+                  <p className="whatwedo-card-body">
+                    Every lesson on the platform is open. The work is the work; we don&rsquo;t put
+                    it behind a sign-up wall to harvest your email.
+                  </p>
+                </div>
+                <div className="whatwedo-card whatwedo-card--filled">
+                  <h3 className="whatwedo-card-headline">Ask a partner <em>when you&rsquo;re ready.</em></h3>
+                  <p className="whatwedo-card-body">
+                    When a decision needs specific help, the platform introduces you to a partner
+                    we vouch for. You decide when, and whether.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Talk to an expert CTA */}
+            <section className="shell" style={{ paddingBottom: 160 }}>
+              <div className="expert-cta">
+                <div className="expert-cta-body">
+                  <p className="section-eyebrow">Need a steer?</p>
+                  <h2 className="h2">Not sure where to start?<br />Talk to an expert.</h2>
+                  <p className="body-large" style={{ marginTop: 24, maxWidth: 560 }}>
+                    Tell us, in a few short answers, what you&rsquo;re trying to figure out. One of
+                    our team will read it and call you back within a day.
+                  </p>
+                </div>
+                <div className="expert-cta-action">
+                  <PrimaryButton to="find-an-expert.html">Talk to an expert <Arrow /></PrimaryButton>
+                </div>
+              </div>
+            </section>
+
+          </main>
+
+          <Footer />
+        </React.Fragment>);
+
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Education />);
+</script>
+</body>
+</html>

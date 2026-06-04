@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Module, Help Me Invest</title>
+  <link rel="icon" type="image/png" href="../logos/hmi-mark.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script>window.__BASE = '../';</script>
+  <script type="text/babel" src="../js/components.jsx"></script>
+
+  <script type="text/babel">
+    function Module() {
+      const params = new URLSearchParams(window.location.search);
+      const topic = params.get('topic') || 'Property strategy';
+      const from = params.get('from') || 'strategy.html';
+      const n = parseInt(params.get('n') || '2', 10);
+      const duration = params.get('d') || '10:24';
+      const num = String(n).padStart(2, '0');
+
+      // Modules sit behind the free account — if signed out, go sign in.
+      React.useEffect(function () {
+        if (!(window.HMIAuth && window.HMIAuth.isLoggedIn())) {
+          window.location.href = withBase('account/sign-in.html');
+        }
+      }, []);
+      if (!(window.HMIAuth && window.HMIAuth.isLoggedIn())) return null;
+
+      return (
+        <React.Fragment>
+          <Header active="education" />
+
+          <main>
+            {/* Header */}
+            <section className="shell" style={{ paddingTop: 64, paddingBottom: 32 }}>
+              <Eyebrow>Education &middot; {topic}</Eyebrow>
+              <p className="video-module-eyebrow" style={{ marginTop: 18 }}>Module {num} &middot; {duration}</p>
+              <h1 className="d1 col-display" style={{ marginTop: 10 }}>Module title <em>placeholder.</em></h1>
+            </section>
+
+            {/* The video */}
+            <section className="shell" style={{ paddingTop: 16, paddingBottom: 40 }}>
+              <div style={{ maxWidth: 900 }}>
+                <div className="hero-video" role="button" tabIndex="0" aria-label={`Play module ${num}`}>
+                  <div className="video-play" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l10-5.5z" /></svg>
+                  </div>
+                  <span className="hero-video-badge">Module {num} &middot; {duration}</span>
+                </div>
+              </div>
+            </section>
+
+            {/* Description */}
+            <section className="shell" style={{ paddingBottom: 64 }}>
+              <div className="col-body">
+                <Eyebrow>About this module</Eyebrow>
+                <p className="body-large" style={{ marginTop: 20 }}>
+                  A short description of the module goes here. This is placeholder copy that will be
+                  replaced with the real summary once the module is recorded.
+                </p>
+                <p className="body" style={{ marginTop: 20 }}>
+                  A longer placeholder paragraph can sit here for the fuller description, the key
+                  takeaways, and what the module sets you up to do next.
+                </p>
+              </div>
+            </section>
+
+            {/* Footer nav */}
+            <section className="shell" style={{ paddingTop: 16, paddingBottom: 120 }}>
+              <div style={{ maxWidth: 900 }}>
+                <div className="article-nav">
+                  {n > 2
+                    ? <a href={withBase('education/module.html') + '?topic=' + encodeURIComponent(topic) + '&from=' + from + '&n=' + (n - 1) + '&d=' + duration}>&larr; Previous video</a>
+                    : <a href={withBase('education/' + from)}>&larr; Back to the series</a>}
+                  <a href={withBase('education/' + from)}>All modules</a>
+                  <a href={withBase('education/module.html') + '?topic=' + encodeURIComponent(topic) + '&from=' + from + '&n=' + (n + 1) + '&d=' + duration}>Next video &rarr;</a>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Module />);
+  </script>
+</body>
+</html>
