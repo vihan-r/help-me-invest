@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Button, Container, TertiaryLink, Wordmark } from "@/components";
+import {
+  Button,
+  ChainDiagram,
+  Container,
+  InvestorCard,
+  PartnerCard,
+  Pillar,
+  Pillars,
+  PlatformDiagram,
+  TertiaryLink,
+  Wordmark,
+} from "@/components";
 
 export const metadata: Metadata = {
   title: "Design system — Help Me Invest",
@@ -313,6 +324,112 @@ export default function StyleguidePage() {
             until the white-on-green PNG is supplied. The transparent <code>currentColor</code> SVG
             remains the eventual fix.
           </p>
+        </Section>
+
+        {/* —— Chain vs platform —— */}
+        <Section eyebrow="Signature" title="Chain vs platform diagram">
+          <p className="body mb-lg max-w-body">
+            The brand&rsquo;s signature motif, shown beside its platform alternative. Labels are
+            always structural — never a profession. The Emerald circle marks a layer where a clip is
+            taken. Both reveal on scroll, calm and slow.
+          </p>
+          <div className="grid-2" style={{ alignItems: "start" }}>
+            <ChainDiagram
+              title="The chain you can’t see."
+              topLabel="The property"
+              layers={[
+                { label: "Placeholder.", clip: true },
+                { label: "Placeholder.", clip: false },
+                { label: "Placeholder.", clip: true },
+                { label: "Placeholder.", clip: true },
+                { label: "Placeholder.", clip: false },
+              ]}
+              caption="A structural sketch. Each circle marks a layer where a clip is taken."
+            />
+            <PlatformDiagram
+              title="The way Help Me Invest works."
+              topLabel="The property"
+              caption="Knowledge moves directly. The customer leads the decision."
+            />
+          </div>
+        </Section>
+
+        {/* —— Investor story cards —— */}
+        <Section eyebrow="Signature" title="Investor story cards">
+          <div className="investor-triptych">
+            <InvestorCard
+              name="Aisha"
+              age={26}
+              city="outer Melbourne"
+              decision="Bought her first place after learning what the fees really were."
+              href="#"
+            />
+            <InvestorCard
+              name="Marcus"
+              age={41}
+              city="Brisbane"
+              decision="Restructured before his fourth purchase, on his own terms."
+              href="#"
+            />
+            <InvestorCard
+              name="Chris"
+              age={34}
+              city="Perth"
+              decision="Walked into the deal already knowing every number."
+              href="#"
+            />
+          </div>
+        </Section>
+
+        {/* —— Partner cards —— */}
+        <Section eyebrow="Signature" title="Partner cards">
+          <div className="grid-3">
+            <PartnerCard
+              name="Partner name placeholder."
+              role="What this partner does for the customer, placeholder line."
+              bio="Placeholder editorial bio. Two or three sentences about the partner, in the same register as the rest of the page."
+              href="#"
+            />
+            <PartnerCard
+              name="Partner name placeholder."
+              role="What this partner does for the customer, placeholder line."
+              bio="Placeholder editorial bio. Two or three sentences about the partner, in the same register as the rest of the page."
+              href="#"
+            />
+            <PartnerCard
+              name="Partner name placeholder."
+              role="What this partner does for the customer, placeholder line."
+              bio="Placeholder editorial bio. Two or three sentences about the partner, in the same register as the rest of the page."
+              href="#"
+            />
+          </div>
+        </Section>
+
+        {/* —— Pillars —— */}
+        <Section eyebrow="Signature" title="Pillars (what we do)">
+          <Pillars>
+            <Pillar
+              number="01"
+              headline={<>The teaching is open.</>}
+              body="Every part of the property investing journey, taught openly. No paywall on the fundamentals."
+              linkLabel="See the modules"
+              href="#"
+            />
+            <Pillar
+              number="02"
+              headline={<>The access is direct.</>}
+              body="Wholesale stock and off-market opportunities that historically flowed only through closed channels."
+              linkLabel="How the access works"
+              href="#"
+            />
+            <Pillar
+              number="03"
+              headline={<>The help is yours to call.</>}
+              body="Trusted partners chosen on merit, aligned with your outcome. There if you need them."
+              linkLabel="Meet the partners"
+              href="#"
+            />
+          </Pillars>
         </Section>
       </Container>
     </main>
