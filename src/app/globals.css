@@ -442,3 +442,502 @@
     }
   }
 }
+
+/* —— Easing token (calm, editorial motion) —— */
+:root {
+  --ease-out-quart: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer components {
+  /* —— Layout utilities —— */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px 56px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 900px) {
+    .grid-2 {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+    .grid-3 {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+  .stack-xs > * + * {
+    margin-top: var(--spacing-xs);
+  }
+  .stack-sm > * + * {
+    margin-top: var(--spacing-sm);
+  }
+  .stack-md > * + * {
+    margin-top: var(--spacing-md);
+  }
+  .stack-lg > * + * {
+    margin-top: var(--spacing-lg);
+  }
+  .stack-xl > * + * {
+    margin-top: var(--spacing-xl);
+  }
+  .stack-2xl > * + * {
+    margin-top: var(--spacing-2xl);
+  }
+
+  /* —— Reveal-on-scroll motion (calm, slow, editorial) —— */
+  [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition:
+      opacity 1400ms var(--ease-out-quart),
+      transform 1400ms var(--ease-out-quart);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Chain layers stagger slightly slower than default for structural emphasis. */
+  [data-reveal-chain] {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity 1100ms var(--ease-out-quart),
+      transform 1100ms var(--ease-out-quart);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal-chain].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .chain-v2-stack > [data-reveal-chain]:nth-child(1) {
+    --reveal-delay: 0ms;
+  }
+  .chain-v2-stack > [data-reveal-chain]:nth-child(3) {
+    --reveal-delay: 100ms;
+  }
+  .chain-v2-stack > [data-reveal-chain]:nth-child(5) {
+    --reveal-delay: 200ms;
+  }
+  .chain-v2-stack > [data-reveal-chain]:nth-child(7) {
+    --reveal-delay: 300ms;
+  }
+  .chain-v2-stack > [data-reveal-chain]:nth-child(9) {
+    --reveal-delay: 400ms;
+  }
+  .chain-v2-stack > [data-reveal-chain]:nth-child(11) {
+    --reveal-delay: 500ms;
+  }
+  .chain-v2-stack > [data-reveal-chain]:nth-child(13) {
+    --reveal-delay: 600ms;
+  }
+
+  /* In the two-up comparison, nodes stay static and the figures block-reveal;
+     the platform (right) figure follows the chain (left) figure. */
+  .grid-2 > .chain-v2 .chain-v2-stack > [data-reveal-chain] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    --reveal-delay: 0ms;
+  }
+  .grid-2 > .chain-v2:last-child {
+    --reveal-delay: 220ms;
+  }
+
+  /* Card stagger within grids */
+  .investor-triptych > [data-reveal]:nth-child(2),
+  .whatwedo-grid > [data-reveal]:nth-child(2),
+  .grid-3 > [data-reveal]:nth-child(2) {
+    --reveal-delay: 100ms;
+  }
+  .investor-triptych > [data-reveal]:nth-child(3),
+  .whatwedo-grid > [data-reveal]:nth-child(3),
+  .grid-3 > [data-reveal]:nth-child(3) {
+    --reveal-delay: 200ms;
+  }
+
+  /* —— Chain / platform diagram —— */
+  .chain-v2 {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .chain-v2 .chain-title {
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--color-grey);
+    margin: 0 0 18px;
+  }
+  .chain-v2-stack {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .chain-node {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+  }
+  .chain-node-box {
+    flex: 1;
+    background: var(--color-lighter-mint);
+    color: var(--color-emerald);
+    border-radius: var(--radius-md);
+    padding: 16px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 60px;
+  }
+  .chain-node.is-terminal .chain-node-box {
+    padding: 20px 22px;
+    min-height: 68px;
+    background: var(--color-emerald);
+  }
+  .chain-node.is-terminal .chain-node-label {
+    color: var(--color-paper);
+  }
+  .chain-node-label {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .chain-node-clip {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-left: 8px;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .chain-clip-line {
+    width: 24px;
+    height: 1px;
+    background: var(--color-grey);
+  }
+  .chain-clip-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--color-emerald);
+  }
+  .chain-clip-label {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    color: var(--color-grey);
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+  .chain-connector {
+    position: relative;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+  }
+  .chain-connector-line {
+    width: 1px;
+    height: 100%;
+    background: var(--color-grey);
+  }
+  .chain-connector-arrow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid var(--color-grey);
+  }
+  .platform-connector {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+  .platform-connector-line {
+    width: 1px;
+    height: 100%;
+    background: var(--color-grey);
+  }
+  .platform-connector-label {
+    position: absolute;
+    background: var(--color-paper);
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--color-grey);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .platform-connector-arrow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid var(--color-grey);
+  }
+  .chain-caption {
+    font-size: 13px;
+    color: var(--color-grey);
+    line-height: 1.5;
+    margin: 16px 0 0;
+    max-width: 320px;
+  }
+  @media (max-width: 720px) {
+    .chain-node-clip {
+      gap: 2px;
+      padding-left: 4px;
+    }
+    .chain-clip-line {
+      width: 12px;
+    }
+    .chain-clip-label {
+      display: none;
+    }
+  }
+
+  /* —— Placeholder image block (editorial portraits we do not invent) —— */
+  .placeholder {
+    position: relative;
+    border-radius: var(--radius-xl);
+    background: var(--color-mint);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 18px;
+    overflow: hidden;
+  }
+  .placeholder.emerald {
+    background: var(--color-emerald);
+  }
+  .placeholder-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-grey);
+    background: rgba(246, 247, 244, 0.85);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.01em;
+  }
+  .placeholder.emerald .placeholder-label {
+    background: rgba(246, 247, 244, 0.92);
+  }
+  .placeholder.ratio-1x1 {
+    aspect-ratio: 1 / 1;
+  }
+  .placeholder.ratio-4x5 {
+    aspect-ratio: 4 / 5;
+  }
+  .placeholder.ratio-16x9 {
+    aspect-ratio: 16 / 9;
+  }
+  .placeholder.ratio-3x2 {
+    aspect-ratio: 3 / 2;
+  }
+
+  /* —— Investor story card —— */
+  .investor-triptych {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 56px;
+    align-items: stretch;
+  }
+  @media (max-width: 980px) {
+    .investor-triptych {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+  .investor-profile {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: var(--radius-xl);
+    background: var(--color-lighter-mint);
+    color: var(--color-charcoal);
+    text-decoration: none;
+  }
+  .editorial-portrait {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--color-lighter-mint);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: flex-end;
+    padding: 18px;
+    overflow: hidden;
+  }
+  .editorial-portrait.has-image {
+    padding: 0;
+  }
+  .editorial-portrait.has-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.25);
+    transform-origin: center center;
+  }
+  .editorial-portrait-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--color-grey);
+  }
+  .investor-meta {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--color-charcoal);
+    margin: 22px 0 0;
+  }
+  .investor-decision {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+    font-size: 22px;
+    line-height: 1.25;
+    color: var(--color-emerald);
+    margin: 12px 0 0;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .investor-cta {
+    margin: 24px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-charcoal);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  /* —— Partner card —— */
+  .partner-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--color-charcoal);
+  }
+  .partner-card .placeholder {
+    overflow: hidden;
+  }
+  .partner-card .partner-card-cta {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-charcoal);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  /* —— Pillars (the "what we do" cards) —— */
+  .whatwedo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 880px) {
+    .whatwedo-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+  .whatwedo-grid--carded {
+    gap: 24px;
+  }
+  @media (max-width: 880px) {
+    .whatwedo-grid--carded {
+      gap: 20px;
+    }
+  }
+  .whatwedo-card {
+    position: relative;
+    padding-top: 32px;
+    border-top: 1px solid rgba(10, 75, 52, 0.25);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  .whatwedo-card.whatwedo-card--filled {
+    background: var(--color-lighter-mint);
+    border-radius: 24px;
+    padding: 36px 32px;
+    border-top: none;
+  }
+  .whatwedo-card.whatwedo-card--filled .whatwedo-card-number {
+    display: none;
+  }
+  .whatwedo-card-number {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--color-grey);
+  }
+  .whatwedo-card-headline {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-emerald);
+    margin: 0;
+    text-wrap: balance;
+    max-width: 90%;
+  }
+  .whatwedo-card-headline em {
+    font-style: normal;
+    font-weight: 400;
+  }
+  .whatwedo-card-body {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin: 20px 0 0;
+  }
+  .whatwedo-card-link {
+    margin-top: auto;
+    padding-top: 32px;
+  }
+}
+
+/* Reduced motion — reveal elements render in place, no animation. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-chain] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
