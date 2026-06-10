@@ -17,3 +17,5 @@ export { InvestorCard, PartnerCard } from "./Cards";
 export type { InvestorCardProps, PartnerCardProps } from "./Cards";
 export { Pillars, Pillar } from "./Pillars";
 export type { PillarsProps, PillarProps } from "./Pillars";
+export { SectionEyebrow } from "./SectionEyebrow";
+export { Arrow } from "./Arrow";
