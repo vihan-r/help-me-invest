@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
-import { RevealObserver, SiteFooter, SiteHeader } from "@/components";
+import { RevealObserver } from "@/components";
 import { SITE } from "@/config/site";
 import "./globals.css";
 
@@ -47,9 +47,7 @@ export default function RootLayout({
     <html lang="en-AU" className={`${jakarta.variable} ${newsreader.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <RevealObserver />
-        <SiteHeader />
         {children}
-        <SiteFooter />
       </body>
     </html>
   );
