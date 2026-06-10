@@ -1770,3 +1770,213 @@
     }
   }
 }
+
+/* =============================================================================
+ * Forms + account screens (sign in / sign up / reset / verify) + survey shell.
+ * Values verbatim from source.
+ * ========================================================================== */
+@layer components {
+  /* —— Form controls —— */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .field label {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--color-charcoal);
+  }
+  .field input[type="text"],
+  .field input[type="email"],
+  .field input[type="tel"],
+  .field input[type="number"],
+  .field input[type="password"],
+  .field select,
+  .field textarea {
+    font: inherit;
+    font-size: 16px;
+    color: var(--color-charcoal);
+    background: var(--color-paper);
+    border: 1px solid rgba(139, 136, 129, 0.55);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    width: 100%;
+    transition: border-color 120ms ease;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--color-emerald);
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.5;
+  }
+  .field-help {
+    font-size: 13px;
+    color: var(--color-grey);
+    margin: 0;
+  }
+  .field-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .field-radio {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(139, 136, 129, 0.4);
+    cursor: pointer;
+    transition:
+      background 120ms ease,
+      border-color 120ms ease;
+  }
+  .field-radio:hover {
+    background: var(--color-lighter-mint);
+    border-color: var(--color-lighter-mint);
+  }
+  .field-radio input {
+    margin-top: 4px;
+    accent-color: var(--color-emerald);
+  }
+  .field-radio span {
+    font-size: 16px;
+    color: var(--color-charcoal);
+  }
+
+  /* —— Account screens —— */
+  .account-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .account-grid {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .account-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+  .account-form {
+    max-width: 520px;
+  }
+  .account-form .field-help {
+    font-size: 13px;
+    color: var(--color-grey);
+    margin: 0;
+  }
+  .account-form .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .account-form .terms-line {
+    text-align: center;
+    font-size: 13px;
+    color: var(--color-charcoal);
+    margin: 14px 0 0;
+  }
+  .account-form .terms-line a {
+    color: var(--color-charcoal);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .account-form .terms-line a:hover {
+    color: var(--color-emerald);
+  }
+  .divider-or {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1px;
+    background: rgba(139, 136, 129, 0.45);
+    margin: 32px 0;
+  }
+  .divider-or span {
+    background: var(--color-paper);
+    padding: 0 14px;
+    font-size: 13px;
+    color: var(--color-grey);
+  }
+  .account-context {
+    background: var(--color-lighter-mint);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+  }
+  .account-context .context-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .account-context .context-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+  }
+  .account-context .context-list li::before {
+    content: "";
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-emerald);
+    margin-top: 9px;
+  }
+  .account-context hr {
+    border: none;
+    border-top: 1px solid rgba(10, 75, 52, 0.18);
+    margin: 28px 0 20px;
+  }
+  .account-context .context-foot {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+  .account-context .eyebrow {
+    color: rgba(10, 75, 52, 0.7);
+  }
+
+  /* —— Self-assessment shell —— */
+  .sa-shell {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .sa-progress-track {
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(139, 136, 129, 0.3);
+    overflow: hidden;
+  }
+  .sa-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--color-emerald);
+    transition: width 400ms var(--ease-out-quart);
+  }
+  .sa-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 48px;
+  }
+}

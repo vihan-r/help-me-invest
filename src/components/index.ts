@@ -21,3 +21,4 @@ export { SectionEyebrow } from "./SectionEyebrow";
 export { Arrow } from "./Arrow";
 export { VideoModule } from "./VideoModule";
 export type { VideoModuleProps } from "./VideoModule";
+export { SelfAssessmentShell } from "./SelfAssessmentShell";
