@@ -1338,16 +1338,18 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: right center;
+    /* Both the desktop image column and the stacked mobile image are tall and
+       narrow, so cover always crops the photo's sides. The subject sits ~73%
+       across the photo; 82% keeps him roughly centred in the crop at every size
+       (instead of "right center", which pinned the right edge and pushed him
+       off to the left as the container changed shape). */
+    object-position: 82% center;
     display: block;
   }
   @media (max-width: 880px) {
     .hero-card-img {
       grid-column: 1;
       grid-row: 2;
-      /* Stacked image is tall + narrow → cover crops the sides. Centre on the
-         subject (~73% across the photo) so he stays roughly centred in frame. */
-      object-position: 82% center;
     }
   }
   .hero-card-content {
