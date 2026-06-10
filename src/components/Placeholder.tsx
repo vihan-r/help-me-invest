@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 export interface PlaceholderProps {
   /** Aspect ratio token. */
-  ratio?: "1x1" | "4x5" | "16x9" | "3x2";
+  ratio?: "1x1" | "4x5" | "5x6" | "16x9" | "3x2";
   label: string;
   /** Emerald fill instead of Mint. */
   emerald?: boolean;

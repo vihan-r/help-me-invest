@@ -19,3 +19,5 @@ export { Pillars, Pillar } from "./Pillars";
 export type { PillarsProps, PillarProps } from "./Pillars";
 export { SectionEyebrow } from "./SectionEyebrow";
 export { Arrow } from "./Arrow";
+export { VideoModule } from "./VideoModule";
+export type { VideoModuleProps } from "./VideoModule";
