@@ -1980,3 +1980,10 @@
     margin-top: 48px;
   }
 }
+
+@layer components {
+  /* Medium section rhythm (used by the Contact alternative-routes block) */
+  .section-md {
+    padding-block: var(--spacing-xl);
+  }
+}

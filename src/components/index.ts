@@ -22,3 +22,7 @@ export { Arrow } from "./Arrow";
 export { VideoModule } from "./VideoModule";
 export type { VideoModuleProps } from "./VideoModule";
 export { SelfAssessmentShell } from "./SelfAssessmentShell";
+export { ContactForm } from "./ContactForm";
+export { ExpertForm } from "./ExpertForm";
+export { LegalPage } from "./LegalPage";
+export type { LegalPageProps, LegalSection } from "./LegalPage";
