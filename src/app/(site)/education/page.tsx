@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Arrow, Button, TertiaryLink } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Education",
   description:
     "Everything you need to invest in property yourself — taught openly, no paywall on the knowledge. You decide what you need, when you need it.",
-};
+  path: "/education",
+});
 
 function Topic({
   title,
@@ -56,7 +57,7 @@ function Topic({
 
 export default function Education() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
         <h1 className="d1 col-display">

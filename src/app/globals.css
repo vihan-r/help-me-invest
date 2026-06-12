@@ -62,6 +62,59 @@
   }
 }
 
+/* —— Accessibility: skip link + keyboard focus ring ————————————————————————
+   The skip link is the first focusable element (WCAG 2.4.1, bypass blocks);
+   it stays off-screen until focused. The focus ring uses :focus-visible, so it
+   shows for keyboard users without disturbing pointer interactions, and reverses
+   to Soft Paper on Emerald grounds where an Emerald ring would be invisible. */
+@layer base {
+  .skip-link {
+    position: absolute;
+    left: 16px;
+    top: -120px;
+    z-index: 100;
+    background: var(--color-emerald);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1;
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: top 160ms var(--ease-out-quart);
+  }
+  .skip-link:focus {
+    top: 16px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skip-link {
+      transition: none;
+    }
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-emerald);
+    outline-offset: 2px;
+  }
+  /* Reverse the ring to Soft Paper on Emerald grounds (hero, reversed sections). */
+  .hero-card :focus-visible,
+  .on-emerald :focus-visible {
+    outline-color: var(--color-paper);
+  }
+  /* The <main> skip target is programmatically focusable but not interactive —
+     no ring; the user tabs straight into the content from there. */
+  main:focus,
+  main:focus-visible {
+    outline: none;
+  }
+}
+
 /* —— Design-system components ————————————————————————————————————————————
    Semantic classes mirrored from the source styles.css so production markup
    uses named tokens, never raw values. */
@@ -369,15 +422,10 @@
       gap: 22px;
     }
   }
+  /* Collapse to the toggle-driven menu at 880px: between ~720px and ~880px the
+     full horizontal nav + Sign in no longer fits and the button clipped past the
+     viewport edge. 880 aligns with the hero/grid stacking breakpoint. */
   @media (max-width: 880px) {
-    .site-header-right {
-      gap: 14px;
-    }
-    .site-nav {
-      gap: 18px;
-    }
-  }
-  @media (max-width: 720px) {
     .site-nav,
     .site-signin {
       display: none;
@@ -715,9 +763,12 @@
     border-right: 5px solid transparent;
     border-top: 7px solid var(--color-grey);
   }
+  /* Functional small text (captions/help that must be read) uses Warm Charcoal
+     for AA contrast; Warm Mid-Grey is reserved for structural/decorative labels.
+     See PROJECT_CONTEXT.md §3. */
   .chain-caption {
     font-size: 13px;
-    color: var(--color-grey);
+    color: var(--color-charcoal);
     line-height: 1.5;
     margin: 16px 0 0;
     max-width: 320px;
@@ -1367,6 +1418,10 @@
   @media (max-width: 880px) {
     .hero-card-content {
       padding: 48px 32px;
+      /* Stacked, the content is a 1fr grid column; min-width:0 lets it shrink to
+         the card width so the headline/CTA wrap inside it instead of forcing the
+         column wider than the card (which overflow:hidden would then clip). */
+      min-width: 0;
     }
   }
   .hero-card-headline {
@@ -1435,6 +1490,27 @@
   }
   .hero-card-cta .anim-arrow {
     transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  /* Small phones: the display headline's longest word and the long primary CTA
+     can't fit a ~264px content box at the 64px floor, so step the headline down
+     and let the CTAs stack full-width and wrap. Placed after the base hero rules
+     so these equal-specificity overrides win on source order. */
+  @media (max-width: 480px) {
+    .hero-card-content {
+      padding: 40px 24px;
+    }
+    .hero-card-headline {
+      font-size: clamp(42px, 12vw, 58px);
+    }
+    .hero-card-ctas {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .hero-card-cta {
+      white-space: normal;
+      justify-content: center;
+      text-align: center;
+    }
   }
 
   /* Hero entrance — image fades up, content staggers in. */
@@ -1527,7 +1603,7 @@
   }
   .topic-meta {
     font-size: 13px;
-    color: var(--color-grey);
+    color: var(--color-charcoal);
     white-space: nowrap;
   }
   @media (max-width: 720px) {
@@ -1807,8 +1883,21 @@
   .field input:focus,
   .field select:focus,
   .field textarea:focus {
-    outline: none;
     border-color: var(--color-emerald);
+  }
+  /* —— Radio/checkbox group (fieldset + legend replaces a dangling label) —— */
+  .field-group {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-inline-size: 0;
+  }
+  .field-group > legend {
+    padding: 0;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--color-charcoal);
   }
   .field textarea {
     resize: vertical;
@@ -1817,7 +1906,7 @@
   }
   .field-help {
     font-size: 13px;
-    color: var(--color-grey);
+    color: var(--color-charcoal);
     margin: 0;
   }
   .field-radio-group {
@@ -1873,7 +1962,7 @@
   }
   .account-form .field-help {
     font-size: 13px;
-    color: var(--color-grey);
+    color: var(--color-charcoal);
     margin: 0;
   }
   .account-form .btn {

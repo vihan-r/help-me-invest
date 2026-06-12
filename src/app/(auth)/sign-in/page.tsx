@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Arrow, Button } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Sign in",
   description: "Sign in to your Help Me Invest account.",
-};
+  path: "/sign-in",
+  noindex: true,
+});
 
 export default function SignIn() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
         <div className="account-grid" style={{ gridTemplateColumns: "1fr" }}>
           <div className="account-form">

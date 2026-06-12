@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Arrow,
@@ -12,11 +11,13 @@ import {
   SectionEyebrow,
   TertiaryLink,
 } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   description:
     "A platform for Australians investing on their own terms. Learn how property investing works, get direct access to deals, and call on trusted experts when you're ready.",
-};
+  path: "/",
+});
 
 const chainLayers = [
   { label: "Placeholder.", clip: true },
@@ -28,7 +29,7 @@ const chainLayers = [
 
 export default function Home() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Hero — contained photographic card with a dark-green content panel */}
       <section className="hero-card-wrap">
         <div className="hero-card">

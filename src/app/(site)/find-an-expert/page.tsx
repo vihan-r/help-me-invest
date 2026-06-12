@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import { ExpertForm } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Talk to an expert",
   description:
     "Tell us what you're trying to do and we'll introduce you to a partner we vouch for — chosen on merit, paid transparently.",
-};
+  path: "/find-an-expert",
+});
 
 export default function FindAnExpert() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="shell" style={{ paddingTop: 64, paddingBottom: 56 }}>
         <p className="eyebrow">Talk to an expert</p>
@@ -52,21 +53,21 @@ export default function FindAnExpert() {
           </h2>
           <div className="grid-3" style={{ marginTop: 48 }}>
             <div>
-              <h4 className="h4">1 · We read it.</h4>
+              <h3 className="h4">1 · We read it.</h3>
               <p className="body" style={{ marginTop: 12 }}>
                 One of our team — not a script, not a triage bot — reads what you&rsquo;ve written
                 and works out who&rsquo;s the right partner for it.
               </p>
             </div>
             <div>
-              <h4 className="h4">2 · We call you back.</h4>
+              <h3 className="h4">2 · We call you back.</h3>
               <p className="body" style={{ marginTop: 12 }}>
                 To confirm what you&rsquo;re after, suggest the partner we think fits, and check
                 that you&rsquo;re comfortable proceeding.
               </p>
             </div>
             <div>
-              <h4 className="h4">3 · You decide.</h4>
+              <h3 className="h4">3 · You decide.</h3>
               <p className="body" style={{ marginTop: 12 }}>
                 The introduction only happens if you want it. You see the partner&rsquo;s payment
                 arrangement before you commit. Help is offered, never imposed.

@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import { Arrow, Button, Placeholder } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "How it works",
   description:
     "How Help Me Invest works — self-assess, learn, decide whether you need help, and execute. Every fee named on the page; walking away costs nothing.",
-};
+  path: "/how-it-works",
+});
 
 export default function HowItWorks() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Hero */}
       <section className="shell" style={{ paddingTop: 80, paddingBottom: 96 }}>
         <p className="eyebrow" style={{ marginBottom: 24 }}>
@@ -79,7 +80,7 @@ export default function HowItWorks() {
               <p className="phase-cost-sub">Create a free account. Takes under five minutes.</p>
             </div>
             <div className="phase-body">
-              <h2 className="phase-headline">Start with where you stand.</h2>
+              <h3 className="phase-headline">Start with where you stand.</h3>
               <p className="phase-lede">
                 Before anything else, take the self-assessment. It&rsquo;s not just a set of
                 questions, it&rsquo;s a predictive model we&rsquo;ve built, giving you clarity on
@@ -126,7 +127,7 @@ export default function HowItWorks() {
               <p className="phase-cost-sub">No credit card. No qualifying call.</p>
             </div>
             <div className="phase-body">
-              <h2 className="phase-headline">Learn how property investing actually works.</h2>
+              <h3 className="phase-headline">Learn how property investing actually works.</h3>
               <p className="phase-lede">
                 Sign up with an email and a password. The whole library opens, lessons, frameworks,
                 calculators, and the parts of the market that the chain has kept quiet about. Read
@@ -181,7 +182,7 @@ export default function HowItWorks() {
               <p className="phase-cost-sub">A call with our team, not a sales rep.</p>
             </div>
             <div className="phase-body">
-              <h2 className="phase-headline">Decide whether you actually need help.</h2>
+              <h3 className="phase-headline">Decide whether you actually need help.</h3>
               <p className="phase-lede">
                 When a decision needs specific help, request a call. One of our team rings you back
                 within a day. The job of the call is to work out whether we&rsquo;re the right fit,
@@ -237,7 +238,7 @@ export default function HowItWorks() {
               </p>
             </div>
             <div className="phase-body">
-              <h2 className="phase-headline">Execute with confidence.</h2>
+              <h3 className="phase-headline">Execute with confidence.</h3>
               <p className="phase-lede">
                 If you chose to get help from our experts our process is simple. We always execute
                 alongside you, never in front of you. We build the finance strategy first, then the
