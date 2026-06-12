@@ -56,6 +56,15 @@ served off Vercel/Supabase), privacy-respecting analytics (e.g. PostHog).
   component/CSS). **Mint and Lighter Mint remain** as surface colours.
 - **Card hover lift** was re-added per the brand motion spec (the HTML had removed it):
   scale ~1.02 + ~6px rise + soft shadow on filled cards, ~1.2s easeOutQuart.
+- **Text-colour contrast split (Stage 8, ratified by the client):** Warm Mid-Grey
+  `#8B8881` on Soft Paper measures ~3.3:1 — below WCAG AA (4.5:1) for small text. The
+  **grey token is unchanged.** Grey is reserved for **structural/decorative** labels
+  (eyebrows, in-diagram annotations, placeholder/portrait labels, figure labels like
+  `.fee-card-label`, ordinals, dividers); **functional small text that must be read**
+  uses **Warm Charcoal** — form help (`.field-help`), explanatory captions
+  (`.chain-caption`), and meaningful content metadata (`.topic-meta`). Field
+  labels/legends were already Charcoal. The split is documented in the `/styleguide`
+  "Text colour" panel.
 
 ---
 

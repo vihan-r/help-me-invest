@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import { Arrow, PartnerCard, Placeholder, TertiaryLink } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Partners",
   description:
     "The partners we vouch for — introduced on merit, paid transparently, held to the outcome. They stand alongside, not in front.",
-};
+  path: "/partners",
+});
 
 export default function Partners() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
         <h1 className="d1 col-display">

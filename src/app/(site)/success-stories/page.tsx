@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { Arrow, Button, Placeholder, TertiaryLink } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Investor Stories",
   description:
     "Australians investing on their own terms — customers defined by posture, not stage. A small set of their stories.",
-};
+  path: "/success-stories",
+});
 
 function StoryCard({
   name,
@@ -22,7 +23,7 @@ function StoryCard({
     <article className="stack-md">
       <Placeholder ratio="5x6" label="[ Editorial portrait, customer ]" />
       <div className="stack-sm">
-        <h4 className="h4">{name}</h4>
+        <h2 className="h4">{name}</h2>
         <p className="body-small text-grey">{structural}</p>
         <p className="body" style={{ marginTop: 8 }}>
           {summary}
@@ -78,7 +79,7 @@ const STORIES = [
 
 export default function SuccessStories() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
         <h1 className="d1 col-display">

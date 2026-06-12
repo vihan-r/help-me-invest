@@ -43,8 +43,8 @@ export function ContactForm() {
         <input id="email" name="email" type="email" autoComplete="email" />
       </div>
 
-      <div className="field">
-        <label>What&rsquo;s this about?</label>
+      <fieldset className="field-group">
+        <legend>What&rsquo;s this about?</legend>
         <div className="field-radio-group">
           <label className="field-radio">
             <input type="radio" name="topic" defaultChecked />
@@ -63,7 +63,7 @@ export function ContactForm() {
             <span>Press / other.</span>
           </label>
         </div>
-      </div>
+      </fieldset>
 
       <div className="field">
         <label htmlFor="message">What&rsquo;s on your mind?</label>

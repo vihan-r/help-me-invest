@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import { Arrow, ContactForm, TertiaryLink } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Contact",
   description: "Get in touch with the Help Me Invest team — we reply within a day.",
-};
+  path: "/contact",
+});
 
 export default function Contact() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="shell" style={{ paddingTop: 64, paddingBottom: 64 }}>
         <h1 className="d1 col-display">
@@ -32,7 +33,7 @@ export default function Contact() {
       <section className="shell section-md">
         <div className="col-body stack-md">
           <div>
-            <h3 className="h4">By email</h3>
+            <h2 className="h4">By email</h2>
             <p className="body" style={{ marginTop: 8 }}>
               <a className="inline-link" href="mailto:hello@helpmeinvest.com.au">
                 hello@helpmeinvest.com.au
@@ -41,7 +42,7 @@ export default function Contact() {
             </p>
           </div>
           <div>
-            <h3 className="h4">By post</h3>
+            <h2 className="h4">By post</h2>
             <p className="body" style={{ marginTop: 8 }}>
               Help Me Invest, Level 4, 100 Collins Street, Melbourne VIC 3000.
             </p>

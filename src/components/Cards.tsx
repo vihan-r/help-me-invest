@@ -63,7 +63,7 @@ export function PartnerCard({
     <Link className="partner-card stack-md" href={href} data-reveal="">
       <Placeholder ratio="4x5" label={portraitLabel} />
       <div className="stack-sm">
-        <h4 className="h4">{name}</h4>
+        <h3 className="h4">{name}</h3>
         <p className="body-small" style={{ fontWeight: 500 }}>
           {role}
         </p>

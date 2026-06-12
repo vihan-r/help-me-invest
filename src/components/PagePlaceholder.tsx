@@ -17,7 +17,7 @@ export interface PagePlaceholderProps {
  */
 export function PagePlaceholder({ eyebrow, title, children }: PagePlaceholderProps) {
   return (
-    <main className="flex-1">
+    <main id="main-content" tabIndex={-1} className="flex-1">
       <Container width="body" className="py-2xl">
         <p className="eyebrow mb-sm">{eyebrow}</p>
         <h1 className="h1">{title}</h1>

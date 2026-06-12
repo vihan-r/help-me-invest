@@ -21,7 +21,7 @@ export function SelfAssessmentShell() {
   const next = () => (step < 2 ? setStep(step + 1) : setView("done"));
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <div className="shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
         <div className="sa-shell">
           {view === "intro" && (
@@ -191,8 +191,8 @@ const STEPS: { title: string; lede: string; fields: React.ReactNode }[] = [
           <label htmlFor="sa-income">Gross annual income</label>
           <input id="sa-income" type="number" inputMode="numeric" placeholder="$" />
         </div>
-        <div className="field">
-          <label>How is your income earned?</label>
+        <fieldset className="field-group">
+          <legend>How is your income earned?</legend>
           <div className="field-radio-group">
             <label className="field-radio">
               <input type="radio" name="sa-income-type" defaultChecked />
@@ -207,7 +207,7 @@ const STEPS: { title: string; lede: string; fields: React.ReactNode }[] = [
               <span>A mix of both.</span>
             </label>
           </div>
-        </div>
+        </fieldset>
       </>
     ),
   },
@@ -220,8 +220,8 @@ const STEPS: { title: string; lede: string; fields: React.ReactNode }[] = [
           <label htmlFor="sa-target">Annual income you’d want in retirement</label>
           <input id="sa-target" type="number" inputMode="numeric" placeholder="$" />
         </div>
-        <div className="field">
-          <label>Have you invested in property before?</label>
+        <fieldset className="field-group">
+          <legend>Have you invested in property before?</legend>
           <div className="field-radio-group">
             <label className="field-radio">
               <input type="radio" name="sa-experience" defaultChecked />
@@ -236,7 +236,7 @@ const STEPS: { title: string; lede: string; fields: React.ReactNode }[] = [
               <span>I own more than one.</span>
             </label>
           </div>
-        </div>
+        </fieldset>
       </>
     ),
   },

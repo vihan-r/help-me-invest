@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { LegalPage } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Terms and conditions",
   description: "The terms that govern use of Help Me Invest.",
-};
+  path: "/terms",
+});
 
 // Structural skeleton only — bodies are PLACEHOLDER, not real legal wording.
 const SECTIONS = [

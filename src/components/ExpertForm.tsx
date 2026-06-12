@@ -48,8 +48,8 @@ export function ExpertForm() {
         <input id="email" name="email" type="email" autoComplete="email" />
       </div>
 
-      <div className="field">
-        <label>What are you trying to do?</label>
+      <fieldset className="field-group">
+        <legend>What are you trying to do?</legend>
         <div className="field-radio-group">
           <label className="field-radio">
             <input type="radio" name="intent" defaultChecked />
@@ -72,10 +72,10 @@ export function ExpertForm() {
             <span>Something else — I&rsquo;ll explain below.</span>
           </label>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="field">
-        <label>When would you like to hear from us?</label>
+      <fieldset className="field-group">
+        <legend>When would you like to hear from us?</legend>
         <div className="field-radio-group">
           <label className="field-radio">
             <input type="radio" name="timing" defaultChecked />
@@ -90,13 +90,13 @@ export function ExpertForm() {
             <span>I&rsquo;m working through a decision now.</span>
           </label>
         </div>
-      </div>
+      </fieldset>
 
       <div>
         <button type="submit" className="btn btn-primary">
           Send my details <Arrow />
         </button>
-        <p className="body-small text-grey" style={{ marginTop: 14 }}>
+        <p className="body-small" style={{ marginTop: 14 }}>
           We&rsquo;ll call you back within a day. If you&rsquo;d rather email,{" "}
           <a className="inline-link" href="mailto:hello@helpmeinvest.com.au">
             hello@helpmeinvest.com.au

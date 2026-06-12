@@ -18,7 +18,7 @@ export default function Error({
   return (
     <>
       <SiteHeader />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <Container width="body" className="py-2xl">
           <p className="eyebrow mb-sm">Something went wrong</p>
           <h1 className="h1">This page hit a snag</h1>

@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Arrow, Button, VideoModule } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Understanding wholesale property",
   description:
     "Start here — one short module on what wholesale property actually is in the Australian market, and what changes when an everyday investor gets direct access.",
-};
+  path: "/education/wholesale",
+});
 
 // Locked modules — generic placeholders; the cards are blurred and
 // non-interactive until the user has an account (gating UI only, no auth yet).
@@ -22,7 +23,7 @@ const lockedModules = [
 
 export default function Wholesale() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* Header */}
       <section className="shell" style={{ paddingTop: 64, paddingBottom: 32 }}>
         <p className="eyebrow">Education · Understanding wholesale property</p>

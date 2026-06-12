@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Arrow, Button } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Create account",
   description: "Create your free Help Me Invest account.",
-};
+  path: "/sign-up",
+  noindex: true,
+});
 
 export default function SignUp() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
         <div className="account-grid">
           {/* The form */}
@@ -42,8 +44,8 @@ export default function SignUp() {
                 </p>
               </div>
 
-              <div className="field">
-                <label>Where are you in your investing journey?</label>
+              <fieldset className="field-group">
+                <legend>Where are you in your investing journey?</legend>
                 <div className="field-radio-group">
                   <label className="field-radio">
                     <input type="radio" name="stage" defaultChecked />
@@ -62,7 +64,7 @@ export default function SignUp() {
                     <span>I already own one or more investment properties.</span>
                   </label>
                 </div>
-              </div>
+              </fieldset>
 
               <div style={{ marginTop: 32 }}>
                 <Button variant="primary" type="button">

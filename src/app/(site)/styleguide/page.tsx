@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import {
   Button,
@@ -12,11 +11,13 @@ import {
   TertiaryLink,
   Wordmark,
 } from "@/components";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Design system — Help Me Invest",
   description: "Token and component reference for the HMI design system (FEAT-21).",
-};
+  noindex: true,
+});
 
 /* —— Token data (values pulled verbatim from the design source of truth) —— */
 
@@ -221,6 +222,87 @@ export default function StyleguidePage() {
                 Mid-Grey
               </p>
               <p className="eyebrow">Structural metadata</p>
+            </div>
+          </div>
+        </Section>
+
+        {/* —— Text colour roles (contrast) —— */}
+        <Section eyebrow="Foundations" title="Text colour — structural vs functional small text">
+          <p className="body max-w-body">
+            Warm Mid-Grey (<code>#8B8881</code>) on Soft Paper measures ~3.3:1 — fine for large text
+            and graphic elements, but below the 4.5:1 WCAG AA threshold for small body text. The
+            grey token is unchanged; instead it is reserved for{" "}
+            <strong>structural and decorative</strong> labels, while{" "}
+            <strong>functional small text that needs to be read</strong> uses Warm Charcoal
+            (&gt;12:1).
+          </p>
+          <div className="mt-lg grid grid-cols-1 gap-md lg:grid-cols-2">
+            {/* Structural / decorative — stays grey */}
+            <div className="rounded-lg border border-grey/25 p-md">
+              <p className="eyebrow mb-md">Structural / decorative — Warm Mid-Grey (unchanged)</p>
+              <ul className="space-y-md">
+                <li>
+                  <p className="eyebrow">Your starting point</p>
+                  <p className="body-small mt-2xs">
+                    <code>.eyebrow</code> · <code>.section-eyebrow</code> — section labels
+                  </p>
+                </li>
+                <li>
+                  <p className="chain-clip-label">Clip taken</p>
+                  <p className="body-small mt-2xs">
+                    <code>.chain-clip-label</code> · diagram annotations
+                  </p>
+                </li>
+                <li>
+                  <p className="editorial-portrait-label">[ Cover image ]</p>
+                  <p className="body-small mt-2xs">
+                    <code>.placeholder-label</code> · placeholder / portrait labels
+                  </p>
+                </li>
+                <li>
+                  <p className="fee-card-label">Service fee</p>
+                  <p className="body-small mt-2xs">
+                    <code>.fee-card-label</code> · <code>.video-module-eyebrow</code> — figure
+                    labels
+                  </p>
+                </li>
+              </ul>
+            </div>
+            {/* Functional / must-read — now charcoal */}
+            <div className="rounded-lg border border-emerald/25 p-md">
+              <p className="eyebrow mb-md">Functional / must-read — Warm Charcoal</p>
+              <ul className="space-y-md">
+                <li>
+                  <p className="field-help">
+                    At least 8 characters. We&rsquo;ll never email it to you.
+                  </p>
+                  <p className="body-small mt-2xs">
+                    <code>.field-help</code> · form help &amp; instructions
+                  </p>
+                </li>
+                <li>
+                  <p className="chain-caption" style={{ margin: 0 }}>
+                    A structural sketch. Each circle marks a layer where a clip is taken.
+                  </p>
+                  <p className="body-small mt-2xs">
+                    <code>.chain-caption</code> · explanatory captions
+                  </p>
+                </li>
+                <li>
+                  <p className="topic-meta">8 modules · ~90 minutes of video.</p>
+                  <p className="body-small mt-2xs">
+                    <code>.topic-meta</code> · meaningful content metadata
+                  </p>
+                </li>
+                <li>
+                  <span style={{ fontWeight: 500, fontSize: 15, color: "var(--color-charcoal)" }}>
+                    What email should we use?
+                  </span>
+                  <p className="body-small mt-2xs">
+                    <code>.field label</code> · <code>legend</code> — already charcoal
+                  </p>
+                </li>
+              </ul>
             </div>
           </div>
         </Section>

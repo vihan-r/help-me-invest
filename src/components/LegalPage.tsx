@@ -19,7 +19,7 @@ export interface LegalPageProps {
  */
 export function LegalPage({ title, docName, sections }: LegalPageProps) {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <section className="shell" style={{ paddingTop: 80, paddingBottom: 160 }}>
         <div className="col-reading">
           <p className="eyebrow">Legal</p>
