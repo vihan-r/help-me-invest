@@ -33,12 +33,30 @@ and analytics behind the finished front end.
 | Styling     | Tailwind CSS v4 (tokens in `@theme`)     |
 | Tooling     | ESLint 9 (flat config) + Prettier        |
 | Fonts       | `next/font` — Newsreader + Plus Jakarta Sans |
-| Hosting     | Vercel (planned)                         |
+| Hosting     | Railway.com (planned — Phase 2)          |
 | Package mgr | **npm**                                  |
 
-Phase 2 services (per the brief): Supabase (auth/storage), Payload CMS, GoHighLevel
-CRM, a transactional email service, an SMS provider, Bunny Stream (video — never
-served off Vercel/Supabase), privacy-respecting analytics (e.g. PostHog).
+**Phase 2 services — finalised architecture.** The stack was decided in a dev-expert
+meeting and **supersedes the original brief's plan** (which had Vercel hosting, Supabase
+for DB/auth/storage, Payload CMS, and Bunny Stream/Mux for video — all now dropped):
+
+| Concern                        | Service                                                                          |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| Hosting + database + storage   | **Railway.com** — direct GitHub deploy, with integrated database and storage     |
+| Auth                           | **Clerk** — managed service providing Google SSO + email verification            |
+| CMS                            | **Sanity** — also drives non-dev marketing landing pages via templates           |
+| Video                          | **Cloudflare Stream** — with DRM (Widevine / FairPlay) for gated content         |
+
+Carried over from the brief: GoHighLevel CRM, a transactional email service, an SMS
+provider, and privacy-respecting analytics (e.g. PostHog).
+
+Notes on this architecture:
+
+- **All of it is Phase 2 — none of it is built yet.**
+- The **current front-end build has no dependency on any of these services**, so nothing
+  needs re-architecting when they're wired in behind the finished front end.
+- **Karan (dev expert) owns the security review** and will audit the first full-stack
+  build, with a focus on API security and protecting client data.
 
 ---
 
@@ -171,7 +189,7 @@ shells. Repo: `vihan-r/help-me-invest` (private).
 
 **Stage 8 — Phase-1 polish (not started; awaiting go-ahead):** full responsive sweep
 across every surface, accessibility + reduced-motion pass, per-route OpenGraph/meta,
-and deploy to staging (Vercel) for stakeholder click-through. This closes Phase 1.
+and deploy to staging (Railway) for stakeholder click-through. This closes Phase 1.
 
 Then **Phase 2** layers in CMS, accounts/auth/gating, the assessment funnel + PDF,
 CRM/email/SMS, consent handling, and analytics — behind the finished front end.
