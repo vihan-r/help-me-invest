@@ -2,6 +2,9 @@
   "name": "help-me-invest",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "engines": {
     "node": ">=20.9.0"
   },
