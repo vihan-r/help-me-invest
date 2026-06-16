@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Arrow, Button } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { SignInForm } from "./SignInForm";
 
 export const metadata = pageMeta({
   title: "Sign in",
@@ -24,33 +25,7 @@ export default function SignIn() {
               waiting.
             </p>
 
-            <form className="stack-md" style={{ marginTop: 40 }}>
-              <div className="field">
-                <label htmlFor="email">What email do you use?</label>
-                <input id="email" name="email" type="email" autoComplete="email" />
-              </div>
-
-              <div className="field">
-                <label htmlFor="password">Your password</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                />
-                <p className="field-help">
-                  <Link className="inline-link" href="/reset-password">
-                    Forgot your password?
-                  </Link>
-                </p>
-              </div>
-
-              <div style={{ marginTop: 16 }}>
-                <Button variant="primary" type="button">
-                  Sign in <Arrow />
-                </Button>
-              </div>
-            </form>
+            <SignInForm />
 
             <div className="divider-or">
               <span>or</span>

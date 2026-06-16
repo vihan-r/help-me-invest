@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Arrow, Button } from "@/components";
+import { Arrow } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { ResetPasswordForm } from "./ResetPasswordForm";
 
 export const metadata = pageMeta({
   title: "Reset password",
@@ -20,22 +21,11 @@ export default function ResetPassword() {
               Reset your <em>password.</em>
             </h1>
             <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
-              Enter the email you use for Help Me Invest and we&rsquo;ll send you a link to set a
-              new password. The link expires in an hour.
+              Enter the email you use for Help Me Invest and we&rsquo;ll send you a link to set a new
+              password. The link expires in an hour.
             </p>
 
-            <form className="stack-md" style={{ marginTop: 40 }}>
-              <div className="field">
-                <label htmlFor="email">Your email</label>
-                <input id="email" name="email" type="email" autoComplete="email" />
-              </div>
-
-              <div style={{ marginTop: 16 }}>
-                <Button variant="primary" type="button">
-                  Send reset link <Arrow />
-                </Button>
-              </div>
-            </form>
+            <ResetPasswordForm />
 
             <p style={{ marginTop: 28, textAlign: "center" }}>
               <Link className="tertiary-link" href="/sign-in">

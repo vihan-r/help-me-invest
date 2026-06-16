@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Arrow, Button } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { SignUpForm } from "./SignUpForm";
 
 export const metadata = pageMeta({
   title: "Create account",
@@ -25,57 +26,7 @@ export default function SignUp() {
               talk to the partners we vouch for. We&rsquo;ll never share your details.
             </p>
 
-            <form className="stack-md" style={{ marginTop: 40 }}>
-              <div className="field">
-                <label htmlFor="first-name">What&rsquo;s your first name?</label>
-                <input id="first-name" name="first-name" type="text" autoComplete="given-name" />
-              </div>
-
-              <div className="field">
-                <label htmlFor="email">What email should we use?</label>
-                <input id="email" name="email" type="email" autoComplete="email" />
-              </div>
-
-              <div className="field">
-                <label htmlFor="password">Choose a password</label>
-                <input id="password" name="password" type="password" autoComplete="new-password" />
-                <p className="field-help">
-                  At least 8 characters. We&rsquo;ll never email it to you.
-                </p>
-              </div>
-
-              <fieldset className="field-group">
-                <legend>Where are you in your investing journey?</legend>
-                <div className="field-radio-group">
-                  <label className="field-radio">
-                    <input type="radio" name="stage" defaultChecked />
-                    <span>Just exploring, I want to understand how property investing works.</span>
-                  </label>
-                  <label className="field-radio">
-                    <input type="radio" name="stage" />
-                    <span>Saving for my first investment property.</span>
-                  </label>
-                  <label className="field-radio">
-                    <input type="radio" name="stage" />
-                    <span>Ready to buy my first investment property.</span>
-                  </label>
-                  <label className="field-radio">
-                    <input type="radio" name="stage" />
-                    <span>I already own one or more investment properties.</span>
-                  </label>
-                </div>
-              </fieldset>
-
-              <div style={{ marginTop: 32 }}>
-                <Button variant="primary" type="button">
-                  Create my account <Arrow />
-                </Button>
-                <p className="terms-line">
-                  By creating an account, you agree to our <Link href="/terms">terms</Link> and{" "}
-                  <Link href="/privacy">privacy notice</Link>.
-                </p>
-              </div>
-            </form>
+            <SignUpForm />
 
             <div className="divider-or">
               <span>or</span>

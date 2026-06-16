@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Arrow, Button } from "@/components";
+import { Arrow } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { VerifyEmailActions } from "./VerifyEmailActions";
 
 export const metadata = pageMeta({
   title: "Verify your email",
@@ -20,8 +21,8 @@ export default function VerifyEmail() {
               Check your <em>inbox.</em>
             </h1>
             <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
-              We&rsquo;ve sent a verification link to your email. Open it to confirm your address
-              and unlock the full library. It can take a minute to arrive.
+              We&rsquo;ve sent a verification link to your email. Open it to confirm your address and
+              unlock the full library. It can take a minute to arrive.
             </p>
 
             <div
@@ -34,11 +35,7 @@ export default function VerifyEmail() {
               </p>
             </div>
 
-            <div style={{ marginTop: 32 }}>
-              <Button variant="primary" type="button">
-                Resend verification email <Arrow />
-              </Button>
-            </div>
+            <VerifyEmailActions />
 
             <p style={{ marginTop: 28, textAlign: "center" }}>
               <Link className="tertiary-link" href="/sign-in">
