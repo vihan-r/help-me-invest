@@ -46,7 +46,7 @@ export function ContactForm() {
 
   if (isSubmitSuccessful) {
     return (
-      <div className="stack-md" style={{ padding: "32px 0" }} role="status" aria-live="polite">
+      <div className="stack-md py-8" role="status" aria-live="polite">
         <h2 className="h3">
           Your message is <em>on its way.</em>
         </h2>

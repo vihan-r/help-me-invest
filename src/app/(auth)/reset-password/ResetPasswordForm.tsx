@@ -27,8 +27,7 @@ export function ResetPasswordForm() {
   if (isSubmitSuccessful) {
     return (
       <div
-        className="bg-lighter-mint"
-        style={{ borderRadius: 14, padding: "20px 22px", marginTop: 32 }}
+        className="bg-lighter-mint rounded-lg py-5 px-[22px] mt-8"
         role="status"
         aria-live="polite"
       >
@@ -41,7 +40,7 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <form className="stack-md" style={{ marginTop: 40 }} noValidate onSubmit={handleSubmit(onSubmit)}>
+    <form className="stack-md mt-10" noValidate onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="email"
         label="Your email"
@@ -51,7 +50,7 @@ export function ResetPasswordForm() {
         {...register("email")}
         error={errors.email?.message}
       />
-      <div style={{ marginTop: 16 }}>
+      <div className="mt-4">
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send reset link <Arrow />
         </button>

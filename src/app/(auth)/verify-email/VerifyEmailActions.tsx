@@ -19,11 +19,11 @@ export function VerifyEmailActions() {
   };
 
   return (
-    <div style={{ marginTop: 32 }}>
+    <div className="mt-8">
       <Button variant="primary" type="button" onClick={resend}>
         Resend verification email <Arrow />
       </Button>
-      <p className="field-help" style={{ marginTop: 14 }} role="status" aria-live="polite">
+      <p className="field-help mt-3.5" role="status" aria-live="polite">
         {sent ? "Sent — a fresh verification link is on its way." : ""}
       </p>
     </div>

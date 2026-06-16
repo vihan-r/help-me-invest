@@ -13,14 +13,14 @@ export const metadata = pageMeta({
 export default function SignIn() {
   return (
     <main id="main-content" tabIndex={-1}>
-      <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
+      <section className="account-shell pt-16 pb-30">
         <div className="account-grid" style={{ gridTemplateColumns: "1fr" }}>
           <div className="account-form">
             <p className="eyebrow">Welcome back</p>
-            <h1 className="d1" style={{ marginTop: 14 }}>
+            <h1 className="d1 mt-3.5">
               Sign in to your <em>account.</em>
             </h1>
-            <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
+            <p className="body-large mt-6 max-w-[520px]">
               Pick up where you left off in the library. Your saved progress and notes are here
               waiting.
             </p>
@@ -35,7 +35,7 @@ export default function SignIn() {
               Continue with Google
             </Button>
 
-            <p style={{ marginTop: 28, textAlign: "center" }}>
+            <p className="mt-7 text-center">
               <Link className="tertiary-link" href="/sign-up">
                 Don&rsquo;t have an account yet? Create one <Arrow />
               </Link>

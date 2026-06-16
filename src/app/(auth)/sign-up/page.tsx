@@ -13,15 +13,15 @@ export const metadata = pageMeta({
 export default function SignUp() {
   return (
     <main id="main-content" tabIndex={-1}>
-      <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
+      <section className="account-shell pt-16 pb-30">
         <div className="account-grid">
           {/* The form */}
           <div className="account-form">
             <p className="eyebrow">Free account · 30 seconds</p>
-            <h1 className="d1" style={{ marginTop: 14 }}>
+            <h1 className="d1 mt-3.5">
               Create your <em>account.</em>
             </h1>
-            <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
+            <p className="body-large mt-6 max-w-[520px]">
               A free account so you can keep going through the library and, when you&rsquo;re ready,
               talk to the partners we vouch for. We&rsquo;ll never share your details.
             </p>
@@ -36,7 +36,7 @@ export default function SignUp() {
               Continue with Google
             </Button>
 
-            <p style={{ marginTop: 28, textAlign: "center" }}>
+            <p className="mt-7 text-center">
               <Link className="tertiary-link" href="/sign-in">
                 Already have an account? Sign in <Arrow />
               </Link>

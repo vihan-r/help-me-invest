@@ -12,7 +12,7 @@ export function SiteFooter() {
         <div className="site-footer-grid">
           <div className="site-footer-col">
             <Wordmark size={20} />
-            <p className="body-small" style={{ marginTop: 18, maxWidth: 320 }}>
+            <p className="body-small mt-4.5 max-w-[320px]">
               A platform for Australians investing on their own terms.
             </p>
           </div>

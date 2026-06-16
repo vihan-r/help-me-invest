@@ -42,7 +42,7 @@ export function SignUpForm() {
   };
 
   return (
-    <form className="stack-md" style={{ marginTop: 40 }} noValidate onSubmit={handleSubmit(onSubmit)}>
+    <form className="stack-md mt-10" noValidate onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="first-name"
         label="What’s your first name?"
@@ -77,7 +77,7 @@ export function SignUpForm() {
         registration={register("stage")}
         error={errors.stage?.message}
       />
-      <div style={{ marginTop: 32 }}>
+      <div className="mt-8">
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Create my account <Arrow />
         </button>

@@ -52,7 +52,7 @@ export function ExpertForm() {
 
   if (isSubmitSuccessful) {
     return (
-      <div className="stack-md" style={{ padding: "32px 0" }} role="status" aria-live="polite">
+      <div className="stack-md py-8" role="status" aria-live="polite">
         <h2 className="h3">
           Thanks. We&rsquo;ll be in touch <em>within a day.</em>
         </h2>
@@ -110,7 +110,7 @@ export function ExpertForm() {
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send my details <Arrow />
         </button>
-        <p className="body-small" style={{ marginTop: 14 }}>
+        <p className="body-small mt-3.5">
           We&rsquo;ll call you back within a day. If you&rsquo;d rather email,{" "}
           <a className="inline-link" href="mailto:hello@helpmeinvest.com.au">
             hello@helpmeinvest.com.au

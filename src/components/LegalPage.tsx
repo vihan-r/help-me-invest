@@ -20,20 +20,13 @@ export interface LegalPageProps {
 export function LegalPage({ title, docName, sections }: LegalPageProps) {
   return (
     <main id="main-content" tabIndex={-1}>
-      <section className="shell" style={{ paddingTop: 80, paddingBottom: 160 }}>
+      <section className="shell pt-20 pb-40">
         <div className="col-reading">
           <p className="eyebrow">Legal</p>
-          <h1 className="d1" style={{ marginTop: 16 }}>
-            {title}
-          </h1>
-          <p className="body-small text-grey" style={{ marginTop: 24 }}>
-            Last updated: [ placeholder date ]
-          </p>
+          <h1 className="d1 mt-4">{title}</h1>
+          <p className="body-small text-grey mt-6">Last updated: [ placeholder date ]</p>
 
-          <div
-            className="bg-lighter-mint"
-            style={{ borderRadius: 14, padding: "20px 22px", marginTop: 32 }}
-          >
+          <div className="bg-lighter-mint rounded-lg py-5 px-[22px] mt-8">
             <p className="body-small">
               <strong>Placeholder document.</strong> This is layout only — the final {docName}{" "}
               wording will be supplied by Help Me Invest and will replace everything below. Section
@@ -41,7 +34,7 @@ export function LegalPage({ title, docName, sections }: LegalPageProps) {
             </p>
           </div>
 
-          <div className="stack-lg" style={{ marginTop: 56 }}>
+          <div className="stack-lg mt-14">
             {sections.map((s, i) => (
               <section key={s.heading} className="stack-sm">
                 <h2 className="h3">

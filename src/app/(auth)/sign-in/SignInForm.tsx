@@ -27,7 +27,7 @@ export function SignInForm() {
   };
 
   return (
-    <form className="stack-md" style={{ marginTop: 40 }} noValidate onSubmit={handleSubmit(onSubmit)}>
+    <form className="stack-md mt-10" noValidate onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="email"
         label="What email do you use?"
@@ -51,7 +51,7 @@ export function SignInForm() {
           Forgot your password?
         </Link>
       </p>
-      <div style={{ marginTop: 16 }}>
+      <div className="mt-4">
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Sign in <Arrow />
         </button>

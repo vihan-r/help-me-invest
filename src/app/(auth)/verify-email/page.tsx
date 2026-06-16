@@ -13,22 +13,19 @@ export const metadata = pageMeta({
 export default function VerifyEmail() {
   return (
     <main id="main-content" tabIndex={-1}>
-      <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
+      <section className="account-shell pt-16 pb-30">
         <div className="account-grid" style={{ gridTemplateColumns: "1fr" }}>
           <div className="account-form">
             <p className="eyebrow">One last step</p>
-            <h1 className="d1" style={{ marginTop: 14 }}>
+            <h1 className="d1 mt-3.5">
               Check your <em>inbox.</em>
             </h1>
-            <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
-              We&rsquo;ve sent a verification link to your email. Open it to confirm your address and
-              unlock the full library. It can take a minute to arrive.
+            <p className="body-large mt-6 max-w-[520px]">
+              We&rsquo;ve sent a verification link to your email. Open it to confirm your address
+              and unlock the full library. It can take a minute to arrive.
             </p>
 
-            <div
-              className="bg-lighter-mint"
-              style={{ borderRadius: 14, padding: "20px 22px", marginTop: 32 }}
-            >
+            <div className="bg-lighter-mint rounded-lg py-5 px-[22px] mt-8">
               <p className="body-small">
                 Can&rsquo;t find it? Check your spam folder, or resend the link below. The link
                 expires in 24 hours.
@@ -37,7 +34,7 @@ export default function VerifyEmail() {
 
             <VerifyEmailActions />
 
-            <p style={{ marginTop: 28, textAlign: "center" }}>
+            <p className="mt-7 text-center">
               <Link className="tertiary-link" href="/sign-in">
                 Already verified? Sign in <Arrow />
               </Link>

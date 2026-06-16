@@ -69,7 +69,7 @@ export default function Home() {
           There&rsquo;s a chain between you and the property you&rsquo;re trying to buy.{" "}
           <em>Each layer takes a clip.</em>
         </h2>
-        <div className="grid-2" style={{ marginTop: 64, alignItems: "start" }}>
+        <div className="grid-2 mt-16 items-start">
           <ChainDiagram
             title="The chain you can’t see."
             topLabel="The property"
@@ -82,7 +82,7 @@ export default function Home() {
             caption="Knowledge moves directly. The customer leads the decision."
           />
         </div>
-        <div className="col-body" style={{ marginTop: 96 }}>
+        <div className="col-body mt-24">
           <div className="stack-md">
             <p className="body">
               Australian property investing has evolved into a layered system. The property sits at
@@ -96,7 +96,7 @@ export default function Home() {
               can be charged for navigating it.
             </p>
           </div>
-          <p style={{ marginTop: 32 }}>
+          <p className="mt-8">
             <TertiaryLink href="/how-it-works">
               Learn more about the chain <Arrow />
             </TertiaryLink>
@@ -110,11 +110,11 @@ export default function Home() {
         <h2 className="h1 col-display">
           Three things, <em>delivered directly,</em> at a fraction of what the chain has charged.
         </h2>
-        <p className="body-large col-body" style={{ marginTop: 32 }}>
+        <p className="body-large col-body mt-8">
           The platform gives everyday Australians the knowledge, the access, and the trusted experts
           to invest in property themselves. Each one was previously gated. None of them needs to be.
         </p>
-        <div style={{ marginTop: 80 }}>
+        <div className="mt-20">
           <Pillars>
             <Pillar
               number="01"
@@ -151,7 +151,7 @@ export default function Home() {
             />
           </Pillars>
         </div>
-        <p style={{ marginTop: 48 }}>
+        <p className="mt-12">
           <TertiaryLink href="/how-it-works">
             Learn how it works <Arrow />
           </TertiaryLink>
@@ -159,30 +159,22 @@ export default function Home() {
       </section>
 
       {/* Your starting point — self-assessment (Lighter Mint ground) */}
-      <section className="bg-lighter-mint" style={{ padding: "96px 0" }}>
+      <section className="bg-lighter-mint py-24">
         <div className="shell">
-          <div className="grid-2" style={{ gap: 72, alignItems: "center" }}>
+          <div className="grid-2 gap-18 items-center">
             <div>
               <SectionEyebrow>Your starting point</SectionEyebrow>
               <h2 className="h1">
                 Now, see where you <em>really stand.</em>
               </h2>
-              <p className="body-large" style={{ marginTop: 32 }}>
+              <p className="body-large mt-8">
                 You can see the whole chain now, and how much of it ran on keeping you in the dark
                 about your own position. This is where that ends. The self-assessment is a
                 predictive model that shows you where you stand today, where you want to be by the
                 time you retire, and the strategy it takes to close the gap. The first move on a
                 property plan that&rsquo;s genuinely your own.
               </p>
-              <div
-                style={{
-                  marginTop: 48,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 32,
-                  flexWrap: "wrap",
-                }}
-              >
+              <div className="mt-12 flex items-center gap-8 flex-wrap">
                 <Button variant="primary" href="/self-assessment">
                   Start my self assessment <Arrow />
                 </Button>
@@ -203,13 +195,13 @@ export default function Home() {
           <h2 className="h1">
             Australians investing on their own terms, <em>in their own words.</em>
           </h2>
-          <p className="body-large col-body" style={{ marginTop: 32 }}>
+          <p className="body-large col-body mt-8">
             What unites them isn&rsquo;t the stage they&rsquo;re at, it&rsquo;s their values. They
             want to understand a decision before they make it. They expect transparency by default.
             They treat property as a decision, not as a dream.
           </p>
         </div>
-        <div className="investor-triptych" style={{ marginTop: 80 }}>
+        <div className="investor-triptych mt-20">
           <InvestorCard
             name="Aisha"
             age={26}
@@ -238,7 +230,7 @@ export default function Home() {
             zoom={1.2}
           />
         </div>
-        <p style={{ marginTop: 64 }}>
+        <p className="mt-16">
           <TertiaryLink href="/success-stories">
             See all investor stories <Arrow />
           </TertiaryLink>
@@ -246,26 +238,14 @@ export default function Home() {
       </section>
 
       {/* Closing CTA */}
-      <section
-        className="shell"
-        style={{ paddingTop: 120, paddingBottom: 160, textAlign: "center" }}
-      >
-        <h2 className="d1" style={{ maxWidth: 900, margin: "0 auto" }}>
+      <section className="shell pt-30 pb-40 text-center">
+        <h2 className="d1 max-w-[900px] mx-auto">
           Property investing <em>back in the hands</em> of everyday Australians.
         </h2>
-        <p className="body-large" style={{ maxWidth: 520, margin: "32px auto 0" }}>
+        <p className="body-large max-w-[520px] mt-8 mx-auto">
           The education is free. The access is open. The choice is yours.
         </p>
-        <div
-          style={{
-            marginTop: 48,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 32,
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="mt-12 flex justify-center items-center gap-8 flex-wrap">
           <Button variant="primary" href="/self-assessment">
             Start building my property strategy <Arrow />
           </Button>
