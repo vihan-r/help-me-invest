@@ -1,24 +1,73 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Arrow } from "./Arrow";
 import { Button } from "./Button";
+import { RadioGroup, TextField } from "./Field";
 import { Placeholder } from "./Placeholder";
 
 type View = "intro" | "step" | "done";
 
 const PHASES = ["About you", "Where this leads", "Your plan"];
 
+// Shell-level validation: enough to stop a step advancing with empty answers.
+// The predictive model + real ranges are Phase 2.
+const schema = z.object({
+  age: z.string().trim().min(1, "Enter your age."),
+  retire: z.string().trim().min(1, "Enter the age you’re aiming at."),
+  income: z.string().trim().min(1, "Enter your gross annual income."),
+  incomeType: z.enum(["salary", "self", "mix"]),
+  target: z.string().trim().min(1, "Enter the income you’d want."),
+  experience: z.enum(["none", "one", "multiple"]),
+});
+
+type SAValues = z.infer<typeof schema>;
+
+const STEP_META = [
+  {
+    title: "Let’s start with timing.",
+    lede: "Two quick questions. Nothing here is saved or sent.",
+  },
+  { title: "Your income today.", lede: "A rough figure is fine — you can refine it later." },
+  { title: "Where you’d like to land.", lede: "What “work is optional” looks like for you." },
+];
+
+const STEP_FIELDS: (keyof SAValues)[][] = [
+  ["age", "retire"],
+  ["income", "incomeType"],
+  ["target", "experience"],
+];
+
 export function SelfAssessmentShell() {
   const [view, setView] = useState<View>("intro");
   const [step, setStep] = useState(0);
+
+  // One form across all steps — react-hook-form keeps values mounted across
+  // Back/Next (shouldUnregister defaults to false), so nothing is lost when a
+  // step's inputs unmount. Fixes the uncontrolled-multi-step state bug.
+  const {
+    register,
+    trigger,
+    formState: { errors },
+  } = useForm<SAValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { incomeType: "salary", experience: "none" },
+  });
 
   const start = () => {
     setStep(0);
     setView("step");
   };
   const back = () => (step > 0 ? setStep(step - 1) : setView("intro"));
-  const next = () => (step < 2 ? setStep(step + 1) : setView("done"));
+  const next = async () => {
+    const ok = await trigger(STEP_FIELDS[step]);
+    if (!ok) return;
+    if (step < 2) setStep(step + 1);
+    else setView("done");
+  };
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -119,14 +168,88 @@ export function SelfAssessmentShell() {
                   {PHASES[step]} · {step + 1} of 3
                 </p>
                 <h2 className="h2" style={{ marginTop: 12 }}>
-                  {STEPS[step].title}
+                  {STEP_META[step].title}
                 </h2>
                 <p className="body-large" style={{ marginTop: 16 }}>
-                  {STEPS[step].lede}
+                  {STEP_META[step].lede}
                 </p>
 
                 <div className="stack-md" style={{ marginTop: 36 }}>
-                  {STEPS[step].fields}
+                  {step === 0 && (
+                    <>
+                      <TextField
+                        id="sa-age"
+                        label="How old are you?"
+                        type="number"
+                        inputMode="numeric"
+                        placeholder="e.g. 34"
+                        required
+                        {...register("age")}
+                        error={errors.age?.message}
+                      />
+                      <TextField
+                        id="sa-retire"
+                        label="When would you like work to be optional?"
+                        type="number"
+                        inputMode="numeric"
+                        placeholder="e.g. 60"
+                        help="The age you’re aiming at."
+                        required
+                        {...register("retire")}
+                        error={errors.retire?.message}
+                      />
+                    </>
+                  )}
+                  {step === 1 && (
+                    <>
+                      <TextField
+                        id="sa-income"
+                        label="Gross annual income"
+                        type="number"
+                        inputMode="numeric"
+                        placeholder="$"
+                        required
+                        {...register("income")}
+                        error={errors.income?.message}
+                      />
+                      <RadioGroup
+                        legend="How is your income earned?"
+                        options={[
+                          { value: "salary", label: "Salary (PAYG)." },
+                          { value: "self", label: "Self-employed or business income." },
+                          { value: "mix", label: "A mix of both." },
+                        ]}
+                        required
+                        registration={register("incomeType")}
+                        error={errors.incomeType?.message}
+                      />
+                    </>
+                  )}
+                  {step === 2 && (
+                    <>
+                      <TextField
+                        id="sa-target"
+                        label="Annual income you’d want in retirement"
+                        type="number"
+                        inputMode="numeric"
+                        placeholder="$"
+                        required
+                        {...register("target")}
+                        error={errors.target?.message}
+                      />
+                      <RadioGroup
+                        legend="Have you invested in property before?"
+                        options={[
+                          { value: "none", label: "Not yet — this would be my first." },
+                          { value: "one", label: "I own one investment property." },
+                          { value: "multiple", label: "I own more than one." },
+                        ]}
+                        required
+                        registration={register("experience")}
+                        error={errors.experience?.message}
+                      />
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -142,7 +265,7 @@ export function SelfAssessmentShell() {
           )}
 
           {view === "done" && (
-            <div style={{ textAlign: "center", paddingTop: 24 }}>
+            <div style={{ textAlign: "center", paddingTop: 24 }} role="status" aria-live="polite">
               <p className="eyebrow">That’s everything</p>
               <h2 className="h2" style={{ marginTop: 12 }}>
                 Your report would appear here.
@@ -163,81 +286,3 @@ export function SelfAssessmentShell() {
     </main>
   );
 }
-
-const STEPS: { title: string; lede: string; fields: React.ReactNode }[] = [
-  {
-    title: "Let’s start with timing.",
-    lede: "Two quick questions. Nothing here is saved or sent.",
-    fields: (
-      <>
-        <div className="field">
-          <label htmlFor="sa-age">How old are you?</label>
-          <input id="sa-age" type="number" inputMode="numeric" placeholder="e.g. 34" />
-        </div>
-        <div className="field">
-          <label htmlFor="sa-retire">When would you like work to be optional?</label>
-          <input id="sa-retire" type="number" inputMode="numeric" placeholder="e.g. 60" />
-          <p className="field-help">The age you’re aiming at.</p>
-        </div>
-      </>
-    ),
-  },
-  {
-    title: "Your income today.",
-    lede: "A rough figure is fine — you can refine it later.",
-    fields: (
-      <>
-        <div className="field">
-          <label htmlFor="sa-income">Gross annual income</label>
-          <input id="sa-income" type="number" inputMode="numeric" placeholder="$" />
-        </div>
-        <fieldset className="field-group">
-          <legend>How is your income earned?</legend>
-          <div className="field-radio-group">
-            <label className="field-radio">
-              <input type="radio" name="sa-income-type" defaultChecked />
-              <span>Salary (PAYG).</span>
-            </label>
-            <label className="field-radio">
-              <input type="radio" name="sa-income-type" />
-              <span>Self-employed or business income.</span>
-            </label>
-            <label className="field-radio">
-              <input type="radio" name="sa-income-type" />
-              <span>A mix of both.</span>
-            </label>
-          </div>
-        </fieldset>
-      </>
-    ),
-  },
-  {
-    title: "Where you’d like to land.",
-    lede: "What “work is optional” looks like for you.",
-    fields: (
-      <>
-        <div className="field">
-          <label htmlFor="sa-target">Annual income you’d want in retirement</label>
-          <input id="sa-target" type="number" inputMode="numeric" placeholder="$" />
-        </div>
-        <fieldset className="field-group">
-          <legend>Have you invested in property before?</legend>
-          <div className="field-radio-group">
-            <label className="field-radio">
-              <input type="radio" name="sa-experience" defaultChecked />
-              <span>Not yet — this would be my first.</span>
-            </label>
-            <label className="field-radio">
-              <input type="radio" name="sa-experience" />
-              <span>I own one investment property.</span>
-            </label>
-            <label className="field-radio">
-              <input type="radio" name="sa-experience" />
-              <span>I own more than one.</span>
-            </label>
-          </div>
-        </fieldset>
-      </>
-    ),
-  },
-];
