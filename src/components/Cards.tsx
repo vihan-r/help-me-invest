@@ -1,3 +1,4 @@
+import type { StaticImageData } from "next/image";
 import Link from "next/link";
 import { EditorialPortrait, Placeholder } from "./Placeholder";
 
@@ -8,8 +9,8 @@ export interface InvestorCardProps {
   /** The editorial "decision" line, set in Newsreader. */
   decision: string;
   href: string;
-  /** Optional portrait image; falls back to an editorial placeholder. */
-  image?: string;
+  /** Optional portrait image (path or static import); falls back to an editorial placeholder. */
+  image?: string | StaticImageData;
   focus?: string;
   zoom?: number;
 }

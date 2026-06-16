@@ -1,4 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
+import heroBanner from "../../../public/images/hero-banner.png";
+import aishaPortrait from "../../../public/images/aisha.png";
+import marcusPortrait from "../../../public/images/marcus.png";
+import chrisPortrait from "../../../public/images/chris.png";
 import {
   Arrow,
   Button,
@@ -35,12 +40,17 @@ export default function Home() {
       {/* Hero — contained photographic card with a dark-green content panel */}
       <section className="hero-card-wrap">
         <div className="hero-card">
-          {/* eslint-disable-next-line @next/next/no-img-element -- full-bleed hero banner with custom grid placement; not a candidate for next/image here */}
-          <img
-            className="hero-card-img"
-            src="/images/hero-banner.png"
-            alt="An Australian property investor reviewing learning material at home — quiet, considered, on their own terms."
-          />
+          <div className="hero-card-img">
+            <Image
+              src={heroBanner}
+              alt="An Australian property investor reviewing learning material at home — quiet, considered, on their own terms."
+              fill
+              priority
+              placeholder="blur"
+              sizes="(max-width: 880px) 100vw, 50vw"
+              style={{ objectFit: "cover", objectPosition: "82% center" }}
+            />
+          </div>
           <div className="hero-card-content">
             <h1 className="hero-card-headline">Property investing on your own terms</h1>
             <p className="hero-card-lede">
@@ -206,7 +216,7 @@ export default function Home() {
             city="outer Melbourne"
             decision="Bought her first investment property directly through the platform."
             href="/success-stories"
-            image="/images/aisha.png"
+            image={aishaPortrait}
           />
           <InvestorCard
             name="Marcus"
@@ -214,7 +224,7 @@ export default function Home() {
             city="Newcastle"
             decision="Refinanced, then bought a second property, with every fee on the page."
             href="/success-stories"
-            image="/images/marcus.png"
+            image={marcusPortrait}
             focus="80% 50%"
           />
           <InvestorCard
@@ -223,7 +233,7 @@ export default function Home() {
             city="regional Queensland"
             decision="Fourth property, stress-tested with a platform partner before signing."
             href="/success-stories"
-            image="/images/chris.png"
+            image={chrisPortrait}
             focus="50% 40%"
             zoom={1.2}
           />

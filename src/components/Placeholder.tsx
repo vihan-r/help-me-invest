@@ -1,3 +1,4 @@
+import Image, { type StaticImageData } from "next/image";
 import type { CSSProperties } from "react";
 
 export interface PlaceholderProps {
@@ -24,8 +25,8 @@ export function Placeholder({ ratio = "4x5", label, emerald = false, style }: Pl
 }
 
 export interface EditorialPortraitProps {
-  /** Image source. When omitted, a labelled placeholder renders instead. */
-  src?: string;
+  /** Image source (string path or a static import). When omitted, a labelled placeholder renders. */
+  src?: string | StaticImageData;
   alt?: string;
   /** object-position, e.g. "50% 30%". */
   focus?: string;
@@ -46,11 +47,17 @@ export function EditorialPortrait({
   if (src) {
     return (
       <div className="editorial-portrait has-image">
-        {/* eslint-disable-next-line @next/next/no-img-element -- custom object-fit + transform crop; not a candidate for next/image here */}
-        <img
+        <Image
           src={src}
           alt={alt ?? ""}
-          style={{ objectPosition: focus ?? "50% 50%", transform: `scale(${zoom ?? 1.25})` }}
+          fill
+          sizes="(max-width: 980px) 100vw, 33vw"
+          placeholder={typeof src === "object" ? "blur" : "empty"}
+          style={{
+            objectFit: "cover",
+            objectPosition: focus ?? "50% 50%",
+            transform: `scale(${zoom ?? 1.25})`,
+          }}
         />
       </div>
     );
