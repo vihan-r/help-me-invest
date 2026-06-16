@@ -70,7 +70,7 @@ export function SelfAssessmentShell() {
   };
 
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       <div className="shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
         <div className="sa-shell">
           {view === "intro" && (
@@ -283,6 +283,6 @@ export function SelfAssessmentShell() {
           )}
         </div>
       </div>
-    </main>
+    </>
   );
 }

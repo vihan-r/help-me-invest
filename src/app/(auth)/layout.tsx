@@ -8,11 +8,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <header className="site-header">
-        <div className="account-shell" style={{ display: "flex", justifyContent: "flex-start" }}>
+        <div className="account-shell flex justify-start">
           <Wordmark size={20} />
         </div>
       </header>
-      {children}
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        {children}
+      </main>
     </>
   );
 }

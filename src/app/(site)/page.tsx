@@ -19,17 +19,19 @@ export const metadata = pageMeta({
   path: "/",
 });
 
+// Structural placeholders for the chain motif — interim "Layer N" labels until
+// the real chain-layer copy is supplied (outstanding content item).
 const chainLayers = [
-  { label: "Placeholder.", clip: true },
-  { label: "Placeholder.", clip: false },
-  { label: "Placeholder.", clip: true },
-  { label: "Placeholder.", clip: true },
-  { label: "Placeholder.", clip: false },
+  { label: "Layer 1", clip: true },
+  { label: "Layer 2", clip: false },
+  { label: "Layer 3", clip: true },
+  { label: "Layer 4", clip: true },
+  { label: "Layer 5", clip: false },
 ];
 
 export default function Home() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Hero — contained photographic card with a dark-green content panel */}
       <section className="hero-card-wrap">
         <div className="hero-card">
@@ -40,11 +42,7 @@ export default function Home() {
             alt="An Australian property investor reviewing learning material at home — quiet, considered, on their own terms."
           />
           <div className="hero-card-content">
-            <h1 className="hero-card-headline">
-              Property investing
-              <br />
-              on your own terms
-            </h1>
+            <h1 className="hero-card-headline">Property investing on your own terms</h1>
             <p className="hero-card-lede">
               A platform for Australians investing on their own terms. Learn how property investing
               actually works, get direct access to the deals that used to flow only through closed
@@ -254,6 +252,6 @@ export default function Home() {
           </TertiaryLink>
         </div>
       </section>
-    </main>
+    </>
   );
 }

@@ -77,7 +77,7 @@ const STORIES = [
 
 export default function SuccessStories() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
       <section className="shell pt-16 pb-24">
         <h1 className="d1 col-display">
@@ -111,6 +111,6 @@ export default function SuccessStories() {
           </Button>
         </div>
       </section>
-    </main>
+    </>
   );
 }

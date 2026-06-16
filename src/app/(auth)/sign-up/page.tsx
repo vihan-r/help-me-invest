@@ -12,7 +12,7 @@ export const metadata = pageMeta({
 
 export default function SignUp() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       <section className="account-shell pt-16 pb-30">
         <div className="account-grid">
           {/* The form */}
@@ -61,6 +61,6 @@ export default function SignUp() {
           </aside>
         </div>
       </section>
-    </main>
+    </>
   );
 }

@@ -10,7 +10,7 @@ export const metadata = pageMeta({
 
 export default function FindAnExpert() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
       <section className="shell pt-16 pb-14">
         <p className="eyebrow">Talk to an expert</p>
@@ -27,14 +27,14 @@ export default function FindAnExpert() {
       {/* Video */}
       <section className="shell pt-0 pb-14">
         <div className="col-body">
-          <div className="video-placeholder" aria-label="Play video">
-            <div className="video-play" aria-hidden="true">
+          <button type="button" className="video-placeholder" aria-label="Play the intro video">
+            <span className="video-play" aria-hidden="true">
               <svg viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4 2.5v11l10-5.5z" />
               </svg>
-            </div>
+            </span>
             <span className="video-duration">02:00</span>
-          </div>
+          </button>
         </div>
       </section>
 
@@ -76,6 +76,6 @@ export default function FindAnExpert() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

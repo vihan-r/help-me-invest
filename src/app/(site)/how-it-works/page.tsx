@@ -10,7 +10,7 @@ export const metadata = pageMeta({
 
 export default function HowItWorks() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Hero */}
       <section className="shell pt-20 pb-24">
         <p className="eyebrow mb-6">How it works</p>
@@ -295,6 +295,6 @@ export default function HowItWorks() {
           </Button>
         </div>
       </section>
-    </main>
+    </>
   );
 }

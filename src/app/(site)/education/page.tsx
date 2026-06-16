@@ -55,7 +55,7 @@ function Topic({
 
 export default function Education() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
       <section className="shell pt-16 pb-24">
         <h1 className="d1 col-display">
@@ -160,6 +160,6 @@ export default function Education() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

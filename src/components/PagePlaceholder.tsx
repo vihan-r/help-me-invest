@@ -17,14 +17,12 @@ export interface PagePlaceholderProps {
  */
 export function PagePlaceholder({ eyebrow, title, children }: PagePlaceholderProps) {
   return (
-    <main id="main-content" tabIndex={-1} className="flex-1">
-      <Container width="body" className="py-2xl">
-        <p className="eyebrow mb-sm">{eyebrow}</p>
-        <h1 className="h1">{title}</h1>
-        <p className="body-large mt-md">
-          {children ?? "This page is part of the Help Me Invest MVP and is built in a later stage."}
-        </p>
-      </Container>
-    </main>
+    <Container width="body" className="py-2xl">
+      <p className="eyebrow mb-sm">{eyebrow}</p>
+      <h1 className="h1">{title}</h1>
+      <p className="body-large mt-md">
+        {children ?? "This page is part of the Help Me Invest MVP and is built in a later stage."}
+      </p>
+    </Container>
   );
 }

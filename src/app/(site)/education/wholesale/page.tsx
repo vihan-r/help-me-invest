@@ -23,7 +23,7 @@ const lockedModules = [
 
 export default function Wholesale() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
       <section className="shell pt-16 pb-8">
         <p className="eyebrow">Education · Understanding wholesale property</p>
@@ -41,14 +41,18 @@ export default function Wholesale() {
       {/* Module 01 hero video */}
       <section className="shell pt-8 pb-8">
         <div className="max-w-[900px]">
-          <div className="hero-video" aria-label="Play Module 01, what wholesale actually means">
-            <div className="video-play" aria-hidden="true">
+          <button
+            type="button"
+            className="hero-video"
+            aria-label="Play Module 01, what wholesale actually means"
+          >
+            <span className="video-play" aria-hidden="true">
               <svg viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4 2.5v11l10-5.5z" />
               </svg>
-            </div>
+            </span>
             <span className="hero-video-badge">Module 01 · 08:24</span>
-          </div>
+          </button>
           <div className="hero-video-row">
             <Button variant="secondary" href="/sign-up">
               Watch next module <Arrow />
@@ -114,6 +118,6 @@ export default function Wholesale() {
           </nav>
         </div>
       </section>
-    </main>
+    </>
   );
 }
