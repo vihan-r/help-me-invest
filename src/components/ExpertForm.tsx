@@ -1,18 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Arrow } from "./Arrow";
+import { RadioGroup, TextField } from "./Field";
 
 /**
- * Talk-to-an-expert form — non-submitting, UI only. Calm, customer-led intake
- * (no urgency/scarcity copy). On submit it shows an on-brand confirmation.
+ * Talk-to-an-expert intake. Calm, customer-led (no urgency/scarcity). Validated
+ * with react-hook-form + zod; `onSubmit` is a no-op stub until the Phase-2 backend.
  */
-export function ExpertForm() {
-  const [submitted, setSubmitted] = useState(false);
 
-  if (submitted) {
+const INTENTS = [
+  { value: "first", label: "I’m buying my first investment property." },
+  { value: "next", label: "I’m buying my next investment property." },
+  { value: "refinance", label: "I’m refinancing an existing loan." },
+  { value: "review", label: "I’m reviewing my current portfolio." },
+  { value: "other", label: "Something else — I’ll explain below." },
+] as const;
+
+const TIMINGS = [
+  { value: "whenever", label: "Whenever suits — I’m just exploring." },
+  { value: "months", label: "Sometime in the next few months." },
+  { value: "now", label: "I’m working through a decision now." },
+] as const;
+
+const schema = z.object({
+  firstName: z.string().trim().min(1, "Please tell us your first name."),
+  phone: z.string().trim().min(1, "Add a number we can reach you on."),
+  email: z.email("Please add a valid email."),
+  intent: z.enum(["first", "next", "refinance", "review", "other"]),
+  timing: z.enum(["whenever", "months", "now"]),
+});
+
+type ExpertValues = z.infer<typeof schema>;
+
+export function ExpertForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<ExpertValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { intent: "first", timing: "whenever" },
+  });
+
+  const onSubmit = async (data: ExpertValues) => {
+    // No backend yet — Phase 2 replaces this body with the API / CRM call using `data`.
+    void data;
+  };
+
+  if (isSubmitSuccessful) {
     return (
-      <div className="stack-md" style={{ padding: "32px 0" }}>
+      <div className="stack-md" style={{ padding: "32px 0" }} role="status" aria-live="polite">
         <h2 className="h3">
           Thanks. We&rsquo;ll be in touch <em>within a day.</em>
         </h2>
@@ -25,75 +65,49 @@ export function ExpertForm() {
   }
 
   return (
-    <form
-      className="stack-lg"
-      noValidate
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-    >
-      <div className="field">
-        <label htmlFor="first-name">What&rsquo;s your first name?</label>
-        <input id="first-name" name="first-name" type="text" autoComplete="given-name" />
-      </div>
-
-      <div className="field">
-        <label htmlFor="phone">What&rsquo;s the best number to reach you on?</label>
-        <input id="phone" name="phone" type="tel" autoComplete="tel" />
-      </div>
-
-      <div className="field">
-        <label htmlFor="email">And an email, in case we can&rsquo;t reach you by phone.</label>
-        <input id="email" name="email" type="email" autoComplete="email" />
-      </div>
-
-      <fieldset className="field-group">
-        <legend>What are you trying to do?</legend>
-        <div className="field-radio-group">
-          <label className="field-radio">
-            <input type="radio" name="intent" defaultChecked />
-            <span>I&rsquo;m buying my first investment property.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="intent" />
-            <span>I&rsquo;m buying my next investment property.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="intent" />
-            <span>I&rsquo;m refinancing an existing loan.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="intent" />
-            <span>I&rsquo;m reviewing my current portfolio.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="intent" />
-            <span>Something else — I&rsquo;ll explain below.</span>
-          </label>
-        </div>
-      </fieldset>
-
-      <fieldset className="field-group">
-        <legend>When would you like to hear from us?</legend>
-        <div className="field-radio-group">
-          <label className="field-radio">
-            <input type="radio" name="timing" defaultChecked />
-            <span>Whenever suits — I&rsquo;m just exploring.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="timing" />
-            <span>Sometime in the next few months.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="timing" />
-            <span>I&rsquo;m working through a decision now.</span>
-          </label>
-        </div>
-      </fieldset>
-
+    <form className="stack-lg" noValidate onSubmit={handleSubmit(onSubmit)}>
+      <TextField
+        id="first-name"
+        label="What’s your first name?"
+        autoComplete="given-name"
+        required
+        {...register("firstName")}
+        error={errors.firstName?.message}
+      />
+      <TextField
+        id="phone"
+        label="What’s the best number to reach you on?"
+        type="tel"
+        autoComplete="tel"
+        required
+        {...register("phone")}
+        error={errors.phone?.message}
+      />
+      <TextField
+        id="email"
+        label="And an email, in case we can’t reach you by phone."
+        type="email"
+        autoComplete="email"
+        required
+        {...register("email")}
+        error={errors.email?.message}
+      />
+      <RadioGroup
+        legend="What are you trying to do?"
+        options={[...INTENTS]}
+        required
+        registration={register("intent")}
+        error={errors.intent?.message}
+      />
+      <RadioGroup
+        legend="When would you like to hear from us?"
+        options={[...TIMINGS]}
+        required
+        registration={register("timing")}
+        error={errors.timing?.message}
+      />
       <div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send my details <Arrow />
         </button>
         <p className="body-small" style={{ marginTop: 14 }}>

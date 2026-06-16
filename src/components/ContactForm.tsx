@@ -1,18 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Arrow } from "./Arrow";
+import { RadioGroup, TextAreaField, TextField } from "./Field";
 
 /**
- * Contact form — non-submitting. On submit it shows an on-brand confirmation
- * (no backend wired). UI only.
+ * Contact form. Client-side validated with react-hook-form + zod; the schema is
+ * the single source of truth and is reusable by the Phase-2 backend. `onSubmit`
+ * is a no-op stub today — wiring the backend is a change to that one function,
+ * not a rewrite.
  */
-export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
 
-  if (submitted) {
+const TOPICS = [
+  { value: "new", label: "I’m new — where do I start?" },
+  { value: "property", label: "A question about a specific property or decision." },
+  { value: "partner", label: "Partner enquiry." },
+  { value: "press", label: "Press / other." },
+] as const;
+
+const schema = z.object({
+  firstName: z.string().trim().min(1, "Please tell us your first name."),
+  email: z.email("Please add a valid email."),
+  topic: z.enum(["new", "property", "partner", "press"]),
+  message: z.string().trim().min(1, "Add a short message so we can help."),
+});
+
+type ContactValues = z.infer<typeof schema>;
+
+export function ContactForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<ContactValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { topic: "new" },
+  });
+
+  const onSubmit = async (data: ContactValues) => {
+    // No backend yet — Phase 2 replaces this body with the API / CRM call using `data`.
+    void data;
+  };
+
+  if (isSubmitSuccessful) {
     return (
-      <div className="stack-md" style={{ padding: "32px 0" }}>
+      <div className="stack-md" style={{ padding: "32px 0" }} role="status" aria-live="polite">
         <h2 className="h3">
           Your message is <em>on its way.</em>
         </h2>
@@ -25,53 +59,41 @@ export function ContactForm() {
   }
 
   return (
-    <form
-      className="stack-lg"
-      noValidate
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-    >
-      <div className="field">
-        <label htmlFor="first-name">What&rsquo;s your first name?</label>
-        <input id="first-name" name="first-name" type="text" autoComplete="given-name" />
-      </div>
-
-      <div className="field">
-        <label htmlFor="email">What email should we use?</label>
-        <input id="email" name="email" type="email" autoComplete="email" />
-      </div>
-
-      <fieldset className="field-group">
-        <legend>What&rsquo;s this about?</legend>
-        <div className="field-radio-group">
-          <label className="field-radio">
-            <input type="radio" name="topic" defaultChecked />
-            <span>I&rsquo;m new — where do I start?</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="topic" />
-            <span>A question about a specific property or decision.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="topic" />
-            <span>Partner enquiry.</span>
-          </label>
-          <label className="field-radio">
-            <input type="radio" name="topic" />
-            <span>Press / other.</span>
-          </label>
-        </div>
-      </fieldset>
-
-      <div className="field">
-        <label htmlFor="message">What&rsquo;s on your mind?</label>
-        <textarea id="message" name="message" rows={6} />
-      </div>
-
+    <form className="stack-lg" noValidate onSubmit={handleSubmit(onSubmit)}>
+      <TextField
+        id="first-name"
+        label="What’s your first name?"
+        autoComplete="given-name"
+        required
+        {...register("firstName")}
+        error={errors.firstName?.message}
+      />
+      <TextField
+        id="email"
+        label="What email should we use?"
+        type="email"
+        autoComplete="email"
+        required
+        {...register("email")}
+        error={errors.email?.message}
+      />
+      <RadioGroup
+        legend="What’s this about?"
+        options={[...TOPICS]}
+        required
+        registration={register("topic")}
+        error={errors.topic?.message}
+      />
+      <TextAreaField
+        id="message"
+        label="What’s on your mind?"
+        rows={6}
+        required
+        {...register("message")}
+        error={errors.message?.message}
+      />
       <div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send <Arrow />
         </button>
       </div>
