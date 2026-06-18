@@ -25,10 +25,8 @@ function StoryCard({
       <div className="stack-sm">
         <h2 className="h4">{name}</h2>
         <p className="body-small text-grey">{structural}</p>
-        <p className="body" style={{ marginTop: 8 }}>
-          {summary}
-        </p>
-        <p style={{ marginTop: 12 }}>
+        <p className="body mt-2">{summary}</p>
+        <p className="mt-3">
           <TertiaryLink href={href}>
             Read {name.split(",")[0]}&rsquo;s story <Arrow />
           </TertiaryLink>
@@ -79,13 +77,13 @@ const STORIES = [
 
 export default function SuccessStories() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
-      <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
+      <section className="shell pt-16 pb-24">
         <h1 className="d1 col-display">
           Australians investing on <em>their own terms.</em>
         </h1>
-        <p className="body-large col-body" style={{ marginTop: 32 }}>
+        <p className="body-large col-body mt-8">
           The customers we&rsquo;re built for are defined by posture, not by stage. They read before
           they buy, they ask how the fee is calculated, and they treat the property as a decision
           rather than a dream. A small set of their stories follows.
@@ -102,17 +100,17 @@ export default function SuccessStories() {
       </section>
 
       {/* Closing */}
-      <section className="shell" style={{ paddingTop: 120, paddingBottom: 160 }}>
+      <section className="shell pt-30 pb-40">
         <h2 className="h1 col-display">
           This is what property investing looks like when it&rsquo;s{" "}
           <em>back in the hands of everyday Australians.</em>
         </h2>
-        <div style={{ marginTop: 48 }}>
+        <div className="mt-12">
           <Button variant="primary" href="/find-an-expert">
             Talk to an expert <Arrow />
           </Button>
         </div>
       </section>
-    </main>
+    </>
   );
 }

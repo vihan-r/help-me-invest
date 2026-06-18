@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Arrow, Button } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { SignUpForm } from "./SignUpForm";
 
 export const metadata = pageMeta({
   title: "Create account",
@@ -11,71 +12,21 @@ export const metadata = pageMeta({
 
 export default function SignUp() {
   return (
-    <main id="main-content" tabIndex={-1}>
-      <section className="account-shell" style={{ paddingTop: 64, paddingBottom: 120 }}>
+    <>
+      <section className="account-shell pt-16 pb-30">
         <div className="account-grid">
           {/* The form */}
           <div className="account-form">
             <p className="eyebrow">Free account · 30 seconds</p>
-            <h1 className="d1" style={{ marginTop: 14 }}>
+            <h1 className="d1 mt-3.5">
               Create your <em>account.</em>
             </h1>
-            <p className="body-large" style={{ marginTop: 24, maxWidth: 520 }}>
+            <p className="body-large mt-6 max-w-[520px]">
               A free account so you can keep going through the library and, when you&rsquo;re ready,
               talk to the partners we vouch for. We&rsquo;ll never share your details.
             </p>
 
-            <form className="stack-md" style={{ marginTop: 40 }}>
-              <div className="field">
-                <label htmlFor="first-name">What&rsquo;s your first name?</label>
-                <input id="first-name" name="first-name" type="text" autoComplete="given-name" />
-              </div>
-
-              <div className="field">
-                <label htmlFor="email">What email should we use?</label>
-                <input id="email" name="email" type="email" autoComplete="email" />
-              </div>
-
-              <div className="field">
-                <label htmlFor="password">Choose a password</label>
-                <input id="password" name="password" type="password" autoComplete="new-password" />
-                <p className="field-help">
-                  At least 8 characters. We&rsquo;ll never email it to you.
-                </p>
-              </div>
-
-              <fieldset className="field-group">
-                <legend>Where are you in your investing journey?</legend>
-                <div className="field-radio-group">
-                  <label className="field-radio">
-                    <input type="radio" name="stage" defaultChecked />
-                    <span>Just exploring, I want to understand how property investing works.</span>
-                  </label>
-                  <label className="field-radio">
-                    <input type="radio" name="stage" />
-                    <span>Saving for my first investment property.</span>
-                  </label>
-                  <label className="field-radio">
-                    <input type="radio" name="stage" />
-                    <span>Ready to buy my first investment property.</span>
-                  </label>
-                  <label className="field-radio">
-                    <input type="radio" name="stage" />
-                    <span>I already own one or more investment properties.</span>
-                  </label>
-                </div>
-              </fieldset>
-
-              <div style={{ marginTop: 32 }}>
-                <Button variant="primary" type="button">
-                  Create my account <Arrow />
-                </Button>
-                <p className="terms-line">
-                  By creating an account, you agree to our <Link href="/terms">terms</Link> and{" "}
-                  <Link href="/privacy">privacy notice</Link>.
-                </p>
-              </div>
-            </form>
+            <SignUpForm />
 
             <div className="divider-or">
               <span>or</span>
@@ -85,7 +36,7 @@ export default function SignUp() {
               Continue with Google
             </Button>
 
-            <p style={{ marginTop: 28, textAlign: "center" }}>
+            <p className="mt-7 text-center">
               <Link className="tertiary-link" href="/sign-in">
                 Already have an account? Sign in <Arrow />
               </Link>
@@ -110,6 +61,6 @@ export default function SignUp() {
           </aside>
         </div>
       </section>
-    </main>
+    </>
   );
 }

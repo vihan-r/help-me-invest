@@ -1,3 +1,4 @@
+import type { StaticImageData } from "next/image";
 import Link from "next/link";
 import { EditorialPortrait, Placeholder } from "./Placeholder";
 
@@ -8,8 +9,8 @@ export interface InvestorCardProps {
   /** The editorial "decision" line, set in Newsreader. */
   decision: string;
   href: string;
-  /** Optional portrait image; falls back to an editorial placeholder. */
-  image?: string;
+  /** Optional portrait image (path or static import); falls back to an editorial placeholder. */
+  image?: string | StaticImageData;
   focus?: string;
   zoom?: number;
 }
@@ -26,7 +27,12 @@ export function InvestorCard({
   zoom,
 }: InvestorCardProps) {
   return (
-    <Link className="investor-profile" href={href} data-reveal="">
+    <Link
+      className="investor-profile"
+      href={href}
+      data-reveal=""
+      aria-label={`Read ${name}’s story`}
+    >
       <EditorialPortrait
         src={image}
         focus={focus}
@@ -60,7 +66,12 @@ export function PartnerCard({
   portraitLabel = "[ Partner portrait ]",
 }: PartnerCardProps) {
   return (
-    <Link className="partner-card stack-md" href={href} data-reveal="">
+    <Link
+      className="partner-card stack-md"
+      href={href}
+      data-reveal=""
+      aria-label={`Read ${name} — full bio`}
+    >
       <Placeholder ratio="4x5" label={portraitLabel} />
       <div className="stack-sm">
         <h3 className="h4">{name}</h3>

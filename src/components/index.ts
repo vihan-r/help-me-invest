@@ -17,6 +17,8 @@ export { InvestorCard, PartnerCard } from "./Cards";
 export type { InvestorCardProps, PartnerCardProps } from "./Cards";
 export { Pillars, Pillar } from "./Pillars";
 export type { PillarsProps, PillarProps } from "./Pillars";
+export { TextField, TextAreaField, RadioGroup } from "./Field";
+export type { TextFieldProps, TextAreaFieldProps, RadioGroupProps, RadioOption } from "./Field";
 export { SectionEyebrow } from "./SectionEyebrow";
 export { Arrow } from "./Arrow";
 export { VideoModule } from "./VideoModule";

@@ -10,13 +10,13 @@ export const metadata = pageMeta({
 
 export default function Partners() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
-      <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
+      <section className="shell pt-16 pb-24">
         <h1 className="d1 col-display">
           The partners we <em>vouch for.</em>
         </h1>
-        <p className="body-large col-body" style={{ marginTop: 32 }}>
+        <p className="body-large col-body mt-8">
           Our partners are introduced to you on merit, paid in arrangements that are documented
           openly, and held to the outcome you&rsquo;re working toward. They stand alongside, not in
           front. You lead the engagement; the partner brings the specific help.
@@ -30,10 +30,10 @@ export default function Partners() {
         <h2 className="h1 col-display">
           What we ask of <em>every partner.</em>
         </h2>
-        <p className="body-large col-body" style={{ marginTop: 32 }}>
+        <p className="body-large col-body mt-8">
           Three standards. Every partner meets all of them, or they don&rsquo;t carry the vouch.
         </p>
-        <div className="whatwedo-grid whatwedo-grid--carded" style={{ marginTop: 48 }}>
+        <div className="whatwedo-grid whatwedo-grid--carded mt-12">
           <div className="whatwedo-card whatwedo-card--filled">
             <h3 className="whatwedo-card-headline">
               They <em>earn</em> the introduction.
@@ -72,11 +72,11 @@ export default function Partners() {
         <h2 className="h2 col-display">
           Who we <em>vouch for.</em>
         </h2>
-        <p className="body col-body" style={{ marginTop: 20 }}>
+        <p className="body col-body mt-5">
           Placeholder copy. Replace with a short editorial intro once the partner roster is
           confirmed.
         </p>
-        <div className="grid-3" style={{ marginTop: 56 }}>
+        <div className="grid-3 mt-14">
           {[1, 2, 3].map((i) => (
             <PartnerCard
               key={i}
@@ -90,7 +90,7 @@ export default function Partners() {
       </section>
 
       {/* Closing */}
-      <section className="shell" style={{ paddingTop: 96, paddingBottom: 160 }}>
+      <section className="shell pt-24 pb-40">
         <div className="col-body stack-md">
           <h2 className="h2">
             Our partners are here <em>when you&rsquo;re ready.</em>
@@ -100,13 +100,13 @@ export default function Partners() {
             with a decision, tell us what you&rsquo;re working on and we&rsquo;ll introduce you to
             the right expert.
           </p>
-          <p style={{ marginTop: 28 }}>
+          <p className="mt-7">
             <TertiaryLink href="/find-an-expert">
               Talk to an expert <Arrow />
             </TertiaryLink>
           </p>
         </div>
       </section>
-    </main>
+    </>
   );
 }

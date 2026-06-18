@@ -10,14 +10,12 @@ export const metadata = pageMeta({
 
 export default function HowItWorks() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Hero */}
-      <section className="shell" style={{ paddingTop: 80, paddingBottom: 96 }}>
-        <p className="eyebrow" style={{ marginBottom: 24 }}>
-          How it works
-        </p>
+      <section className="shell pt-20 pb-24">
+        <p className="eyebrow mb-6">How it works</p>
         <h1 className="d1 col-display">A platform built around the investor.</h1>
-        <p className="body-large col-body" style={{ marginTop: 40 }}>
+        <p className="body-large col-body mt-10">
           Learn what property investing actually involves, decide whether you need help with any of
           it, and only pay if you do. Every fee is named on this page. Walking away costs nothing at
           any point.
@@ -26,10 +24,8 @@ export default function HowItWorks() {
       </section>
 
       {/* High-level journey diagram */}
-      <section className="shell" style={{ paddingTop: 8, paddingBottom: 32 }}>
-        <p className="eyebrow" style={{ marginBottom: 24 }}>
-          The journey, end to end
-        </p>
+      <section className="shell pt-2 pb-8">
+        <p className="eyebrow mb-6">The journey, end to end</p>
         <div className="journey">
           <div className="journey-step">
             <p className="journey-label">Self assess</p>
@@ -62,10 +58,8 @@ export default function HowItWorks() {
 
       {/* The path — the four phases */}
       <section className="shell">
-        <header style={{ marginBottom: 8 }}>
-          <p className="eyebrow" style={{ marginBottom: 24 }}>
-            The path
-          </p>
+        <header className="mb-2">
+          <p className="eyebrow mb-6">The path</p>
           <h2 className="h1">How it works.</h2>
         </header>
 
@@ -107,7 +101,7 @@ export default function HowItWorks() {
                   </p>
                 </li>
               </ol>
-              <div style={{ marginTop: 40 }}>
+              <div className="mt-10">
                 <Button variant="primary" href="/self-assessment">
                   Start self assessment <Arrow />
                 </Button>
@@ -162,7 +156,7 @@ export default function HowItWorks() {
                   </p>
                 </li>
               </ol>
-              <div style={{ marginTop: 40 }}>
+              <div className="mt-10">
                 <Button variant="primary" href="/education">
                   Start learning <Arrow />
                 </Button>
@@ -216,7 +210,7 @@ export default function HowItWorks() {
                   </p>
                 </li>
               </ol>
-              <div style={{ marginTop: 40 }}>
+              <div className="mt-10">
                 <Button variant="primary" href="/find-an-expert">
                   Get help from an expert <Arrow />
                 </Button>
@@ -286,7 +280,7 @@ export default function HowItWorks() {
       </section>
 
       {/* Closing */}
-      <section className="shell" style={{ paddingTop: 120, paddingBottom: 160 }}>
+      <section className="shell pt-30 pb-40">
         <div className="col-body stack-md">
           <h2 className="h1">Start where you are.</h2>
           <p className="body-large">
@@ -295,12 +289,12 @@ export default function HowItWorks() {
             out.
           </p>
         </div>
-        <div style={{ marginTop: 48 }}>
+        <div className="mt-12">
           <Button variant="primary" href="/self-assessment">
             Take the self-assessment <Arrow />
           </Button>
         </div>
       </section>
-    </main>
+    </>
   );
 }

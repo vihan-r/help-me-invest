@@ -27,10 +27,8 @@ function Topic({
     <article className="topic">
       <div>
         <h2 className="h2">{title}</h2>
-        <p className="body-large" style={{ marginTop: 20, maxWidth: 720 }}>
-          {blurb}
-        </p>
-        <p style={{ marginTop: 24 }}>
+        <p className="body-large mt-5 max-w-[720px]">{blurb}</p>
+        <p className="mt-6">
           <TertiaryLink href={href}>
             Start with this <Arrow />
           </TertiaryLink>
@@ -57,20 +55,20 @@ function Topic({
 
 export default function Education() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
-      <section className="shell" style={{ paddingTop: 64, paddingBottom: 96 }}>
+      <section className="shell pt-16 pb-24">
         <h1 className="d1 col-display">
           Everything you need to invest in <em>property yourself.</em>
         </h1>
-        <p className="body-large col-body" style={{ marginTop: 32 }}>
+        <p className="body-large col-body mt-8">
           Taught openly. No paywall on the knowledge itself. You decide what you need, when you need
           it.
         </p>
       </section>
 
       {/* Three topics */}
-      <section className="shell" style={{ paddingBottom: 96 }}>
+      <section className="shell pb-24">
         <Topic
           title="Understanding wholesale property."
           blurb="The category of property that has historically flowed only through closed channels, and how the platform opens those channels directly to you."
@@ -105,11 +103,11 @@ export default function Education() {
         <h2 className="h1 col-display">
           How the education <em>works.</em>
         </h2>
-        <p className="body-large col-body" style={{ marginTop: 32 }}>
+        <p className="body-large col-body mt-8">
           The library isn&rsquo;t a course. There&rsquo;s no required sequence and no progress bar.
           You decide what you need, when you need it.
         </p>
-        <div className="whatwedo-grid whatwedo-grid--carded" style={{ marginTop: 48 }}>
+        <div className="whatwedo-grid whatwedo-grid--carded mt-12">
           <div className="whatwedo-card whatwedo-card--filled">
             <h3 className="whatwedo-card-headline">
               Watch in <em>any order.</em>
@@ -141,7 +139,7 @@ export default function Education() {
       </section>
 
       {/* Talk to an expert CTA */}
-      <section className="shell" style={{ paddingBottom: 160 }}>
+      <section className="shell pb-40">
         <div className="expert-cta">
           <div className="expert-cta-body">
             <p className="section-eyebrow">Need a steer?</p>
@@ -150,7 +148,7 @@ export default function Education() {
               <br />
               Talk to an expert.
             </h2>
-            <p className="body-large" style={{ marginTop: 24, maxWidth: 560 }}>
+            <p className="body-large mt-6 max-w-[560px]">
               Tell us, in a few short answers, what you&rsquo;re trying to figure out. One of our
               team will read it and call you back within a day.
             </p>
@@ -162,6 +160,6 @@ export default function Education() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

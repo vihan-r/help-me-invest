@@ -23,14 +23,14 @@ const lockedModules = [
 
 export default function Wholesale() {
   return (
-    <main id="main-content" tabIndex={-1}>
+    <>
       {/* Header */}
-      <section className="shell" style={{ paddingTop: 64, paddingBottom: 32 }}>
+      <section className="shell pt-16 pb-8">
         <p className="eyebrow">Education · Understanding wholesale property</p>
-        <h1 className="d1 col-display" style={{ marginTop: 16 }}>
+        <h1 className="d1 col-display mt-4">
           What wholesale <em>actually means.</em>
         </h1>
-        <p className="body-large col-body" style={{ marginTop: 32 }}>
+        <p className="body-large col-body mt-8">
           Start here. One short module that lays out what wholesale property actually is in the
           Australian market, why it has historically been reserved for insiders, and what changes
           when an everyday investor gets direct access to it. The rest of the series builds on this
@@ -39,16 +39,20 @@ export default function Wholesale() {
       </section>
 
       {/* Module 01 hero video */}
-      <section className="shell" style={{ paddingTop: 32, paddingBottom: 32 }}>
-        <div style={{ maxWidth: 900 }}>
-          <div className="hero-video" aria-label="Play Module 01, what wholesale actually means">
-            <div className="video-play" aria-hidden="true">
+      <section className="shell pt-8 pb-8">
+        <div className="max-w-[900px]">
+          <button
+            type="button"
+            className="hero-video"
+            aria-label="Play Module 01, what wholesale actually means"
+          >
+            <span className="video-play" aria-hidden="true">
               <svg viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4 2.5v11l10-5.5z" />
               </svg>
-            </div>
+            </span>
             <span className="hero-video-badge">Module 01 · 08:24</span>
-          </div>
+          </button>
           <div className="hero-video-row">
             <Button variant="secondary" href="/sign-up">
               Watch next module <Arrow />
@@ -58,23 +62,23 @@ export default function Wholesale() {
       </section>
 
       {/* Divider */}
-      <section className="shell" style={{ paddingTop: 64, paddingBottom: 64 }}>
-        <hr className="rule" style={{ maxWidth: 900 }} />
+      <section className="shell pt-16 pb-16">
+        <hr className="rule max-w-[900px]" />
       </section>
 
       {/* The rest of the series — gated */}
-      <section className="shell" style={{ paddingBottom: 96 }}>
+      <section className="shell pb-24">
         <p className="eyebrow">The rest of the series</p>
-        <h2 className="h2 col-display" style={{ marginTop: 12 }}>
+        <h2 className="h2 col-display mt-3">
           Free to watch. <em>Create an account to continue.</em>
         </h2>
-        <p className="body col-body" style={{ marginTop: 20 }}>
+        <p className="body col-body mt-5">
           The account is free and exists to serve you, a place to keep what you&rsquo;re learning,
           and to introduce you to the partners you can call on when you&rsquo;re ready. The teaching
           itself was never the thing we were going to charge for.
         </p>
 
-        <div className="locked-zone" style={{ marginTop: 40 }}>
+        <div className="locked-zone mt-10">
           <div className="locked-modules" aria-hidden="true">
             {lockedModules.map((m, i) => (
               <VideoModule
@@ -106,14 +110,14 @@ export default function Wholesale() {
       </section>
 
       {/* Article footer nav */}
-      <section className="shell" style={{ paddingTop: 40, paddingBottom: 120 }}>
-        <div style={{ maxWidth: 900 }}>
+      <section className="shell pt-10 pb-30">
+        <div className="max-w-[900px]">
           <nav className="article-nav">
             <Link href="/education">← Back to Education</Link>
             <Link href="/education/finance">Next: Finance →</Link>
           </nav>
         </div>
       </section>
-    </main>
+    </>
   );
 }

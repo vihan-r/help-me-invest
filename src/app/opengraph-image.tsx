@@ -1,8 +1,11 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 // Shared social card for every route (Open Graph + Twitter). Routes set their
 // own og:title / og:description via `pageMeta`; this is the brand image behind
-// them. Rendered at build time — no external font fetch, so it can't break CI.
+// them. Rendered at build time — the Newsreader display face is read from a
+// committed local TTF (no network fetch), so it can't break CI.
 export const alt = "Help Me Invest — property investing on your own terms";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -10,6 +13,8 @@ export const contentType = "image/png";
 const PAPER = "#F6F7F4";
 const EMERALD = "#0A4B34";
 const MINT = "#A8D5B4";
+
+const newsreader = readFileSync(join(process.cwd(), "src/app/fonts/Newsreader-Regular.ttf"));
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -23,7 +28,7 @@ export default function OpengraphImage() {
         background: EMERALD,
         color: PAPER,
         padding: "80px 88px",
-        fontFamily: "Georgia, 'Times New Roman', serif",
+        fontFamily: "Newsreader, Georgia, serif",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", fontSize: 34, letterSpacing: -0.5 }}>
@@ -33,7 +38,15 @@ export default function OpengraphImage() {
         </span>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ fontSize: 84, lineHeight: 1.02, letterSpacing: -2, maxWidth: 900 }}>
+        <div
+          style={{
+            fontFamily: "Newsreader",
+            fontSize: 84,
+            lineHeight: 1.02,
+            letterSpacing: -2,
+            maxWidth: 900,
+          }}
+        >
           Property investing on your own terms.
         </div>
         <div
@@ -48,6 +61,9 @@ export default function OpengraphImage() {
         </div>
       </div>
     </div>,
-    { ...size },
+    {
+      ...size,
+      fonts: [{ name: "Newsreader", data: newsreader, weight: 400, style: "normal" }],
+    },
   );
 }

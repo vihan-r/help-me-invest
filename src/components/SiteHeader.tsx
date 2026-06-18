@@ -20,8 +20,19 @@ function useIsActive() {
  * the shell shows the signed-out state (Sign in).
  */
 export function SiteHeader() {
+  const pathname = usePathname();
   const isActive = useIsActive();
   const [open, setOpen] = useState(false);
+
+  // Close the mobile menu on any route change — including browser back/forward
+  // and programmatic navigation, which the per-link onClick handlers miss.
+  // Adjusting state during render (React's recommended pattern) avoids the
+  // cascading re-render that a setState-in-effect would cause.
+  const [navPath, setNavPath] = useState(pathname);
+  if (pathname !== navPath) {
+    setNavPath(pathname);
+    setOpen(false);
+  }
 
   return (
     <header className="site-header">

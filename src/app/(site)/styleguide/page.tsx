@@ -156,7 +156,7 @@ function Section({
 
 export default function StyleguidePage() {
   return (
-    <main className="bg-paper py-2xl">
+    <div className="bg-paper py-2xl">
       <Container width="display">
         <p className="eyebrow mb-sm">Help Me Invest · FEAT-21</p>
         <h1 className="d1">Design system</h1>
@@ -514,6 +514,6 @@ export default function StyleguidePage() {
           </Pillars>
         </Section>
       </Container>
-    </main>
+    </div>
   );
 }
