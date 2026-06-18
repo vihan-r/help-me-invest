@@ -942,13 +942,42 @@
   a.whatwedo-card--filled,
   a.topic-thumb,
   a.video-module--link {
+    position: relative;
+    will-change: transform, scale, translate;
+  }
+  /* The transition is scoped under `.js` so it beats `.js [data-reveal]`, which
+     otherwise wins on specificity and replaces the transition list with just
+     opacity/transform — dropping scale/translate so the lift snapped instead of
+     easing. With scale/translate restored here (and box-shadow moved off the
+     main thread to ::after below), the lift animates smoothly. reveal still
+     animates via the opacity/transform entries kept in this same list. */
+  .js a.investor-profile,
+  .js a.partner-card,
+  .js a.whatwedo-card--filled,
+  .js a.topic-thumb,
+  .js a.video-module--link {
     transition:
       opacity 1400ms var(--ease-out-quart),
       transform 1400ms var(--ease-out-quart),
       scale 1200ms var(--ease-out-quart),
-      translate 1200ms var(--ease-out-quart),
-      box-shadow 1200ms var(--ease-out-quart);
-    will-change: transform, scale, translate;
+      translate 1200ms var(--ease-out-quart);
+  }
+  /* Soft elevation for filled cards. The shadow lives on a pseudo-element and we
+     animate its OPACITY (GPU-composited) rather than transitioning box-shadow
+     itself — transitioning box-shadow repaints the blur every frame and made the
+     hover visibly choppy. The layer sits behind the card (z-index:-1) so its
+     outset shadow shows around the edges without covering content. */
+  a.investor-profile::after,
+  a.whatwedo-card--filled::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: 0 18px 44px -24px rgba(10, 75, 52, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1200ms var(--ease-out-quart);
   }
   @media (prefers-reduced-motion: no-preference) {
     a.investor-profile:hover,
@@ -959,10 +988,9 @@
       scale: 1.02;
       translate: 0 -6px;
     }
-    /* Soft elevation shadow only on cards that have a fill behind them. */
-    a.investor-profile:hover,
-    a.whatwedo-card--filled:hover {
-      box-shadow: 0 18px 44px -24px rgba(10, 75, 52, 0.35);
+    a.investor-profile:hover::after,
+    a.whatwedo-card--filled:hover::after {
+      opacity: 1;
     }
   }
 
