@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
 import { RevealObserver } from "@/components";
@@ -49,23 +50,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en-AU"
-      className={`${jakarta.variable} ${newsreader.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="flex min-h-full flex-col">
-        {/* Mark JS as available before paint so reveal-on-scroll elements are only
-            hidden (opacity:0) when JS can reveal them — no-JS users see content. */}
-        <script
-          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
-        />
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
-        <RevealObserver />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en-AU"
+        className={`${jakarta.variable} ${newsreader.variable} h-full antialiased`}
+        suppressHydrationWarning
+      >
+        <body className="flex min-h-full flex-col">
+          {/* Mark JS as available before paint so reveal-on-scroll elements are only
+              hidden (opacity:0) when JS can reveal them — no-JS users see content. */}
+          <script
+            dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+          />
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
+          <RevealObserver />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
