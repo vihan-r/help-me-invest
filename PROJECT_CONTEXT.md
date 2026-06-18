@@ -26,26 +26,26 @@ and analytics behind the finished front end.
 
 ## 2. Tech stack
 
-| Layer       | Choice                                   |
-| ----------- | ---------------------------------------- |
-| Framework   | Next.js 16 (App Router) + React 19       |
-| Language    | TypeScript                               |
-| Styling     | Tailwind CSS v4 (tokens in `@theme`)     |
-| Tooling     | ESLint 9 (flat config) + Prettier        |
+| Layer       | Choice                                       |
+| ----------- | -------------------------------------------- |
+| Framework   | Next.js 16 (App Router) + React 19           |
+| Language    | TypeScript                                   |
+| Styling     | Tailwind CSS v4 (tokens in `@theme`)         |
+| Tooling     | ESLint 9 (flat config) + Prettier            |
 | Fonts       | `next/font` — Newsreader + Plus Jakarta Sans |
-| Hosting     | Railway.com (planned — Phase 2)          |
-| Package mgr | **npm**                                  |
+| Hosting     | Railway.com (planned — Phase 2)              |
+| Package mgr | **npm**                                      |
 
 **Phase 2 services — finalised architecture.** The stack was decided in a dev-expert
 meeting and **supersedes the original brief's plan** (which had Vercel hosting, Supabase
 for DB/auth/storage, Payload CMS, and Bunny Stream/Mux for video — all now dropped):
 
-| Concern                        | Service                                                                          |
-| ------------------------------ | -------------------------------------------------------------------------------- |
-| Hosting + database + storage   | **Railway.com** — direct GitHub deploy, with integrated database and storage     |
-| Auth                           | **Clerk** — managed service providing Google SSO + email verification            |
-| CMS                            | **Sanity** — also drives non-dev marketing landing pages via templates           |
-| Video                          | **Cloudflare Stream** — with DRM (Widevine / FairPlay) for gated content         |
+| Concern                      | Service                                                                      |
+| ---------------------------- | ---------------------------------------------------------------------------- |
+| Hosting + database + storage | **Railway.com** — direct GitHub deploy, with integrated database and storage |
+| Auth                         | **Clerk** — managed service providing Google SSO + email verification        |
+| CMS                          | **Sanity** — also drives non-dev marketing landing pages via templates       |
+| Video                        | **Cloudflare Stream** — with DRM (Widevine / FairPlay) for gated content     |
 
 Carried over from the brief: GoHighLevel CRM, a transactional email service, an SMS
 provider, and privacy-respecting analytics (e.g. PostHog).
@@ -141,19 +141,22 @@ components.
 
 ## 7. Stages completed (all merged to `main`)
 
-| Stage | FEAT | What | PR |
-| --- | --- | --- | --- |
-| 0 | FEAT-22 | Project scaffold (Next.js + TS + Tailwind + ESLint/Prettier, `.env.example`, README) | #1 |
-| 1 | FEAT-21 | Design system as code + `/styleguide` | #2 |
-| 2 | FEAT-36 | Global site shell (header/footer, routing skeleton, 404/error, SEO defaults) | #3 |
-| 3 | FEAT-39 | Signature components — chain/platform diagram, cards, pillars, reveal motion + hover states | #4 |
-| 4 | FEAT-37/39 | Home (banner hero) + How it works (journey + 4 phases); responsive fixes | #5 |
-| 5 | FEAT-41/42 | Education hub + gated module index (`/education/wholesale`, gating UI only) + Investor Stories | #6 |
-| 6 | FEAT-38/43 | Self-assessment survey shell + account screens (sign-in/up/reset/verify) + auth route group | #7 |
-| 7 | FEAT-40/44/45/46 | Contact + talk-to-expert forms (non-submitting), Partners shell, Terms/Privacy placeholder layouts | #8 |
+| Stage | FEAT             | What                                                                                                                                 | PR  |
+| ----- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --- |
+| 0     | FEAT-22          | Project scaffold (Next.js + TS + Tailwind + ESLint/Prettier, `.env.example`, README)                                                 | #1  |
+| 1     | FEAT-21          | Design system as code + `/styleguide`                                                                                                | #2  |
+| 2     | FEAT-36          | Global site shell (header/footer, routing skeleton, 404/error, SEO defaults)                                                         | #3  |
+| 3     | FEAT-39          | Signature components — chain/platform diagram, cards, pillars, reveal motion + hover states                                          | #4  |
+| 4     | FEAT-37/39       | Home (banner hero) + How it works (journey + 4 phases); responsive fixes                                                             | #5  |
+| 5     | FEAT-41/42       | Education hub + gated module index (`/education/wholesale`, gating UI only) + Investor Stories                                       | #6  |
+| 6     | FEAT-38/43       | Self-assessment survey shell + account screens (sign-in/up/reset/verify) + auth route group                                          | #7  |
+| 7     | FEAT-40/44/45/46 | Contact + talk-to-expert forms (non-submitting), Partners shell, Terms/Privacy placeholder layouts                                   | #8  |
+| 8     | FEAT-47          | Phase-1 polish — full responsive sweep, a11y + reduced-motion, per-route OpenGraph/meta + dynamic OG image                           | #10 |
+| 9     | FEAT-48          | Pre-backend cleanup — forms wired with react-hook-form + zod, error boundaries, next/image, Tailwind-token cleanup, security headers | #12 |
 
 All MVP routes are navigable, brand-accurate, responsive, and form-complete as UI
-shells. Repo: `vihan-r/help-me-invest` (private).
+shells (forms validate client-side; backend wiring is a small change, not a rewrite).
+Repo: `vihan-r/help-me-invest` (private).
 
 ---
 
@@ -187,9 +190,13 @@ shells. Repo: `vihan-r/help-me-invest` (private).
 
 ## 10. What's next
 
-**Stage 8 — Phase-1 polish (not started; awaiting go-ahead):** full responsive sweep
-across every surface, accessibility + reduced-motion pass, per-route OpenGraph/meta,
-and deploy to staging (Railway) for stakeholder click-through. This closes Phase 1.
+**Phase 1 is complete and deployed.** The finished front end runs live on **Railway
+staging** at **https://help-me-invest-production.up.railway.app**, which
+**auto-deploys on every merge to `main`**. Build is SSR via Nixpacks (`npm run build`
+→ `npm run start`); `NEXT_PUBLIC_SITE_URL` is set in Railway so canonical/OG links
+resolve to the live domain. No backend services are wired yet — it's the front end only.
 
-Then **Phase 2** layers in CMS, accounts/auth/gating, the assessment funnel + PDF,
-CRM/email/SMS, consent handling, and analytics — behind the finished front end.
+**Phase 2 (P-steps)** now layers the finalised stack (see §2) behind the finished
+front end: Clerk auth + account gating, Sanity CMS, Cloudflare Stream (DRM) video,
+the assessment funnel + PDF, CRM/email/SMS, consent handling, and analytics. Karan
+(dev expert) owns the security review of the first full-stack build.
