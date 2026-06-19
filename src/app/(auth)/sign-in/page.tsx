@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Arrow, Button } from "@/components";
+import { Arrow } from "@/components";
 import { pageMeta } from "@/lib/seo";
 import { SignInForm } from "./SignInForm";
 
@@ -26,14 +26,6 @@ export default function SignIn() {
             </p>
 
             <SignInForm />
-
-            <div className="divider-or">
-              <span>or</span>
-            </div>
-
-            <Button variant="secondary" type="button">
-              Continue with Google
-            </Button>
 
             <p className="mt-7 text-center">
               <Link className="tertiary-link" href="/sign-up">

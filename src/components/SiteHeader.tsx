@@ -1,5 +1,6 @@
 "use client";
 
+import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -13,15 +14,16 @@ function useIsActive() {
 }
 
 /**
- * Global site header: wordmark left; primary nav + Sign in right. Collapses to a
- * toggle-driven menu below 720px (mobile-first).
+ * Global site header: wordmark left; primary nav + auth control right. Collapses
+ * to a toggle-driven menu below 880px (mobile-first).
  *
- * NOTE: the signed-in account chip + dropdown arrives with accounts (FEAT-1/55);
- * the shell shows the signed-out state (Sign in).
+ * Auth (FEAT-2): signed-out shows "Sign in"; signed-in shows "Sign out". The full
+ * account menu (FEAT-55) is a follow-up.
  */
 export function SiteHeader() {
   const pathname = usePathname();
   const isActive = useIsActive();
+  const { signOut } = useClerk();
   const [open, setOpen] = useState(false);
 
   // Close the mobile menu on any route change — including browser back/forward
@@ -51,9 +53,20 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <Button variant="secondary" size="sm" href="/sign-in" className="site-signin">
-            Sign in
-          </Button>
+          <SignedOut>
+            <Button variant="secondary" size="sm" href="/sign-in" className="site-signin">
+              Sign in
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm site-signin"
+              onClick={() => signOut({ redirectUrl: "/" })}
+            >
+              Sign out
+            </button>
+          </SignedIn>
           <button
             type="button"
             className="site-nav-toggle"
@@ -96,9 +109,23 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/sign-in" className="site-mobile-signin" onClick={() => setOpen(false)}>
-            Sign in
-          </Link>
+          <SignedOut>
+            <Link href="/sign-in" className="site-mobile-signin" onClick={() => setOpen(false)}>
+              Sign in
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <button
+              type="button"
+              className="site-mobile-signin"
+              onClick={() => {
+                setOpen(false);
+                signOut({ redirectUrl: "/" });
+              }}
+            >
+              Sign out
+            </button>
+          </SignedIn>
         </nav>
       )}
     </header>

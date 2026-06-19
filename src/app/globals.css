@@ -439,13 +439,25 @@
       padding-top: 8px;
       padding-bottom: 16px;
     }
-    .site-mobile-nav a {
+    .site-mobile-nav a,
+    .site-mobile-nav button {
+      font-family: inherit;
       font-weight: 500;
       font-size: 17px;
       color: var(--color-charcoal);
       text-decoration: none;
+      text-align: left;
       padding: 14px 0;
       border-top: 1px solid rgba(139, 136, 129, 0.25);
+    }
+    /* The sign-out action is a <button> but reads as a menu row. */
+    .site-mobile-nav button {
+      width: 100%;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      cursor: pointer;
     }
     .site-mobile-nav a.active {
       color: var(--color-emerald);
