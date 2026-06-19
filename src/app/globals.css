@@ -21,6 +21,14 @@
   --color-charcoal: #1a2b22; /* body ink */
   --color-grey: #8b8881; /* structural neutral */
 
+  /* —— Error role (7th colour — added deliberately, client-signed-off) ——
+     A single restrained "clay red" for validation/error states only. Muted and
+     warm so it sits with the earthy palette rather than a bright UI red. */
+  --color-error: #b0432f; /* accent: icon, invalid border */
+  --color-error-text: #7e2e20; /* error text (AA on the surface tint) */
+  --color-error-surface: #f7e9e5; /* error block fill */
+  --color-error-border: #e0b3aa; /* error block border */
+
   /* —— Typeface system (wired to next/font CSS variables) —— */
   --font-sans:
     var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
@@ -1939,44 +1947,40 @@
   .field textarea:focus {
     border-color: var(--color-emerald);
   }
-  /* Invalid state — the six-colour palette has no error red, so an invalid field
-     is cued by a heavier Warm Charcoal border plus the message text below (the
-     error is identified in text + role="alert", not by colour alone — WCAG 1.4.1
-     / 3.3.1). A dedicated error colour is an open design decision. */
+  /* Invalid state — the dedicated error colour cues the field; the message text +
+     role="alert" still identify the error (not colour alone — WCAG 1.4.1 / 3.3.1). */
   .field input[aria-invalid="true"],
   .field select[aria-invalid="true"],
   .field textarea[aria-invalid="true"] {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-error);
   }
   .field-error {
     font-size: 13px;
     font-weight: 500;
-    color: var(--color-charcoal);
+    color: var(--color-error-text);
     margin: 0;
   }
   /* Form-level / submission error block — sits above the submit button, in view at
-     submit time. Palette-pure + prominent for now (border + icon + medium weight);
-     a single restrained error colour can replace the charcoal tones here once the
-     colour decision is signed off. */
+     submit time: clay error surface + border + icon, with the message in error text. */
   .form-error {
     display: flex;
     align-items: flex-start;
     gap: 10px;
     padding: 14px 16px;
-    border: 1px solid var(--color-charcoal);
+    border: 1px solid var(--color-error-border);
     border-radius: var(--radius-md);
-    background: rgba(26, 43, 34, 0.04);
+    background: var(--color-error-surface);
   }
   .form-error-icon {
     flex-shrink: 0;
     margin-top: 1px;
-    color: var(--color-charcoal);
+    color: var(--color-error);
   }
   .form-error span {
     font-size: 14px;
     font-weight: 500;
     line-height: 1.5;
-    color: var(--color-charcoal);
+    color: var(--color-error-text);
   }
   /* —— Radio/checkbox group (fieldset + legend replaces a dangling label) —— */
   .field-group {

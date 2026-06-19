@@ -64,6 +64,13 @@ const COLOURS = [
     role: "Dividers, eyebrows, metadata",
     swatch: "bg-grey",
   },
+  {
+    name: "Clay (error)",
+    token: "error",
+    hex: "#B0432F",
+    role: "Validation / error states only",
+    swatch: "bg-error",
+  },
 ];
 
 const TYPE_SCALE = [
