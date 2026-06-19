@@ -179,9 +179,21 @@ Repo: `vihan-r/help-me-invest` (private).
   layouts; client to supply final wording.
 - **Story/partner portraits** are placeholders (reference uses placeholders, not photos).
 - `education/finance` and `education/strategy` are intentionally **stubs**.
-- **All forms and auth are UI-only** (no backend) — Phase 2.
+- **Auth is wired (Clerk, FEAT-1..5)** on a **Development** instance. The contact/
+  talk-to-expert forms still POST nowhere (no CRM/email yet) — they validate
+  client-side and are ready for a small backend wiring change.
+- **Auth — production hardening (deferred to pre-launch):** the dev Clerk instance
+  uses Clerk's **shared Google OAuth**, so Google's consent screen shows "Clerk" +
+  Clerk's logo. Before launch, stand up a **production Clerk instance** (own keys,
+  custom domain) and configure **our own Google OAuth credentials** so the consent
+  screen reads "Help Me Invest" with our logo — this needs Google's OAuth
+  verification (verified domain + privacy-policy URL; can take days). Also covers
+  the deferred custom-domain + production-keys move.
+- **Railway build-env note:** the build intermittently failed to see
+  `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` (it must be present at build — the key is
+  inlined into the client bundle). Worth pinning down the env scoping before adding
+  more service keys (Sanity/Cloudflare).
 - **Self-assessment** is a UI shell — the predictive model + PDF report are Phase 2.
-- **`hero-banner.png`** is a plain `<img>` (~2.7MB) — candidate for `next/image` in polish.
 
 ---
 
