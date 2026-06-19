@@ -10,6 +10,7 @@ import { z } from "zod";
 import { Arrow } from "@/components/Arrow";
 import { Button } from "@/components/Button";
 import { TextField } from "@/components/Field";
+import { FormError } from "@/components/FormError";
 import { clerkErrorMessage } from "@/lib/clerk-errors";
 
 const schema = z.object({
@@ -19,7 +20,7 @@ const schema = z.object({
 
 type SignInValues = z.infer<typeof schema>;
 
-export function SignInForm() {
+export function SignInForm({ redirectUrl = "/" }: { redirectUrl?: string }) {
   const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
   const [authError, setAuthError] = useState<string | null>(null);
@@ -36,10 +37,8 @@ export function SignInForm() {
       const result = await signIn.create({ identifier: data.email, password: data.password });
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        router.push("/");
+        router.push(redirectUrl);
       } else {
-        // Password sign-in normally completes in one step; anything else needs
-        // a flow we don't surface yet (e.g. 2FA).
         setAuthError("This account needs an extra verification step we don’t support yet.");
       }
     } catch (err) {
@@ -54,7 +53,7 @@ export function SignInForm() {
       await signIn.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/",
+        redirectUrlComplete: redirectUrl,
       });
     } catch (err) {
       setAuthError(clerkErrorMessage(err));
@@ -64,11 +63,6 @@ export function SignInForm() {
   return (
     <>
       <form className="stack-md mt-10" noValidate onSubmit={handleSubmit(onSubmit)}>
-        {authError && (
-          <p className="field-error" role="alert">
-            {authError}
-          </p>
-        )}
         <TextField
           id="email"
           label="What email do you use?"
@@ -92,6 +86,7 @@ export function SignInForm() {
             Forgot your password?
           </Link>
         </p>
+        {authError && <FormError message={authError} />}
         <div className="mt-4">
           <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isLoaded}>
             Sign in <Arrow />

@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Arrow } from "@/components/Arrow";
 import { TextField } from "@/components/Field";
+import { FormError } from "@/components/FormError";
 import { clerkErrorMessage } from "@/lib/clerk-errors";
 
 const requestSchema = z.object({
@@ -24,7 +25,7 @@ const resetSchema = z.object({
 type RequestValues = z.infer<typeof requestSchema>;
 type ResetValues = z.infer<typeof resetSchema>;
 
-export function ResetPasswordForm() {
+export function ResetPasswordForm({ redirectUrl = "/" }: { redirectUrl?: string }) {
   const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
   const [step, setStep] = useState<"request" | "reset">("request");
@@ -55,7 +56,7 @@ export function ResetPasswordForm() {
       });
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        router.push("/");
+        router.push(redirectUrl);
       } else {
         setAuthError("Couldn’t reset the password. Please check the code and try again.");
       }
@@ -70,11 +71,6 @@ export function ResetPasswordForm() {
         <p className="body-small" role="status" aria-live="polite">
           We’ve emailed you a 6-digit code. Enter it below with your new password.
         </p>
-        {authError && (
-          <p className="field-error" role="alert">
-            {authError}
-          </p>
-        )}
         <TextField
           id="reset-code"
           label="Verification code"
@@ -91,10 +87,11 @@ export function ResetPasswordForm() {
           type="password"
           autoComplete="new-password"
           required
-          help="At least 8 characters."
+          help="At least 8 characters. Avoid common passwords."
           {...resetForm.register("password")}
           error={resetForm.formState.errors.password?.message}
         />
+        {authError && <FormError message={authError} />}
         <div className="mt-4">
           <button
             type="submit"
@@ -110,11 +107,6 @@ export function ResetPasswordForm() {
 
   return (
     <form className="stack-md mt-10" noValidate onSubmit={requestForm.handleSubmit(onRequest)}>
-      {authError && (
-        <p className="field-error" role="alert">
-          {authError}
-        </p>
-      )}
       <TextField
         id="email"
         label="Your email"
@@ -124,6 +116,7 @@ export function ResetPasswordForm() {
         {...requestForm.register("email")}
         error={requestForm.formState.errors.email?.message}
       />
+      {authError && <FormError message={authError} />}
       <div className="mt-4">
         <button
           type="submit"

@@ -59,7 +59,7 @@ export default async function Wholesale() {
             <span className="hero-video-badge">Module 01 · 08:24</span>
           </button>
           <div className="hero-video-row">
-            <Button variant="secondary" href="/sign-up">
+            <Button variant="secondary" href="/sign-up?redirect_url=%2Feducation%2Fwholesale">
               Watch next module <Arrow />
             </Button>
           </div>
@@ -126,10 +126,13 @@ export default async function Wholesale() {
                 <p className="locked-cta-body">
                   We&rsquo;ll save where you are. You can stop any time.
                 </p>
-                <Button variant="primary" href="/sign-up">
+                <Button variant="primary" href="/sign-up?redirect_url=%2Feducation%2Fwholesale">
                   Create my account <Arrow />
                 </Button>
-                <Link className="locked-cta-signin" href="/sign-in">
+                <Link
+                  className="locked-cta-signin"
+                  href="/sign-in?redirect_url=%2Feducation%2Fwholesale"
+                >
                   Already have an account? Sign in <Arrow />
                 </Link>
               </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Arrow } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { safeInternalPath } from "@/lib/safe-redirect";
 import { ResetPasswordForm } from "./ResetPasswordForm";
 
 export const metadata = pageMeta({
@@ -10,7 +11,12 @@ export const metadata = pageMeta({
   noindex: true,
 });
 
-export default function ResetPassword() {
+export default async function ResetPassword({
+  searchParams,
+}: {
+  searchParams: Promise<{ redirect_url?: string }>;
+}) {
+  const redirectUrl = safeInternalPath((await searchParams).redirect_url);
   return (
     <>
       <section className="account-shell pt-16 pb-30">
@@ -21,11 +27,11 @@ export default function ResetPassword() {
               Reset your <em>password.</em>
             </h1>
             <p className="body-large mt-6 max-w-[520px]">
-              Enter the email you use for Help Me Invest and we&rsquo;ll send you a link to set a
-              new password. The link expires in an hour.
+              Enter the email you use for Help Me Invest and we&rsquo;ll send you a 6-digit code to
+              set a new password. The code expires in an hour.
             </p>
 
-            <ResetPasswordForm />
+            <ResetPasswordForm redirectUrl={redirectUrl} />
 
             <p className="mt-7 text-center">
               <Link className="tertiary-link" href="/sign-in">

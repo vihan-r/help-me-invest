@@ -10,6 +10,7 @@ import { z } from "zod";
 import { Arrow } from "@/components/Arrow";
 import { Button } from "@/components/Button";
 import { TextField } from "@/components/Field";
+import { FormError } from "@/components/FormError";
 import { clerkErrorMessage } from "@/lib/clerk-errors";
 
 const schema = z.object({
@@ -21,7 +22,7 @@ const schema = z.object({
 
 type VerifyValues = z.infer<typeof schema>;
 
-export function VerifyEmailActions() {
+export function VerifyEmailActions({ redirectUrl = "/" }: { redirectUrl?: string }) {
   const { isLoaded, signUp, setActive } = useSignUp();
   const router = useRouter();
   const [authError, setAuthError] = useState<string | null>(null);
@@ -43,7 +44,7 @@ export function VerifyEmailActions() {
       const result = await signUp.attemptEmailAddressVerification({ code: data.code });
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        router.push("/");
+        router.push(redirectUrl);
       } else {
         setAuthError("That code didn’t verify. Please check it and try again.");
       }
@@ -80,11 +81,6 @@ export function VerifyEmailActions() {
   return (
     <>
       <form className="stack-md mt-8" noValidate onSubmit={handleSubmit(onSubmit)}>
-        {authError && (
-          <p className="field-error" role="alert">
-            {authError}
-          </p>
-        )}
         <TextField
           id="code"
           label="Enter your 6-digit verification code"
@@ -95,6 +91,7 @@ export function VerifyEmailActions() {
           {...register("code")}
           error={errors.code?.message}
         />
+        {authError && <FormError message={authError} />}
         <div>
           <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isLoaded}>
             Verify and continue <Arrow />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Arrow } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { safeInternalPath } from "@/lib/safe-redirect";
 import { SignInForm } from "./SignInForm";
 
 export const metadata = pageMeta({
@@ -10,7 +11,12 @@ export const metadata = pageMeta({
   noindex: true,
 });
 
-export default function SignIn() {
+export default async function SignIn({
+  searchParams,
+}: {
+  searchParams: Promise<{ redirect_url?: string }>;
+}) {
+  const redirectUrl = safeInternalPath((await searchParams).redirect_url);
   return (
     <>
       <section className="account-shell pt-16 pb-30">
@@ -25,7 +31,7 @@ export default function SignIn() {
               waiting.
             </p>
 
-            <SignInForm />
+            <SignInForm redirectUrl={redirectUrl} />
 
             <p className="mt-7 text-center">
               <Link className="tertiary-link" href="/sign-up">
