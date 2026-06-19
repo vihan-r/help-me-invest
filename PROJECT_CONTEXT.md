@@ -83,14 +83,22 @@ Notes on this architecture:
   (`.chain-caption`), and meaningful content metadata (`.topic-meta`). Field
   labels/legends were already Charcoal. The split is documented in the `/styleguide`
   "Text colour" panel.
+- **Error colour added (P2/Clerk auth, client-signed-off):** the palette gains a
+  **7th colour** — a restrained, muted **"clay red"** used **only** for
+  validation/error states (form-level error block, field-error text, invalid-field
+  borders). Tokens in `globals.css`: `--color-error` `#B0432F` (accent/icon/border),
+  `--color-error-text` `#7E2E20` (AA on the surface), `--color-error-surface`
+  `#F7E9E5` (block fill), `--color-error-border` `#E0B3AA`. Chosen warm/earthy so it
+  sits with Emerald rather than a bright UI red. Not used for anything but errors.
 
 ---
 
 ## 4. Design system (from `src/app/globals.css`)
 
-**Colours (6 roles):** Soft Paper `#F6F7F4` · Lighter Mint `#D4E8B5` · Mint `#A8D5B4` ·
-Emerald `#0A4B34` · Warm Charcoal `#1A2B22` · Warm Mid-Grey `#8B8881`. On Emerald
-grounds, body/headlines reverse to Soft Paper (`.on-emerald`).
+**Colours (6 roles + 1 error):** Soft Paper `#F6F7F4` · Lighter Mint `#D4E8B5` ·
+Mint `#A8D5B4` · Emerald `#0A4B34` · Warm Charcoal `#1A2B22` · Warm Mid-Grey `#8B8881`.
+Plus a 7th, **Clay error red `#B0432F`** (errors only — see §3). On Emerald grounds,
+body/headlines reverse to Soft Paper (`.on-emerald`).
 
 **Type scale:** `.d1` (Newsreader 400, clamp 56–104px, opsz 72), `.h1` (clamp 36–56),
 `.h2` (clamp 34–50), `.h3` (30px, opsz 36), `.h4` (26px), `.body-large` (21), `.body`
