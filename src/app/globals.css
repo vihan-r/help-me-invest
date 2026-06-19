@@ -1954,6 +1954,30 @@
     color: var(--color-charcoal);
     margin: 0;
   }
+  /* Form-level / submission error block — sits above the submit button, in view at
+     submit time. Palette-pure + prominent for now (border + icon + medium weight);
+     a single restrained error colour can replace the charcoal tones here once the
+     colour decision is signed off. */
+  .form-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--color-charcoal);
+    border-radius: var(--radius-md);
+    background: rgba(26, 43, 34, 0.04);
+  }
+  .form-error-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--color-charcoal);
+  }
+  .form-error span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+  }
   /* —— Radio/checkbox group (fieldset + legend replaces a dangling label) —— */
   .field-group {
     border: 0;

@@ -10,6 +10,7 @@ import { z } from "zod";
 import { Arrow } from "@/components/Arrow";
 import { Button } from "@/components/Button";
 import { RadioGroup, TextField } from "@/components/Field";
+import { FormError } from "@/components/FormError";
 import { clerkErrorMessage } from "@/lib/clerk-errors";
 
 const STAGES = [
@@ -31,7 +32,7 @@ const schema = z.object({
 
 type SignUpValues = z.infer<typeof schema>;
 
-export function SignUpForm() {
+export function SignUpForm({ redirectUrl = "/" }: { redirectUrl?: string }) {
   const { isLoaded, signUp } = useSignUp();
   const router = useRouter();
   const [authError, setAuthError] = useState<string | null>(null);
@@ -56,7 +57,8 @@ export function SignUpForm() {
         unsafeMetadata: { firstName: data.firstName, investingStage: data.stage },
       });
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      router.push("/verify-email");
+      // Carry the post-auth destination through the verification step.
+      router.push(`/verify-email?redirect_url=${encodeURIComponent(redirectUrl)}`);
     } catch (err) {
       setAuthError(clerkErrorMessage(err));
     }
@@ -69,7 +71,7 @@ export function SignUpForm() {
       await signUp.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/",
+        redirectUrlComplete: redirectUrl,
       });
     } catch (err) {
       setAuthError(clerkErrorMessage(err));
@@ -79,11 +81,6 @@ export function SignUpForm() {
   return (
     <>
       <form className="stack-md mt-10" noValidate onSubmit={handleSubmit(onSubmit)}>
-        {authError && (
-          <p className="field-error" role="alert">
-            {authError}
-          </p>
-        )}
         <TextField
           id="first-name"
           label="What’s your first name?"
@@ -107,7 +104,7 @@ export function SignUpForm() {
           type="password"
           autoComplete="new-password"
           required
-          help="At least 8 characters. We’ll never email it to you."
+          help="At least 8 characters. Avoid common passwords — they’re rejected for your security."
           {...register("password")}
           error={errors.password?.message}
         />
@@ -121,6 +118,7 @@ export function SignUpForm() {
         {/* Clerk bot-protection (Smart CAPTCHA) mounts here; without this element
             it falls back to a modal challenge. */}
         <div id="clerk-captcha" />
+        {authError && <FormError message={authError} />}
         <div className="mt-8">
           <button type="submit" className="btn btn-primary" disabled={isSubmitting || !isLoaded}>
             Create my account <Arrow />

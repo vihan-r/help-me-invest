@@ -36,6 +36,9 @@ export function SiteHeader() {
     setOpen(false);
   }
 
+  // Sign in returns the user to the page they were on (conversion flow).
+  const signInHref = `/sign-in?redirect_url=${encodeURIComponent(pathname)}`;
+
   return (
     <header className="site-header">
       <div className="shell site-header-inner">
@@ -54,7 +57,7 @@ export function SiteHeader() {
             ))}
           </nav>
           <SignedOut>
-            <Button variant="secondary" size="sm" href="/sign-in" className="site-signin">
+            <Button variant="secondary" size="sm" href={signInHref} className="site-signin">
               Sign in
             </Button>
           </SignedOut>
@@ -110,7 +113,7 @@ export function SiteHeader() {
             </Link>
           ))}
           <SignedOut>
-            <Link href="/sign-in" className="site-mobile-signin" onClick={() => setOpen(false)}>
+            <Link href={signInHref} className="site-mobile-signin" onClick={() => setOpen(false)}>
               Sign in
             </Link>
           </SignedOut>
