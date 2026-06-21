@@ -13,8 +13,9 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Run on all routes except Next internals and static files...
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpg|jpeg|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Run on all routes except Next internals, the embedded Sanity Studio
+    // (it manages its own auth), and static files...
+    "/((?!_next|studio|[^?]*\\.(?:html?|css|js(?!on)|jpg|jpeg|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     // ...and always on API routes.
     "/(api|trpc)(.*)",
   ],
