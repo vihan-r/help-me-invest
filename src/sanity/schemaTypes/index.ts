@@ -1,10 +1,13 @@
 import type { SchemaTypeDefinition } from "sanity";
 
+import { educationTopic } from "./educationTopic";
+import { investorStory } from "./investorStory";
+import { videoModule } from "./videoModule";
+
 /**
  * Registered content schemas for the Studio.
  *
- * Empty for the P3.1 scaffold — the document types land in later sub-steps:
- *   - P3.2: investorStory, educationTopic, videoModule (+ seed content)
+ *   - P3.2 (here): investorStory, educationTopic, videoModule (+ seed content)
  *   - P3.4: landingPage + the brand-enforced page-builder block types
  */
-export const schemaTypes: SchemaTypeDefinition[] = [];
+export const schemaTypes: SchemaTypeDefinition[] = [investorStory, educationTopic, videoModule];
