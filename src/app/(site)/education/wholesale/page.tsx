@@ -1,7 +1,15 @@
 import { auth } from "@clerk/nextjs/server";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Arrow, Button, VideoModule } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import {
+  MODULES_BY_TOPIC_QUERY,
+  TOPIC_BY_SLUG_QUERY,
+  type Module,
+  type TopicPage,
+} from "@/sanity/lib/queries";
 
 export const metadata = pageMeta({
   title: "Understanding wholesale property",
@@ -10,61 +18,91 @@ export const metadata = pageMeta({
   path: "/education/wholesale",
 });
 
-// The rest of the series — generic placeholders. Gated on real auth: signed-out
-// visitors see them blurred behind the sign-up wall; signed-in users see them
-// unlocked. (Real video lands with Cloudflare Stream in a later P-step.)
-const restModules = [
-  { duration: "11:02" },
-  { duration: "09:48" },
-  { duration: "14:15" },
-  { duration: "10:30" },
-  { duration: "12:50" },
-  { duration: "07:20" },
-  { duration: "15:40" },
-];
+const SLUG = "wholesale";
+
+// Placeholder rows for the gated "rest of the series" — shown until the team
+// adds real account-gated modules to the CMS, so the sign-up wall stays live.
+// (Real video lands with Cloudflare Stream in P4.)
+const PLACEHOLDER_REST = ["11:02", "09:48", "14:15", "10:30", "12:50", "07:20", "15:40"].map(
+  (duration, i) => ({
+    index: i + 2,
+    title: "Module title placeholder.",
+    duration,
+    blurb: "A short description of the module goes here.",
+  }),
+);
+
+interface RestRow {
+  index: number;
+  title: string;
+  duration?: string;
+  blurb: string;
+}
+
+function pad(n: number) {
+  return String(n).padStart(2, "0");
+}
 
 export default async function Wholesale() {
   const { userId } = await auth();
   const isSignedIn = Boolean(userId);
 
+  const [topic, modules] = await Promise.all([
+    sanityFetch<TopicPage | null>(TOPIC_BY_SLUG_QUERY, { slug: SLUG }),
+    sanityFetch<Module[]>(MODULES_BY_TOPIC_QUERY, { slug: SLUG }),
+  ]);
+
+  if (!topic) notFound();
+
+  const hero = modules.find((m) => m.accessLevel === "free") ?? null;
+  const gated = modules.filter((m) => m.accessLevel === "account");
+
+  // accessLevel drives the split; fall back to placeholders when no real gated
+  // modules exist yet so the "rest of the series" section + sign-up wall persist.
+  const rest: RestRow[] = gated.length
+    ? gated.map((m) => ({
+        index: m.moduleNumber,
+        title: m.title,
+        duration: m.duration,
+        blurb: m.blurb ?? "",
+      }))
+    : PLACEHOLDER_REST;
+
   return (
     <>
       {/* Header */}
       <section className="shell pt-16 pb-8">
-        <p className="eyebrow">Education · Understanding wholesale property</p>
-        <h1 className="d1 col-display mt-4">
-          What wholesale <em>actually means.</em>
-        </h1>
-        <p className="body-large col-body mt-8">
-          Start here. One short module that lays out what wholesale property actually is in the
-          Australian market, why it has historically been reserved for insiders, and what changes
-          when an everyday investor gets direct access to it. The rest of the series builds on this
-          one.
-        </p>
+        {topic.eyebrow ? <p className="eyebrow">{topic.eyebrow}</p> : null}
+        <h1 className="d1 col-display mt-4">{topic.pageHeadline ?? topic.title}</h1>
+        {topic.intro ? <p className="body-large col-body mt-8">{topic.intro}</p> : null}
       </section>
 
       {/* Module 01 hero video */}
-      <section className="shell pt-8 pb-8">
-        <div className="max-w-[900px]">
-          <button
-            type="button"
-            className="hero-video"
-            aria-label="Play Module 01, what wholesale actually means"
-          >
-            <span className="video-play" aria-hidden="true">
-              <svg viewBox="0 0 16 16" fill="currentColor">
-                <path d="M4 2.5v11l10-5.5z" />
-              </svg>
-            </span>
-            <span className="hero-video-badge">Module 01 · 08:24</span>
-          </button>
-          <div className="hero-video-row">
-            <Button variant="secondary" href="/sign-up?redirect_url=%2Feducation%2Fwholesale">
-              Watch next module <Arrow />
-            </Button>
+      {hero ? (
+        <section className="shell pt-8 pb-8">
+          <div className="max-w-[900px]">
+            <button
+              type="button"
+              className="hero-video"
+              aria-label={`Play Module ${pad(hero.moduleNumber)}, ${hero.title}`}
+            >
+              <span className="video-play" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M4 2.5v11l10-5.5z" />
+                </svg>
+              </span>
+              <span className="hero-video-badge">
+                Module {pad(hero.moduleNumber)} · {hero.duration}
+              </span>
+            </button>
+            <div className="hero-video-row">
+              <Button variant="secondary" href="/sign-up?redirect_url=%2Feducation%2Fwholesale">
+                Watch next module <Arrow />
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Divider */}
       <section className="shell pt-16 pb-16">
@@ -83,13 +121,13 @@ export default async function Wholesale() {
               You&rsquo;re signed in — here&rsquo;s the full set. Pick up wherever you like.
             </p>
             <div className="mt-10">
-              {restModules.map((m, i) => (
+              {rest.map((m) => (
                 <VideoModule
-                  key={i}
-                  index={i + 2}
-                  title="Module title placeholder."
+                  key={m.index}
+                  index={m.index}
+                  title={m.title}
                   duration={m.duration}
-                  blurb="A short description of the module goes here."
+                  blurb={m.blurb}
                 />
               ))}
             </div>
@@ -107,13 +145,13 @@ export default async function Wholesale() {
 
             <div className="locked-zone mt-10">
               <div className="locked-modules" aria-hidden="true">
-                {restModules.map((m, i) => (
+                {rest.map((m) => (
                   <VideoModule
-                    key={i}
-                    index={i + 2}
-                    title="Module title placeholder."
+                    key={m.index}
+                    index={m.index}
+                    title={m.title}
                     duration={m.duration}
-                    blurb="A short description of the module goes here."
+                    blurb={m.blurb}
                   />
                 ))}
               </div>

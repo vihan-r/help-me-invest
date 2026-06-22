@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Arrow, Button, TertiaryLink } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { TOPICS_QUERY, type TopicCard } from "@/sanity/lib/queries";
 
 export const metadata = pageMeta({
   title: "Education",
@@ -9,6 +11,9 @@ export const metadata = pageMeta({
     "Everything you need to invest in property yourself — taught openly, no paywall on the knowledge. You decide what you need, when you need it.",
   path: "/education",
 });
+
+// ISR fallback; publish webhook (/api/revalidate) gives instant updates.
+export const revalidate = 3600;
 
 function Topic({
   title,
@@ -53,7 +58,9 @@ function Topic({
   );
 }
 
-export default function Education() {
+export default async function Education() {
+  const topics = await sanityFetch<TopicCard[]>(TOPICS_QUERY);
+
   return (
     <>
       {/* Header */}
@@ -67,34 +74,18 @@ export default function Education() {
         </p>
       </section>
 
-      {/* Three topics */}
+      {/* Topics */}
       <section className="shell pb-24">
-        <Topic
-          title="Understanding wholesale property."
-          blurb="The category of property that has historically flowed only through closed channels, and how the platform opens those channels directly to you."
-          href="/education/wholesale"
-          meta="8 modules · ~90 minutes of video."
-          thumbDuration="08:24"
-        />
-        <Topic
-          title="Finance."
-          blurb={
-            <>
-              How property is actually financed in Australia. The decisions that compound. What your
-              broker is, and isn&rsquo;t, paid to tell you.
-            </>
-          }
-          href="/education/finance"
-          meta="10 modules · ~110 minutes of video."
-          thumbDuration="09:10"
-        />
-        <Topic
-          title="Property strategy."
-          blurb="What to buy, where, why, and when. The frameworks the platform uses, taught from first principles."
-          href="/education/strategy"
-          meta="12 modules · ~140 minutes of video."
-          thumbDuration="10:24"
-        />
+        {topics.map((topic) => (
+          <Topic
+            key={topic._id}
+            title={topic.title}
+            blurb={topic.hubBlurb}
+            href={`/education/${topic.slug}`}
+            meta={topic.moduleCountLine ?? ""}
+            thumbDuration={topic.thumbnailDuration ?? ""}
+          />
+        ))}
       </section>
 
       {/* How the education works */}
