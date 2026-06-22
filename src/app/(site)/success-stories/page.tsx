@@ -1,5 +1,8 @@
-import { Arrow, Button, Placeholder, TertiaryLink } from "@/components";
+import { Arrow, Button, EditorialPortrait, Placeholder, TertiaryLink } from "@/components";
 import { pageMeta } from "@/lib/seo";
+import { urlForImage } from "@/sanity/lib/image";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { STORIES_QUERY, type StoryCard as StoryCardData } from "@/sanity/lib/queries";
 
 export const metadata = pageMeta({
   title: "Investor Stories",
@@ -8,27 +11,33 @@ export const metadata = pageMeta({
   path: "/success-stories",
 });
 
-function StoryCard({
-  name,
-  structural,
-  summary,
-  href = "/stories/investor-story",
-}: {
-  name: string;
-  structural: string;
-  summary: string;
-  href?: string;
-}) {
+// ISR fallback; publish webhook (/api/revalidate) gives instant updates.
+export const revalidate = 3600;
+
+/** "Sarah, 31, Newcastle." — composed from the split name fields. */
+function displayName({ firstName, age, location }: StoryCardData) {
+  return `${[firstName, age, location].filter((v) => v !== undefined && v !== "").join(", ")}.`;
+}
+
+function StoryCard(story: StoryCardData) {
+  const { firstName, structuralLine, summary, slug, portrait } = story;
   return (
     <article className="stack-md">
-      <Placeholder ratio="5x6" label="[ Editorial portrait, customer ]" />
+      {portrait ? (
+        <EditorialPortrait
+          src={urlForImage(portrait).width(800).height(960).url()}
+          alt={displayName(story)}
+        />
+      ) : (
+        <Placeholder ratio="5x6" label="[ Editorial portrait, customer ]" />
+      )}
       <div className="stack-sm">
-        <h2 className="h4">{name}</h2>
-        <p className="body-small text-grey">{structural}</p>
+        <h2 className="h4">{displayName(story)}</h2>
+        <p className="body-small text-grey">{structuralLine}</p>
         <p className="body mt-2">{summary}</p>
         <p className="mt-3">
-          <TertiaryLink href={href}>
-            Read {name.split(",")[0]}&rsquo;s story <Arrow />
+          <TertiaryLink href={`/stories/${slug}`}>
+            Read {firstName}&rsquo;s story <Arrow />
           </TertiaryLink>
         </p>
       </div>
@@ -36,46 +45,9 @@ function StoryCard({
   );
 }
 
-const STORIES = [
-  {
-    name: "Sarah, 31, Newcastle.",
-    structural: "First investment property · 2025.",
-    summary:
-      "Sarah spent six months reading the fundamentals on the platform before she bought. She made the call on the suburb herself, then used the platform to introduce her to a partner for the property selection and the legal review.",
-  },
-  {
-    name: "Marcus, 38, Western Sydney.",
-    structural: "Second investment · 2024.",
-    summary:
-      "Marcus had bought one property the conventional way and had felt for years that he had no idea what had actually happened. The second time he used the platform to walk through the financing structure first, line by line, before he looked at properties.",
-  },
-  {
-    name: "Aisha, 26, Outer Melbourne.",
-    structural: "First investment property · 2026.",
-    summary:
-      "Aisha came to the platform with a clear plan and very little appetite for being sold to. She used the education library to test her thinking, then took the platform’s wholesale access for the property itself.",
-  },
-  {
-    name: "Peter, 47, Regional Queensland.",
-    structural: "Third property · 2025.",
-    summary:
-      "Peter knew the market he wanted to buy in better than any partner could. He used the platform for the parts he didn’t want to do himself, the negotiation and the conveyancing, and kept the rest of the decision in his own hands.",
-  },
-  {
-    name: "Linh, 34, Inner Brisbane.",
-    structural: "Refinance · 2026.",
-    summary:
-      "Linh used the platform to walk through what her existing broker arrangement was actually costing her, in plain numbers. She ended up moving the loan, with the trail commission disclosed on the same page she chose the new product.",
-  },
-  {
-    name: "Chris, 51, Perth.",
-    structural: "Fourth property · 2024.",
-    summary:
-      "Chris came in already experienced. He used the platform mainly as a stress-test, running his plan past one of the partners we vouch for, before he committed. The plan held up. The exercise was worth it anyway.",
-  },
-];
+export default async function SuccessStories() {
+  const stories = await sanityFetch<StoryCardData[]>(STORIES_QUERY);
 
-export default function SuccessStories() {
   return (
     <>
       {/* Header */}
@@ -93,8 +65,8 @@ export default function SuccessStories() {
       {/* Stories grid */}
       <section className="shell section">
         <div className="grid-2">
-          {STORIES.map((s) => (
-            <StoryCard key={s.name} name={s.name} structural={s.structural} summary={s.summary} />
+          {stories.map((s) => (
+            <StoryCard key={s._id} {...s} />
           ))}
         </div>
       </section>

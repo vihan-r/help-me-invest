@@ -34,6 +34,15 @@ export const investorStory = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "slug",
+      title: "Slug (URL)",
+      type: "slug",
+      description:
+        'The web address for this story’s page, e.g. "sarah" → /stories/sarah. Click "Generate" to create it from the first name.',
+      options: { source: "firstName", maxLength: 96 },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "structuralLine",
       title: "Structural line",
       type: "string",
@@ -45,8 +54,16 @@ export const investorStory = defineType({
       title: "Summary",
       type: "text",
       rows: 5,
-      description: "The story shown on the card.",
+      description: "The short version shown on the Investor Stories card.",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "body",
+      title: "Full story",
+      type: "array",
+      of: [{ type: "block" }],
+      description:
+        "The full story shown on this person’s own page. Optional — leave empty to show just the summary.",
     }),
     defineField({
       name: "portrait",

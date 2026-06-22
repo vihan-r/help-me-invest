@@ -28,3 +28,4 @@ export { ContactForm } from "./ContactForm";
 export { ExpertForm } from "./ExpertForm";
 export { LegalPage } from "./LegalPage";
 export type { LegalPageProps, LegalSection } from "./LegalPage";
+export { StoryBody } from "./StoryBody";
