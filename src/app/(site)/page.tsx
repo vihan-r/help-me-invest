@@ -47,6 +47,7 @@ export default function Home() {
               fill
               priority
               placeholder="blur"
+              quality={90}
               sizes="(max-width: 880px) 100vw, 50vw"
               style={{ objectFit: "cover", objectPosition: "82% center" }}
             />

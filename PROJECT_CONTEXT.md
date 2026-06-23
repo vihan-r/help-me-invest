@@ -178,6 +178,12 @@ Repo: `vihan-r/help-me-invest` (private).
 - **Real legal copy** for Terms/Privacy — current pages are clearly-marked placeholder
   layouts; client to supply final wording.
 - **Story/partner portraits** are placeholders (reference uses placeholders, not photos).
+- **Home hero photo (owed by client):** the current `public/images/hero-banner.png`
+  (1915×821, landscape — same file the reference ships) is **too low-resolution for the
+  tall hero panel**. `object-fit: cover` crops most of its width and upscales the short
+  821px height ~2.4× on retina, so it reads as blurry. `next/image` already serves the
+  full-res variant and `quality` is set to 90 — the real fix is a **higher-resolution,
+  taller (portrait-ish, ~1400×1900+) hero image**.
 - `education/finance` and `education/strategy` are intentionally **stubs**.
 - **Auth is wired (Clerk, FEAT-1..5)** on a **Development** instance. The contact/
   talk-to-expert forms still POST nowhere (no CRM/email yet) — they validate
