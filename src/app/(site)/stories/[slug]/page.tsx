@@ -84,9 +84,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
       <section className="shell pt-10 pb-40">
         <div className="max-w-[900px]">
           <p className="mb-12">
-            <TertiaryLink href="/success-stories">
-              ← Back to Investor Stories <Arrow />
-            </TertiaryLink>
+            <TertiaryLink href="/success-stories">← Back to Investor Stories</TertiaryLink>
           </p>
           <h2 className="h2 col-display">
             Investing on <em>your own terms</em> starts with a conversation.

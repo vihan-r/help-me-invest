@@ -4,12 +4,8 @@ import Link from "next/link";
 import { Arrow, Button, VideoModule } from "@/components";
 import { pageMeta } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import {
-  MODULES_BY_TOPIC_QUERY,
-  TOPIC_BY_SLUG_QUERY,
-  type Module,
-  type TopicPage,
-} from "@/sanity/lib/queries";
+import { TOPIC_BY_SLUG_QUERY, type TopicPage } from "@/sanity/lib/queries";
+import { getWholesaleSeries, WHOLESALE_SLUG } from "@/sanity/lib/series";
 
 export const metadata = pageMeta({
   title: "Understanding wholesale property",
@@ -17,27 +13,6 @@ export const metadata = pageMeta({
     "Start here — one short module on what wholesale property actually is in the Australian market, and what changes when an everyday investor gets direct access.",
   path: "/education/wholesale",
 });
-
-const SLUG = "wholesale";
-
-// Placeholder rows for the gated "rest of the series" — shown until the team
-// adds real account-gated modules to the CMS, so the sign-up wall stays live.
-// (Real video lands with Cloudflare Stream in P4.)
-const PLACEHOLDER_REST = ["11:02", "09:48", "14:15", "10:30", "12:50", "07:20", "15:40"].map(
-  (duration, i) => ({
-    index: i + 2,
-    title: "Module title placeholder.",
-    duration,
-    blurb: "A short description of the module goes here.",
-  }),
-);
-
-interface RestRow {
-  index: number;
-  title: string;
-  duration?: string;
-  blurb: string;
-}
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
@@ -47,26 +22,14 @@ export default async function Wholesale() {
   const { userId } = await auth();
   const isSignedIn = Boolean(userId);
 
-  const [topic, modules] = await Promise.all([
-    sanityFetch<TopicPage | null>(TOPIC_BY_SLUG_QUERY, { slug: SLUG }),
-    sanityFetch<Module[]>(MODULES_BY_TOPIC_QUERY, { slug: SLUG }),
+  const [topic, series] = await Promise.all([
+    sanityFetch<TopicPage | null>(TOPIC_BY_SLUG_QUERY, { slug: WHOLESALE_SLUG }),
+    getWholesaleSeries(),
   ]);
 
   if (!topic) notFound();
 
-  const hero = modules.find((m) => m.accessLevel === "free") ?? null;
-  const gated = modules.filter((m) => m.accessLevel === "account");
-
-  // accessLevel drives the split; fall back to placeholders when no real gated
-  // modules exist yet so the "rest of the series" section + sign-up wall persist.
-  const rest: RestRow[] = gated.length
-    ? gated.map((m) => ({
-        index: m.moduleNumber,
-        title: m.title,
-        duration: m.duration,
-        blurb: m.blurb ?? "",
-      }))
-    : PLACEHOLDER_REST;
+  const { hero, rest } = series;
 
   return (
     <>
@@ -84,7 +47,7 @@ export default async function Wholesale() {
             <button
               type="button"
               className="hero-video"
-              aria-label={`Play Module ${pad(hero.moduleNumber)}, ${hero.title}`}
+              aria-label={`Play Module ${pad(hero.index)}, ${hero.title}`}
             >
               <span className="video-play" aria-hidden="true">
                 <svg viewBox="0 0 16 16" fill="currentColor">
@@ -92,7 +55,7 @@ export default async function Wholesale() {
                 </svg>
               </span>
               <span className="hero-video-badge">
-                Module {pad(hero.moduleNumber)} · {hero.duration}
+                Module {pad(hero.index)} · {hero.duration}
               </span>
             </button>
             <div className="hero-video-row">
@@ -128,6 +91,7 @@ export default async function Wholesale() {
                   title={m.title}
                   duration={m.duration}
                   blurb={m.blurb}
+                  href={`/education/wholesale/${m.index}`}
                 />
               ))}
             </div>
