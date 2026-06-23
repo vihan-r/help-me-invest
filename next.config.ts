@@ -20,6 +20,9 @@ const nextConfig: NextConfig = {
   // Sanity-hosted images (story portraits) served through next/image.
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
+    // Next 16 only honours quality values listed here (default is [75]); 90 is
+    // for the hero photo, 75 stays the default for everything else.
+    qualities: [75, 90],
   },
 };
 
