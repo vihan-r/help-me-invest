@@ -3,10 +3,8 @@ import { defineField, defineType } from "sanity";
 /**
  * A video module within an education topic. Fields match what the module rows /
  * hero render today (title, number, duration, optional blurb) plus an editable
- * access level that models the current "Module 01 free, rest gated" rule.
- *
- * The actual video source is deliberately NOT here yet — that arrives with
- * Cloudflare Stream in P4, so a module currently has a duration but no video.
+ * access level that models the current "Module 01 free, rest gated" rule and the
+ * Cloudflare Stream video UID (P4).
  */
 export const videoModule = defineType({
   name: "videoModule",
@@ -47,6 +45,13 @@ export const videoModule = defineType({
       rows: 3,
       description:
         "Short description shown in the module list. (Module 01 is the hero video, so it may have no blurb.)",
+    }),
+    defineField({
+      name: "cloudflareVideoId",
+      title: "Cloudflare video ID",
+      type: "string",
+      description:
+        "The video's UID from the Cloudflare Stream dashboard. For account-gated modules, turn on “Require signed URLs” on the video in Cloudflare. Leave empty until the video is uploaded.",
     }),
     defineField({
       name: "accessLevel",

@@ -1,11 +1,13 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Arrow, Button, VideoModule } from "@/components";
+import { Arrow, Button, StreamPlayer, VideoModule } from "@/components";
 import { pageMeta } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { TOPIC_BY_SLUG_QUERY, type TopicPage } from "@/sanity/lib/queries";
 import { getWholesaleSeries, WHOLESALE_SLUG } from "@/sanity/lib/series";
+
+const CUSTOMER_CODE = process.env.NEXT_PUBLIC_CLOUDFLARE_STREAM_CUSTOMER_CODE;
 
 export const metadata = pageMeta({
   title: "Understanding wholesale property",
@@ -40,24 +42,33 @@ export default async function Wholesale() {
         {topic.intro ? <p className="body-large col-body mt-8">{topic.intro}</p> : null}
       </section>
 
-      {/* Module 01 hero video */}
+      {/* Module 01 hero video — free, so it plays from the public video UID */}
       {hero ? (
         <section className="shell pt-8 pb-8">
           <div className="max-w-[900px]">
-            <button
-              type="button"
-              className="hero-video"
-              aria-label={`Play Module ${pad(hero.index)}, ${hero.title}`}
-            >
-              <span className="video-play" aria-hidden="true">
-                <svg viewBox="0 0 16 16" fill="currentColor">
-                  <path d="M4 2.5v11l10-5.5z" />
-                </svg>
-              </span>
-              <span className="hero-video-badge">
-                Module {pad(hero.index)} · {hero.duration}
-              </span>
-            </button>
+            {hero.cloudflareVideoId && CUSTOMER_CODE ? (
+              <StreamPlayer
+                src={hero.cloudflareVideoId}
+                customerCode={CUSTOMER_CODE}
+                badge={`Module ${pad(hero.index)} · ${hero.duration}`}
+                label={`Play Module ${pad(hero.index)}, ${hero.title}`}
+              />
+            ) : (
+              <button
+                type="button"
+                className="hero-video"
+                aria-label={`Play Module ${pad(hero.index)}, ${hero.title}`}
+              >
+                <span className="video-play" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M4 2.5v11l10-5.5z" />
+                  </svg>
+                </span>
+                <span className="hero-video-badge">
+                  Module {pad(hero.index)} · {hero.duration}
+                </span>
+              </button>
+            )}
             <div className="hero-video-row">
               <Button variant="secondary" href="/sign-up?redirect_url=%2Feducation%2Fwholesale">
                 Watch next module <Arrow />

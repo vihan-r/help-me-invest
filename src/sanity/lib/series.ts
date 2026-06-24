@@ -14,6 +14,7 @@ export interface SeriesRow {
   duration?: string;
   blurb: string;
   isPlaceholder: boolean;
+  cloudflareVideoId?: string;
 }
 
 export interface Series {
@@ -40,6 +41,7 @@ function toRow(m: Module): SeriesRow {
     duration: m.duration,
     blurb: m.blurb ?? "",
     isPlaceholder: false,
+    cloudflareVideoId: m.cloudflareVideoId,
   };
 }
 
