@@ -1,10 +1,14 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
+import { StreamPlayer } from "@/components";
+import { signStreamToken } from "@/lib/cloudflareStream";
 import { pageMeta } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { TOPIC_BY_SLUG_QUERY, type TopicPage } from "@/sanity/lib/queries";
 import { getWholesaleSeries, WHOLESALE_SLUG } from "@/sanity/lib/series";
+
+const CUSTOMER_CODE = process.env.NEXT_PUBLIC_CLOUDFLARE_STREAM_CUSTOMER_CODE;
 
 // Gated content — keep module pages out of search indexes.
 export const metadata = pageMeta({
@@ -40,6 +44,18 @@ export default async function ModulePage({ params }: { params: Promise<{ n: stri
   const row = series.rest.find((m) => m.index === moduleNumber);
   if (!row) notFound();
 
+  // Gated content: mint a short-lived signed playback token. We're past the auth
+  // check, so only signed-in users ever reach this — the token is what lets the
+  // player fetch a "require signed URLs" video (no token → Cloudflare 403s).
+  let videoToken: string | null = null;
+  if (row.cloudflareVideoId && CUSTOMER_CODE) {
+    try {
+      videoToken = await signStreamToken(row.cloudflareVideoId);
+    } catch {
+      videoToken = null;
+    }
+  }
+
   const num = pad(moduleNumber);
   const indices = series.rest.map((m) => m.index);
   const firstIndex = Math.min(...indices);
@@ -58,23 +74,32 @@ export default async function ModulePage({ params }: { params: Promise<{ n: stri
         <h1 className="d1 col-display mt-3">{row.title}</h1>
       </section>
 
-      {/* The video */}
+      {/* The video — signed token for the gated stream, or a placeholder poster */}
       <section className="shell pt-4 pb-10">
         <div className="max-w-[900px]">
-          <button
-            type="button"
-            className="hero-video"
-            aria-label={`Play Module ${num}, ${row.title}`}
-          >
-            <span className="video-play" aria-hidden="true">
-              <svg viewBox="0 0 16 16" fill="currentColor">
-                <path d="M4 2.5v11l10-5.5z" />
-              </svg>
-            </span>
-            <span className="hero-video-badge">
-              Module {num} · {row.duration}
-            </span>
-          </button>
+          {videoToken && CUSTOMER_CODE ? (
+            <StreamPlayer
+              src={videoToken}
+              customerCode={CUSTOMER_CODE}
+              badge={`Module ${num} · ${row.duration}`}
+              label={`Play Module ${num}, ${row.title}`}
+            />
+          ) : (
+            <button
+              type="button"
+              className="hero-video"
+              aria-label={`Play Module ${num}, ${row.title}`}
+            >
+              <span className="video-play" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M4 2.5v11l10-5.5z" />
+                </svg>
+              </span>
+              <span className="hero-video-badge">
+                Module {num} · {row.duration}
+              </span>
+            </button>
+          )}
         </div>
       </section>
 
