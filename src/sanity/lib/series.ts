@@ -1,4 +1,5 @@
 import { sanityFetch } from "./fetch";
+import { urlForImage } from "./image";
 import { MODULES_BY_TOPIC_QUERY, type Module } from "./queries";
 
 export const WHOLESALE_SLUG = "wholesale";
@@ -15,6 +16,8 @@ export interface SeriesRow {
   blurb: string;
   isPlaceholder: boolean;
   cloudflareVideoId?: string;
+  /** Resolved URL of the curated public preview still (module list + locked tease). */
+  previewImageUrl?: string;
 }
 
 export interface Series {
@@ -42,6 +45,9 @@ function toRow(m: Module): SeriesRow {
     blurb: m.blurb ?? "",
     isPlaceholder: false,
     cloudflareVideoId: m.cloudflareVideoId,
+    previewImageUrl: m.previewImage
+      ? urlForImage(m.previewImage).width(800).height(450).fit("crop").url()
+      : undefined,
   };
 }
 
