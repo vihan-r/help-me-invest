@@ -102,6 +102,7 @@ export default async function Wholesale() {
                   title={m.title}
                   duration={m.duration}
                   blurb={m.blurb}
+                  poster={m.previewImageUrl}
                   href={`/education/wholesale/${m.index}`}
                 />
               ))}
@@ -127,6 +128,7 @@ export default async function Wholesale() {
                     title={m.title}
                     duration={m.duration}
                     blurb={m.blurb}
+                    poster={m.previewImageUrl}
                   />
                 ))}
               </div>

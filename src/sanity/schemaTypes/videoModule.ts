@@ -54,6 +54,14 @@ export const videoModule = defineType({
         "The video's UID from the Cloudflare Stream dashboard. For account-gated modules, turn on “Require signed URLs” on the video in Cloudflare. Leave empty until the video is uploaded.",
     }),
     defineField({
+      name: "previewImage",
+      title: "Preview image",
+      type: "image",
+      options: { hotspot: true },
+      description:
+        "Optional public still shown on the module list — and blurred behind the sign-up wall for gated modules. A marketing-chosen frame, NOT the protected video thumbnail (that stays locked to signed-in viewers). Leave empty for a plain placeholder.",
+    }),
+    defineField({
       name: "accessLevel",
       title: "Access level",
       type: "string",

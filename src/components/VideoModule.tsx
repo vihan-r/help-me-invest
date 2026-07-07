@@ -8,6 +8,8 @@ export interface VideoModuleProps {
   blurb: string;
   /** When set, the module is a link; otherwise a non-interactive article. */
   href?: string;
+  /** Optional preview-image URL, shown as the thumbnail (mint fills through if absent). */
+  poster?: string;
 }
 
 function PlayIcon() {
@@ -23,11 +25,30 @@ function PlayIcon() {
  * title and blurb. Used inside the Education locked zone (non-interactive there);
  * pass `href` to make it a real link once modules are unlocked.
  */
-export function VideoModule({ index, title, duration = "00:00", blurb, href }: VideoModuleProps) {
+export function VideoModule({
+  index,
+  title,
+  duration = "00:00",
+  blurb,
+  href,
+  poster,
+}: VideoModuleProps) {
   const num = String(index).padStart(2, "0");
   const inner = (
     <>
-      <div className="video-placeholder" aria-hidden="true">
+      <div
+        className="video-placeholder"
+        aria-hidden="true"
+        style={
+          poster
+            ? {
+                backgroundImage: `url("${poster}")`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : undefined
+        }
+      >
         <div className="video-play">
           <PlayIcon />
         </div>

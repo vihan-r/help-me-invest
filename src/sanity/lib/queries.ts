@@ -57,6 +57,7 @@ export interface Module {
   blurb?: string;
   accessLevel: "free" | "account";
   cloudflareVideoId?: string;
+  previewImage?: SanityImageSource | null;
 }
 
 export const TOPICS_QUERY = `*[_type == "educationTopic"] | order(order asc){
@@ -68,5 +69,5 @@ export const TOPIC_BY_SLUG_QUERY = `*[_type == "educationTopic" && slug.current 
 }`;
 
 export const MODULES_BY_TOPIC_QUERY = `*[_type == "videoModule" && topic->slug.current == $slug] | order(moduleNumber asc){
-  _id, title, moduleNumber, duration, blurb, accessLevel, cloudflareVideoId
+  _id, title, moduleNumber, duration, blurb, accessLevel, cloudflareVideoId, previewImage
 }`;
