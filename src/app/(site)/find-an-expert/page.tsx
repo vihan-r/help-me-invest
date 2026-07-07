@@ -18,9 +18,9 @@ export default function FindAnExpert() {
           Get matched with the <em>right expert.</em>
         </h1>
         <p className="body-large col-body mt-8">
-          Tell us, in a few short answers, what you&rsquo;re trying to do. One of our team will read
-          it, then call you back to introduce you to a partner we vouch for — chosen on merit, paid
-          transparently, held to the outcome.
+          Tell us, in a few short answers, what you&rsquo;re trying to do and when. One of our team
+          will read it, then call you back within 24 hours to introduce you to a partner we vouch
+          for, chosen on merit, paid transparently, held to the outcome.
         </p>
       </section>
 
@@ -62,8 +62,8 @@ export default function FindAnExpert() {
             <div>
               <h3 className="h4">2 · We call you back.</h3>
               <p className="body mt-3">
-                To confirm what you&rsquo;re after, suggest the partner we think fits, and check
-                that you&rsquo;re comfortable proceeding.
+                Within 24 hours. To confirm what you&rsquo;re after, suggest the partner we think
+                fits, and check that you&rsquo;re comfortable proceeding.
               </p>
             </div>
             <div>

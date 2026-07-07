@@ -89,10 +89,11 @@ export default async function Wholesale() {
         {isSignedIn ? (
           <>
             <h2 className="h2 col-display mt-3">
-              The rest of the <em>series.</em>
+              The full series, <em>yours to watch.</em>
             </h2>
             <p className="body col-body mt-5">
-              You&rsquo;re signed in — here&rsquo;s the full set. Pick up wherever you like.
+              You&rsquo;re signed in, so the whole library is open to you. Watch in any order,
+              whenever you want it.
             </p>
             <div className="mt-10">
               {rest.map((m) => (

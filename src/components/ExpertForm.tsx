@@ -20,9 +20,10 @@ const INTENTS = [
 ] as const;
 
 const TIMINGS = [
-  { value: "whenever", label: "Whenever suits — I’m just exploring." },
-  { value: "months", label: "Sometime in the next few months." },
-  { value: "now", label: "I’m working through a decision now." },
+  { value: "week", label: "This week." },
+  { value: "month", label: "This month." },
+  { value: "quarter", label: "Sometime in the next quarter." },
+  { value: "exploring", label: "I’m just exploring, no rush." },
 ] as const;
 
 const schema = z.object({
@@ -30,7 +31,7 @@ const schema = z.object({
   phone: z.string().trim().min(1, "Add a number we can reach you on."),
   email: z.email("Please add a valid email."),
   intent: z.enum(["first", "next", "refinance", "review", "other"]),
-  timing: z.enum(["whenever", "months", "now"]),
+  timing: z.enum(["week", "month", "quarter", "exploring"]),
 });
 
 type ExpertValues = z.infer<typeof schema>;
@@ -42,7 +43,7 @@ export function ExpertForm() {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<ExpertValues>({
     resolver: zodResolver(schema),
-    defaultValues: { intent: "first", timing: "whenever" },
+    defaultValues: { intent: "first", timing: "exploring" },
   });
 
   const onSubmit = async (data: ExpertValues) => {
@@ -54,7 +55,7 @@ export function ExpertForm() {
     return (
       <div className="stack-md py-8" role="status" aria-live="polite">
         <h2 className="h3">
-          Thanks. We&rsquo;ll be in touch <em>within a day.</em>
+          Thanks. We&rsquo;ll be in touch <em>within 24 hours.</em>
         </h2>
         <p className="body">
           One of our team will read what you&rsquo;ve written and call you back within 24 hours. If
@@ -100,7 +101,7 @@ export function ExpertForm() {
         error={errors.intent?.message}
       />
       <RadioGroup
-        legend="When would you like to hear from us?"
+        legend="How soon do you need help?"
         options={[...TIMINGS]}
         required
         registration={register("timing")}
@@ -111,7 +112,7 @@ export function ExpertForm() {
           Send my details <Arrow />
         </button>
         <p className="body-small mt-3.5">
-          We&rsquo;ll call you back within a day. If you&rsquo;d rather email,{" "}
+          We&rsquo;ll call you back within 24 hours. If you&rsquo;d rather email,{" "}
           <a className="inline-link" href="mailto:hello@helpmeinvest.com.au">
             hello@helpmeinvest.com.au
           </a>{" "}

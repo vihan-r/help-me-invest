@@ -14,10 +14,10 @@ import { RadioGroup, TextAreaField, TextField } from "./Field";
  */
 
 const TOPICS = [
-  { value: "new", label: "I’m new — where do I start?" },
-  { value: "property", label: "A question about a specific property or decision." },
-  { value: "partner", label: "Partner enquiry." },
-  { value: "press", label: "Press / other." },
+  { value: "new", label: "I’m new, where do I start?" },
+  { value: "property", label: "A question about a specific property or decision" },
+  { value: "partner", label: "Partner enquiry" },
+  { value: "press", label: "Press / other" },
 ] as const;
 
 const schema = z.object({

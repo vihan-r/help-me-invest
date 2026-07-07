@@ -41,7 +41,8 @@ export default function Partners() {
             <p className="whatwedo-card-body">
               Every partner is vetted on the substance of the work, not on what they&rsquo;re
               willing to pay for placement. The criteria we use to vouch for them are published, and
-              the same criteria apply to every partner.
+              the same criteria apply to every partner, regardless of who they are or what they
+              bring to the platform.
             </p>
           </div>
           <div className="whatwedo-card whatwedo-card--filled">
