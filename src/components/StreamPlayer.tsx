@@ -35,12 +35,23 @@ export function StreamPlayer({ src, customerCode, badge, label }: StreamPlayerPr
     );
   }
 
+  // Cloudflare's auto-generated poster frame, set as the button background so the
+  // play button + badge stay on top and the mint fill shows through if it fails.
+  // Works for both cases: `src` is the UID (free) or the signed token (gated) —
+  // the token grants the thumbnail too.
+  const posterUrl = `https://customer-${customerCode}.cloudflarestream.com/${src}/thumbnails/thumbnail.jpg?height=720`;
+
   return (
     <button
       type="button"
       className="hero-video"
       aria-label={label}
       onClick={() => setPlaying(true)}
+      style={{
+        backgroundImage: `url("${posterUrl}")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
       <span className="video-play" aria-hidden="true">
         <svg viewBox="0 0 16 16" fill="currentColor">
