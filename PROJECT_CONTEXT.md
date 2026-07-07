@@ -45,7 +45,7 @@ for DB/auth/storage, Payload CMS, and Bunny Stream/Mux for video — all now dro
 | Hosting + database + storage | **Railway.com** — direct GitHub deploy, with integrated database and storage |
 | Auth                         | **Clerk** — managed service providing Google SSO + email verification        |
 | CMS                          | **Sanity** — also drives non-dev marketing landing pages via templates       |
-| Video                        | **Cloudflare Stream** — with DRM (Widevine / FairPlay) for gated content     |
+| Video                        | **Cloudflare Stream** — signed URLs + Allowed Origins for gated content      |
 
 Carried over from the brief: GoHighLevel CRM, a transactional email service, an SMS
 provider, and privacy-respecting analytics (e.g. PostHog).
@@ -57,6 +57,12 @@ Notes on this architecture:
   needs re-architecting when they're wired in behind the finished front end.
 - **Karan (dev expert) owns the security review** and will audit the first full-stack
   build, with a focus on API security and protecting client data.
+- **DRM correction (P4):** Cloudflare Stream has **no self-serve Widevine/FairPlay DRM**
+  (it'd be an enterprise arrangement). Gated video is protected by **"require signed
+  URLs" + server-minted signed tokens + Allowed Origins** — strong, server-enforced
+  access control (signed-out users get a 403, not just hidden UI), but not content
+  encryption against ripping. The original brief's "Cloudflare + DRM" assumption was
+  wrong; client signed off on signed-URL gating now, DRM revisited separately if needed.
 
 ---
 
