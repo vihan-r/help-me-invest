@@ -29,7 +29,7 @@ type SAValues = z.infer<typeof schema>;
 const STEP_META = [
   {
     title: "Let’s start with timing.",
-    lede: "Two quick questions. Nothing here is saved or sent.",
+    lede: "Two quick questions. Nothing here is saved or sent, it all works out as you type.",
   },
   { title: "Your income today.", lede: "A rough figure is fine — you can refine it later." },
   { title: "Where you’d like to land.", lede: "What “work is optional” looks like for you." },
@@ -96,7 +96,7 @@ export function SelfAssessmentShell() {
                   className="d1"
                   style={{ fontSize: 48, lineHeight: 1, color: "var(--color-emerald)" }}
                 >
-                  ~5 min
+                  ~10 min
                 </p>
                 <p className="eyebrow" style={{ marginTop: 8 }}>
                   to complete
@@ -112,7 +112,9 @@ export function SelfAssessmentShell() {
                   }}
                 >
                   {[
+                    "A few honest questions, nothing saved or sent as you go.",
                     "A clear, personalised picture of where you stand today.",
+                    "Exactly what it takes to retire on your own terms.",
                     "A customised report at the end that’s yours to keep, free.",
                   ].map((t) => (
                     <li

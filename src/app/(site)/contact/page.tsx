@@ -16,9 +16,9 @@ export default function Contact() {
           Get <em>in touch.</em>
         </h1>
         <p className="body-large col-body mt-8">
-          One of us will read your message and reply within a day. If it&rsquo;s about a specific
-          property decision you&rsquo;re weighing up, say so and we&rsquo;ll route it to the right
-          partner.
+          One of us will read your message and reply within a day. If your question is urgent or
+          specific to a property decision you&rsquo;re making this week, say so, we&rsquo;ll route
+          it to the right partner.
         </p>
       </section>
 
