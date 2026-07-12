@@ -172,6 +172,18 @@ All MVP routes are navigable, brand-accurate, responsive, and form-complete as U
 shells (forms validate client-side; backend wiring is a small change, not a rewrite).
 Repo: `vihan-r/help-me-invest` (private).
 
+### Phase 2 — progress (P-steps, all merged to `main` + live on staging)
+
+| Step | FEAT      | What                                                                                                                                                                                                  | PR(s)    |
+| ---- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| P2   | FEAT-1..5 | **Clerk auth** — email/password + Google SSO, session/logout, code-based password reset + email verification, real gating on `/education/wholesale`; custom/headless flows on the brand screens       | #15–#19  |
+| P3.1 | FEAT-7    | **Sanity CMS** — embedded Studio at `/studio`, client + env wiring                                                                                                                                    | #21      |
+| P3.2 | FEAT-7/41 | Sanity **schemas** (investorStory, educationTopic, videoModule) + content migrated from the hardcoded arrays                                                                                          | #21      |
+| P3.3 | FEAT-7/41 | Front end **reads from Sanity** — Stories + `/stories/[slug]` detail pages, Education hub, Wholesale (gating preserved); ISR + publish webhook (`/api/revalidate`, concrete-path revalidation)        | #22, #25 |
+| —    | FEAT-7    | **Module detail pages** (`/education/wholesale/[n]`) + clickable cards; story back-arrow fix; hero-image quality (`q=90`)                                                                             | #23, #24 |
+| P4   | FEAT-7    | **Cloudflare Stream** gated video — signed-URL access control + server-minted RS256 tokens (**no self-serve DRM** — see §2); branded player + poster; curated preview image for the locked-zone tease | #26–#28  |
+| —    | FEAT-7    | Locked-zone title readability + **full-site copy audit** vs the design reference                                                                                                                      | #29, #30 |
+
 ---
 
 ## 8. Outstanding / owed / deferred
@@ -183,14 +195,24 @@ Repo: `vihan-r/help-me-invest` (private).
   The eventual fix is the single transparent SVG (drops in via `currentColor`).
 - **Real legal copy** for Terms/Privacy — current pages are clearly-marked placeholder
   layouts; client to supply final wording.
-- **Story/partner portraits** are placeholders (reference uses placeholders, not photos).
+- **Story portraits** are now **CMS-managed** — upload per story in the Studio
+  (`investorStory.portrait`); empty = the placeholder frame. Partner cards are still a
+  placeholder shell (roster TBC).
 - **Home hero photo (owed by client):** the current `public/images/hero-banner.png`
   (1915×821, landscape — same file the reference ships) is **too low-resolution for the
   tall hero panel**. `object-fit: cover` crops most of its width and upscales the short
   821px height ~2.4× on retina, so it reads as blurry. `next/image` already serves the
   full-res variant and `quality` is set to 90 — the real fix is a **higher-resolution,
   taller (portrait-ish, ~1400×1900+) hero image**.
-- `education/finance` and `education/strategy` are intentionally **stubs**.
+- **Education videos + module content (owed):** only Wholesale **Module 01** (free) and a
+  throwaway **"Module 02 — test"** (gated) exist. Real course videos must be uploaded to
+  **Cloudflare Stream** (gated ones with _Require signed URLs_ + Allowed Origins), their
+  UIDs pasted into `videoModule.cloudflareVideoId`, plus per-module `previewImage` + real
+  titles/durations/blurbs in Sanity. `education/finance` and `education/strategy` are still
+  **stubs** (topic docs exist, no modules).
+- **Test content to clean up (Studio):** the `WEBHOOKLIVE` marker left on Sarah's story
+  summary (from the webhook test) and the `Module 02 — test` doc (double-M typo) — delete /
+  replace with real content when convenient.
 - **Auth is wired (Clerk, FEAT-1..5)** on a **Development** instance. The contact/
   talk-to-expert forms still POST nowhere (no CRM/email yet) — they validate
   client-side and are ready for a small backend wiring change.
@@ -201,10 +223,18 @@ Repo: `vihan-r/help-me-invest` (private).
   screen reads "Help Me Invest" with our logo — this needs Google's OAuth
   verification (verified domain + privacy-policy URL; can take days). Also covers
   the deferred custom-domain + production-keys move.
-- **Railway build-env note:** the build intermittently failed to see
-  `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` (it must be present at build — the key is
-  inlined into the client bundle). Worth pinning down the env scoping before adding
-  more service keys (Sanity/Cloudflare).
+- **Railway env (now carries all service keys):** Clerk, Sanity, and Cloudflare keys are
+  all set. `NEXT_PUBLIC_*` vars (Clerk publishable key, Sanity project id/dataset,
+  Cloudflare customer code) **must be present at build** — they're inlined into the client
+  bundle. Server-only secrets (Sanity read token + revalidate secret, Cloudflare signing
+  key JWK) are also needed at build to prerender. **Known nuance:** Railway persists
+  `.next/cache` across builds, so a deploy can occasionally prerender slightly-stale Sanity
+  content until the next publish (webhook) or the hourly ISR refresh — self-corrects; a
+  one-line build-cache clear would make it airtight if it ever bites.
+- **DRM (revisit if needed):** Cloudflare Stream has **no self-serve** Widevine/FairPlay
+  DRM (§2). Gated video uses signed-URL access control (strong) but not content-encryption
+  DRM. If ripping-protection becomes a hard requirement, it's an enterprise Cloudflare
+  conversation or a different provider (Mux/Bunny) — a separate decision.
 - **Self-assessment** is a UI shell — the predictive model + PDF report are Phase 2.
 
 ---
@@ -228,7 +258,23 @@ staging** at **https://help-me-invest-production.up.railway.app**, which
 → `npm run start`); `NEXT_PUBLIC_SITE_URL` is set in Railway so canonical/OG links
 resolve to the live domain. No backend services are wired yet — it's the front end only.
 
-**Phase 2 (P-steps)** now layers the finalised stack (see §2) behind the finished
-front end: Clerk auth + account gating, Sanity CMS, Cloudflare Stream (DRM) video,
-the assessment funnel + PDF, CRM/email/SMS, consent handling, and analytics. Karan
-(dev expert) owns the security review of the first full-stack build.
+**Phase 2 (P-steps) — done so far** (all live on staging; see §7 for the table):
+
+- **P2 — Clerk auth** (dev instance): sign-in/up, Google SSO, reset/verify, `/account` gating.
+- **P3 — Sanity CMS**: embedded Studio, schemas, content migrated, front end reads from
+  Sanity (Stories + detail pages, Education, Wholesale), publish webhook for instant updates.
+- **P4 — Cloudflare Stream** gated video: signed-URL access control + server-minted tokens
+  (no self-serve DRM — §2), branded player + poster + curated preview image.
+- Plus: module detail pages, hero-image quality, and a full copy audit against the reference.
+
+**Phase 2 — still to build:**
+
+- **CRM + transactional email** — wire the Contact + Talk-to-expert forms (currently POST
+  nowhere) to GoHighLevel + an email service. This is the next natural step.
+- **SMS + consent** handling, and **privacy-respecting analytics** (e.g. PostHog).
+- **Self-assessment** — the predictive model + generated PDF report (the UI is a shell).
+- **Pre-launch hardening** — production Clerk instance + our own Google OAuth (consent-screen
+  branding), and the `.next/cache` build-staleness tidy-up (§8).
+
+Karan (dev expert) owns the security review of the first full-stack build — the
+signed-URL video gating (P4) is built to be audited by him.
