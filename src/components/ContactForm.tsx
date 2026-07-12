@@ -1,50 +1,40 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { submitContactLead } from "@/app/actions/leads";
+import { TOPICS, contactLeadSchema, type ContactLead } from "@/lib/leadSchemas";
 import { Arrow } from "./Arrow";
 import { RadioGroup, TextAreaField, TextField } from "./Field";
+import { FormError } from "./FormError";
 
 /**
- * Contact form. Client-side validated with react-hook-form + zod; the schema is
- * the single source of truth and is reusable by the Phase-2 backend. `onSubmit`
- * is a no-op stub today — wiring the backend is a change to that one function,
- * not a rewrite.
+ * Contact form. Validated client-side with react-hook-form + zod (schema shared
+ * with the server action), then submitted to GoHighLevel via `submitContactLead`
+ * (the message rides along as a note on the contact).
  */
-
-const TOPICS = [
-  { value: "new", label: "I’m new, where do I start?" },
-  { value: "property", label: "A question about a specific property or decision" },
-  { value: "partner", label: "Partner enquiry" },
-  { value: "press", label: "Press / other" },
-] as const;
-
-const schema = z.object({
-  firstName: z.string().trim().min(1, "Please tell us your first name."),
-  email: z.email("Please add a valid email."),
-  topic: z.enum(["new", "property", "partner", "press"]),
-  message: z.string().trim().min(1, "Add a short message so we can help."),
-});
-
-type ContactValues = z.infer<typeof schema>;
-
 export function ContactForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-  } = useForm<ContactValues>({
-    resolver: zodResolver(schema),
+    formState: { errors, isSubmitting },
+  } = useForm<ContactLead>({
+    resolver: zodResolver(contactLeadSchema),
     defaultValues: { topic: "new" },
   });
 
-  const onSubmit = async (data: ContactValues) => {
-    // No backend yet — Phase 2 replaces this body with the API / CRM call using `data`.
-    void data;
+  const onSubmit = async (data: ContactLead) => {
+    setServerError(null);
+    const res = await submitContactLead(data);
+    if (res.ok) setSubmitted(true);
+    else setServerError(res.error);
   };
 
-  if (isSubmitSuccessful) {
+  if (submitted) {
     return (
       <div className="stack-md py-8" role="status" aria-live="polite">
         <h2 className="h3">
@@ -92,6 +82,7 @@ export function ContactForm() {
         {...register("message")}
         error={errors.message?.message}
       />
+      {serverError ? <FormError message={serverError} /> : null}
       <div>
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send <Arrow />
