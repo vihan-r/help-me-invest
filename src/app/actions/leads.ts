@@ -53,7 +53,12 @@ export async function submitContactLead(input: unknown): Promise<LeadResult> {
       email: d.email,
       source: "Website — Contact",
       tags: ["contact-form", `topic:${d.topic}`],
-      note: ["Contact form", `Topic: ${topicLabel(d.topic)}`, "", d.message].join("\n"),
+      // Custom fields (not a note) so the GHL notification workflow can merge
+      // them into the email to hello@. Keys must match the GHL custom fields.
+      customFields: [
+        { key: "enquiry_topic", value: topicLabel(d.topic) },
+        { key: "contact_form_message", value: d.message },
+      ],
     });
     return { ok: true };
   } catch (err) {

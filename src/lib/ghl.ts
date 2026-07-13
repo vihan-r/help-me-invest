@@ -19,6 +19,12 @@ export interface GhlContactInput {
   source: string;
   /** Free-text detail (the message / a summary), attached as a note. */
   note?: string;
+  /**
+   * Custom-field writes by GHL field key (bare key, e.g. "contact_form_message").
+   * Written on the contact so GHL workflow emails can merge them (notes/tags
+   * can't be merged into emails).
+   */
+  customFields?: { key: string; value: string }[];
 }
 
 function headers(token: string) {
@@ -48,6 +54,7 @@ export async function createGhlContact(input: GhlContactInput): Promise<void> {
       phone: input.phone,
       tags: input.tags,
       source: input.source,
+      customFields: input.customFields?.map((f) => ({ key: f.key, field_value: f.value })),
     }),
   });
 
