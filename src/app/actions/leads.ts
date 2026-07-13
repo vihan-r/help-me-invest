@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { createGhlContact } from "@/lib/ghl";
 import {
   contactLeadSchema,
@@ -8,14 +9,33 @@ import {
   timingLabel,
   topicLabel,
 } from "@/lib/leadSchemas";
+import { rateLimit } from "@/lib/rateLimit";
 
 export type LeadResult = { ok: true } | { ok: false; error: string };
 
 const GENERIC_ERROR =
   "Something went wrong sending this. Please try again in a moment, or email hello@helpmeinvest.com.au.";
+const RATE_LIMITED =
+  "That's a few submissions in a short time — please wait a few minutes and try again.";
+
+/** Best-effort client IP from proxy headers (Railway sets x-forwarded-for). */
+async function clientIp(): Promise<string> {
+  const h = await headers();
+  return h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
+}
+
+/** Hidden honeypot field — real users never fill it; bots often do. */
+function honeypotFilled(input: unknown): boolean {
+  const v = (input as { company?: unknown } | null)?.company;
+  return typeof v === "string" && v.trim().length > 0;
+}
 
 /** Talk-to-an-expert intake → a tagged contact in GoHighLevel. */
 export async function submitExpertLead(input: unknown): Promise<LeadResult> {
+  // Silently accept honeypot hits so bots don't learn they were caught.
+  if (honeypotFilled(input)) return { ok: true };
+  if (!rateLimit(`expert:${await clientIp()}`)) return { ok: false, error: RATE_LIMITED };
+
   const parsed = expertLeadSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Please check the form and try again." };
   const d = parsed.data;
@@ -41,8 +61,11 @@ export async function submitExpertLead(input: unknown): Promise<LeadResult> {
   }
 }
 
-/** Contact form → a tagged contact in GoHighLevel, message attached as a note. */
+/** Contact form → a tagged contact in GoHighLevel, topic + message as custom fields. */
 export async function submitContactLead(input: unknown): Promise<LeadResult> {
+  if (honeypotFilled(input)) return { ok: true };
+  if (!rateLimit(`contact:${await clientIp()}`)) return { ok: false, error: RATE_LIMITED };
+
   const parsed = contactLeadSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Please check the form and try again." };
   const d = parsed.data;

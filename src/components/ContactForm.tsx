@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, type BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import { submitContactLead } from "@/app/actions/leads";
 import { TOPICS, contactLeadSchema, type ContactLead } from "@/lib/leadSchemas";
@@ -27,9 +27,15 @@ export function ContactForm() {
     defaultValues: { topic: "new" },
   });
 
-  const onSubmit = async (data: ContactLead) => {
+  const onSubmit = async (data: ContactLead, event?: BaseSyntheticEvent) => {
+    const company =
+      (
+        (event?.currentTarget as HTMLFormElement | undefined)?.elements.namedItem(
+          "company",
+        ) as HTMLInputElement | null
+      )?.value ?? "";
     setServerError(null);
-    const res = await submitContactLead(data);
+    const res = await submitContactLead({ ...data, company });
     if (res.ok) setSubmitted(true);
     else setServerError(res.error);
   };
@@ -84,6 +90,16 @@ export function ContactForm() {
       />
       {serverError ? <FormError message={serverError} /> : null}
       <div>
+        {/* Honeypot: hidden off-screen; bots that fill it are silently dropped. */}
+        <input
+          className="hp-field"
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send <Arrow />
         </button>
