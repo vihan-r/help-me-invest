@@ -1,57 +1,40 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { submitExpertLead } from "@/app/actions/leads";
+import { INTENTS, TIMINGS, expertLeadSchema, type ExpertLead } from "@/lib/leadSchemas";
 import { Arrow } from "./Arrow";
 import { RadioGroup, TextField } from "./Field";
+import { FormError } from "./FormError";
 
 /**
  * Talk-to-an-expert intake. Calm, customer-led (no urgency/scarcity). Validated
- * with react-hook-form + zod; `onSubmit` is a no-op stub until the Phase-2 backend.
+ * client-side with react-hook-form + zod (schema shared with the server action),
+ * then submitted to GoHighLevel via `submitExpertLead`.
  */
-
-const INTENTS = [
-  { value: "first", label: "I’m buying my first investment property." },
-  { value: "next", label: "I’m buying my next investment property." },
-  { value: "refinance", label: "I’m refinancing an existing loan." },
-  { value: "review", label: "I’m reviewing my current portfolio." },
-  { value: "other", label: "Something else — I’ll explain below." },
-] as const;
-
-const TIMINGS = [
-  { value: "week", label: "This week." },
-  { value: "month", label: "This month." },
-  { value: "quarter", label: "Sometime in the next quarter." },
-  { value: "exploring", label: "I’m just exploring, no rush." },
-] as const;
-
-const schema = z.object({
-  firstName: z.string().trim().min(1, "Please tell us your first name."),
-  phone: z.string().trim().min(1, "Add a number we can reach you on."),
-  email: z.email("Please add a valid email."),
-  intent: z.enum(["first", "next", "refinance", "review", "other"]),
-  timing: z.enum(["week", "month", "quarter", "exploring"]),
-});
-
-type ExpertValues = z.infer<typeof schema>;
-
 export function ExpertForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-  } = useForm<ExpertValues>({
-    resolver: zodResolver(schema),
+    formState: { errors, isSubmitting },
+  } = useForm<ExpertLead>({
+    resolver: zodResolver(expertLeadSchema),
     defaultValues: { intent: "first", timing: "exploring" },
   });
 
-  const onSubmit = async (data: ExpertValues) => {
-    // No backend yet — Phase 2 replaces this body with the API / CRM call using `data`.
-    void data;
+  const onSubmit = async (data: ExpertLead) => {
+    setServerError(null);
+    const res = await submitExpertLead(data);
+    if (res.ok) setSubmitted(true);
+    else setServerError(res.error);
   };
 
-  if (isSubmitSuccessful) {
+  if (submitted) {
     return (
       <div className="stack-md py-8" role="status" aria-live="polite">
         <h2 className="h3">
@@ -107,6 +90,7 @@ export function ExpertForm() {
         registration={register("timing")}
         error={errors.timing?.message}
       />
+      {serverError ? <FormError message={serverError} /> : null}
       <div>
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send my details <Arrow />
