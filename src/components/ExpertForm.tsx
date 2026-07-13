@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, type BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import { submitExpertLead } from "@/app/actions/leads";
 import { INTENTS, TIMINGS, expertLeadSchema, type ExpertLead } from "@/lib/leadSchemas";
@@ -27,9 +27,15 @@ export function ExpertForm() {
     defaultValues: { intent: "first", timing: "exploring" },
   });
 
-  const onSubmit = async (data: ExpertLead) => {
+  const onSubmit = async (data: ExpertLead, event?: BaseSyntheticEvent) => {
+    const company =
+      (
+        (event?.currentTarget as HTMLFormElement | undefined)?.elements.namedItem(
+          "company",
+        ) as HTMLInputElement | null
+      )?.value ?? "";
     setServerError(null);
-    const res = await submitExpertLead(data);
+    const res = await submitExpertLead({ ...data, company });
     if (res.ok) setSubmitted(true);
     else setServerError(res.error);
   };
@@ -92,6 +98,16 @@ export function ExpertForm() {
       />
       {serverError ? <FormError message={serverError} /> : null}
       <div>
+        {/* Honeypot: hidden off-screen; bots that fill it are silently dropped. */}
+        <input
+          className="hp-field"
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
         <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           Send my details <Arrow />
         </button>

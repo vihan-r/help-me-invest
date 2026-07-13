@@ -1931,6 +1931,15 @@
  * ========================================================================== */
 @layer components {
   /* —— Form controls —— */
+  /* Honeypot input — off-screen, non-focusable, hidden from assistive tech. */
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+  }
   .field {
     display: flex;
     flex-direction: column;
