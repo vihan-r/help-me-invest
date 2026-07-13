@@ -2001,7 +2001,10 @@
   /* —— Radio/checkbox group (fieldset + legend replaces a dangling label) —— */
   .field-group {
     border: 0;
-    margin: 0;
+    /* Only reset the UA fieldset's inline margins — leaving the block margin
+       alone so a `.stack-*` parent's inter-field top gap still applies (a bare
+       `margin: 0` here silently killed the 40px gap before every radio group). */
+    margin-inline: 0;
     padding: 0;
     min-inline-size: 0;
   }
