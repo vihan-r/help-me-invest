@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { capture } from "@/lib/analytics";
 import { Arrow } from "./Arrow";
 import { Button } from "./Button";
 import { RadioGroup, TextField } from "./Field";
@@ -58,6 +59,7 @@ export function SelfAssessmentShell() {
   });
 
   const start = () => {
+    capture("self_assessment_started");
     setStep(0);
     setView("step");
   };

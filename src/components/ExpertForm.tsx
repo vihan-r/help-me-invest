@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, type BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import { submitExpertLead } from "@/app/actions/leads";
+import { capture } from "@/lib/analytics";
 import { INTENTS, TIMINGS, expertLeadSchema, type ExpertLead } from "@/lib/leadSchemas";
 import { Arrow } from "./Arrow";
 import { RadioGroup, TextField } from "./Field";
@@ -36,8 +37,10 @@ export function ExpertForm() {
       )?.value ?? "";
     setServerError(null);
     const res = await submitExpertLead({ ...data, company });
-    if (res.ok) setSubmitted(true);
-    else setServerError(res.error);
+    if (res.ok) {
+      capture("expert_form_submitted", { intent: data.intent, timing: data.timing });
+      setSubmitted(true);
+    } else setServerError(res.error);
   };
 
   if (submitted) {

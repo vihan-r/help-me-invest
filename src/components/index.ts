@@ -9,6 +9,7 @@ export { SiteFooter } from "./SiteFooter";
 export { PagePlaceholder } from "./PagePlaceholder";
 export type { PagePlaceholderProps } from "./PagePlaceholder";
 export { RevealObserver } from "./RevealObserver";
+export { PostHogProvider } from "./PostHogProvider";
 export { ChainDiagram, PlatformDiagram } from "./ChainDiagram";
 export type { ChainDiagramProps, PlatformDiagramProps, ChainLayer } from "./ChainDiagram";
 export { Placeholder, EditorialPortrait } from "./Placeholder";
