@@ -1,7 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
-import { RevealObserver } from "@/components";
+import { PostHogProvider, RevealObserver } from "@/components";
 import { SITE } from "@/config/site";
 import "./globals.css";
 
@@ -66,7 +66,7 @@ export default function RootLayout({
             Skip to content
           </a>
           <RevealObserver />
-          {children}
+          <PostHogProvider>{children}</PostHogProvider>
         </body>
       </html>
     </ClerkProvider>

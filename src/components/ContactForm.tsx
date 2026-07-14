@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, type BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import { submitContactLead } from "@/app/actions/leads";
+import { capture } from "@/lib/analytics";
 import { TOPICS, contactLeadSchema, type ContactLead } from "@/lib/leadSchemas";
 import { Arrow } from "./Arrow";
 import { RadioGroup, TextAreaField, TextField } from "./Field";
@@ -36,8 +37,10 @@ export function ContactForm() {
       )?.value ?? "";
     setServerError(null);
     const res = await submitContactLead({ ...data, company });
-    if (res.ok) setSubmitted(true);
-    else setServerError(res.error);
+    if (res.ok) {
+      capture("contact_form_submitted", { topic: data.topic });
+      setSubmitted(true);
+    } else setServerError(res.error);
   };
 
   if (submitted) {

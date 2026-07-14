@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { capture } from "@/lib/analytics";
 
 export interface StreamPlayerProps {
   /** Cloudflare video UID (free videos) or a signed playback token (gated). */
@@ -46,7 +47,10 @@ export function StreamPlayer({ src, customerCode, badge, label }: StreamPlayerPr
       type="button"
       className="hero-video"
       aria-label={label}
-      onClick={() => setPlaying(true)}
+      onClick={() => {
+        capture("module_play", { label });
+        setPlaying(true);
+      }}
       style={{
         backgroundImage: `url("${posterUrl}")`,
         backgroundSize: "cover",
